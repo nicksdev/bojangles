@@ -1,0 +1,33 @@
+Have a location variable that tracks current location
+Have a counter that iterates on movement and actions
+Types of action:
+    -   Movement
+    -   Combat
+    -   Interaction (Search, Open, Examine) - not sure we need this
+    -   Other (actions which don't iterate) Look, Inventory, Character, etc
+
+
+
+
+Actions List:
+
+north, south, east, west, up
+
+
+pickup
+drop
+look
+look in / search
+equip
+unequip
+cast
+attack
+use
+wait
+load
+save
+flee
+help
+
+..
+

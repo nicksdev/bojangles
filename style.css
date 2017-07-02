@@ -1,0 +1,65 @@
+.console
+{
+    height: 500px;
+    width:610px;
+    max-height:500px;
+    padding: 10px 10px 10px 10px;
+    font-family: sans-serif;
+    color:white;
+    background-color:black;
+    overflow:auto;
+}
+
+
+.capitalize {
+    text-transform: capitalize;
+}
+
+
+.charStats
+{
+    height: 30px;
+    width:610px;
+    max-height:30px;
+    padding: 10px 10px 10px 10px;
+    font-family: sans-serif;
+    color:white;
+    background-color:gray;
+    overflow:auto;
+}
+
+
+.default
+{
+    color: lightskyblue;
+}
+
+.items
+{
+    color: cornflowerblue;
+}
+
+.error
+{
+    color:red;
+}
+
+.combatMob
+{
+    color: darkorange;
+}
+
+.combatPlayer
+{
+    color: aqua;
+}
+
+.combatMiss
+{
+    color: grey;
+}
+
+.combatHit {
+    color: red;
+    font-weight: bold;
+}

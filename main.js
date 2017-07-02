@@ -1,0 +1,91 @@
+
+
+function game() {
+    // var log = function(x) {
+    //     console.log(x);
+    // };
+
+//CORE FUNCTIONS
+
+    function gamewindow() {
+        $('#userInput').unbind('keyup');
+        $('#userInput').on("keyup", function (event) {
+            if (event.which === 13) {
+                event.preventDefault();
+                input = $(this).val().toLowerCase();
+                console.log(input);
+                consolePush(input,"default");
+                inputSplit(input);
+                console.log("Location = " + loc["name"]);
+
+                if (actions.hasOwnProperty(inputAction) === true) {
+                    console.log("Recognised Action: " + inputAction);
+                    actions[inputAction]();
+                }
+            }
+        });
+    }
+
+
+    function consolePush(copy,style) {
+        if (style == null) {
+            document.getElementById("consoleDiv").innerHTML += copy + "<br>";
+        } else {
+            document.getElementById("consoleDiv").innerHTML += '<div class="' + style + '">' + copy + "</div>";
+        }
+        document.getElementById('userInput').value = "";
+        document.getElementById("consoleDiv").scrollTop = document.getElementById("consoleDiv").scrollHeight - document.getElementById("consoleDiv").clientHeight;
+    }
+
+    function init(location) {
+        consolePush(location["copy"]["default"]);
+
+    }
+
+    function inputSplit(x) {
+
+        //split userInput into array
+        tmp = input.split(" ");
+
+        //assign first word to userInputAction and shortens userInput
+        inputAction = tmp.shift();
+
+        //rejoin shortened array
+        inputString = tmp.join(" ");
+
+    }
+
+    function list(input) {
+        z = [];
+        for (var key in input) {
+        z.push(key);
+        }
+    return(z);
+    }
+
+
+actions = {
+    look: function(){
+        consolePush("You look");
+        consolePush(loc["copy"]["default"]);
+        consolePush(list(loc["items"]),"items");
+        console.log("Hello");
+    }
+
+
+
+};
+
+
+    window.onload = function () {
+        gamewindow();
+        loc = rooms["room0"];
+        init(loc);
+
+
+    };
+
+}
+
+
+window.game = game();
