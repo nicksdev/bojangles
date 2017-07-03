@@ -1,9 +1,6 @@
 
 
 function game() {
-    // var log = function(x) {
-    //     console.log(x);
-    // };
 
 //CORE FUNCTIONS
 
@@ -21,11 +18,13 @@ function game() {
                 if (actions.hasOwnProperty(inputAction) === true) {
                     console.log("Recognised Action: " + inputAction);
                     actions[inputAction]();
+                } else if (move.hasOwnProperty(inputAction) === true) {
+                    console.log("Recognised Movement " + inputAction);
+                    move[inputAction]();
                 }
             }
         });
     }
-
 
     function consolePush(copy,style) {
         if (style == null) {
@@ -39,7 +38,6 @@ function game() {
 
     function init(location) {
         consolePush(location["copy"]["default"]);
-
     }
 
     function inputSplit(x) {
@@ -65,24 +63,33 @@ function game() {
 
 
 actions = {
-    look: function(){
+    look: function () {
         consolePush("You look");
         consolePush(loc["copy"]["default"]);
-        consolePush(list(loc["items"]),"items");
-        console.log("Hello");
-    }
-
-
-
+        consolePush(list(loc["items"]), "items");
+    },
 };
+
+
+move = {
+    north: function(){
+        if (loc["exits"].hasOwnProperty(inputAction) === true){
+            consolePush("You go North, " + loc["exits"][inputAction]["desc"],"movement");
+            loc = rooms[loc["exits"][inputAction]["nextRoom"]];
+            init(loc);
+        } else {
+            consolePush("You can't go that way","movement");
+        }
+    }
+};
+
+
 
 
     window.onload = function () {
         gamewindow();
         loc = rooms["room0"];
         init(loc);
-
-
     };
 
 }

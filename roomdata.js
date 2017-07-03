@@ -9,7 +9,7 @@ rooms = {
     "room0": {
         name: "room name",
         copy:  {
-            default: "default copy message for this room",
+            default: "a default copy message for this room",
             contents: "in the room you see ITEMS + MOBS",
             mobAttack: "mob attack message",
             mobsDefeated: "don't use this. When Mobs are dead then corpses should be in the item pool",
@@ -52,16 +52,16 @@ rooms = {
 
         },
         exits:  {
-            east: {
-                description: "You take the Eastern Exit",
+            north: {
+                desc: "passing through a low tunnel into ",
                 nextRoom: "room0"
             },
             west: {
-                description: "You take the Western Exit",
+                desc: "You take the Western Exit",
                 nextRoom: "room0"
             },
             south: {
-                description: "You take the Southern Exit",
+                desc: "You take the Southern Exit",
                 nextRoom: "room0"
             }
         }
