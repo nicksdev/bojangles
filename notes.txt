@@ -29,5 +29,16 @@ save
 flee
 help
 
+
+
+Functions:
+
+inv: display inventory
+stats: display stats
+
+
+capacity: calculates carrying capcity. Function of Strength.
+
+
 ..
 

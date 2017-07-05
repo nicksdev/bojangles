@@ -61,6 +61,25 @@ function game() {
     return(z);
     }
 
+    function listEq() {
+
+
+
+        array = [];
+        for(var key in player.equipment) {
+            var value = player.equipment[key];
+            // console.log(value);
+            array.push(value.itemname);
+        }
+
+
+
+        consolePush(array);
+
+
+
+    }
+
 
 actions = {
     look: function () {
@@ -68,6 +87,19 @@ actions = {
         consolePush(loc["copy"]["default"]);
         consolePush(list(loc["items"]), "items");
     },
+
+    inv: function() {
+        consolePush("You have the following equipped:");
+        // console.log(player["equipment"]);
+        // console.log(list(player["equipment"]));
+        // console.log(listEq(player["equipment"]["itemname"]));
+        listEq();
+        consolePush(player["equipment"]["itemname"]);
+
+        consolePush("You are carrying the following:");
+
+
+    }
 };
 
 
