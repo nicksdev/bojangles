@@ -40,5 +40,9 @@ stats: display stats
 capacity: calculates carrying capcity. Function of Strength.
 
 
-..
+Use lodash to better handle objects and arrays
 
+Handle objects using:
+    -   a core template library (just a list of objects)
+    -   a spawned_objects list. Contains a list of all spawned objects in the game. Each has a unique id and a location (e.g. charachter inventory)
+    -

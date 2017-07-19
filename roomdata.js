@@ -19,33 +19,40 @@ rooms = {
         mobsDefeated: false,
         mobs: ["weakGoblin", "caveViper"],
         items: {
-            "silver sword": {
-                id: 100001,
-                name: "silver sword",
+            "item0050": {
+                itemname: "silver sword",
+                itemtype: "weapon",
                 desc: "a light and slim blade with a silvered edge",
-                type: "weapon",
-                levelReq: 1,
+                weight: 5,
+                minLevel: 2,
                 use: "equip",
+                twohanded: "no",
                 minDamage: 3,
                 maxDamage: 10,
                 attack: 9,
-                class: ["warrior"],
+                role: ["warrior"],
                 moveable: true
             },
 
-            "copper mace": {
-                id: 100002,
-                name: "copper mace",
-                desc: "a heavy mace made of copper",
-                type: "weapon",
-                levelReq: 1,
+            "item0051": {
+                itemname: "iron mace",
+                itemtype: "weapon",
+                desc: "a large hunk of iron attached to a large wooden handle",
+                weight: 5,
+                minLevel: 2,
                 use: "equip",
+                twohanded: "yes",
                 minDamage: 3,
                 maxDamage: 10,
                 attack: 9,
-                class: ["warrior"],
+                role: ["warrior"],
                 moveable: true
             },
+
+
+
+
+
 
 
 
