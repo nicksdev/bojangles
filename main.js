@@ -62,35 +62,83 @@ function game() {
         return(array);
     }
 
-    function objSearch(obj, type, value) {
-        //checks to see if something exists in an object
-        console.log(obj);
-        for(var key in obj) {
-            if (obj[key][type] === value) {
-                console.log("Object found");
-                return true;
-            } else {
-                console.log(obj[key][type]);
-                console.log("Object not found");
-                return false;
-            }
-        }
+    //Add object to something
+    function add(source,itemid,destination) {
+
+
+
+
+
     }
 
-    function objByName(obj,value) {
+    function getId(obj,itemname) {
 
-        console.log(obj);
-        for(var key in obj) {
-            if (obj[key]["itemname"] === value) {
-                console.log("Object found");
-                return true;
-            } else {
-                console.log(obj[key]["itemname"]);
-                console.log("Object not found");
-                return false;
-            }
-        }
+        console.log(loc["items"]);
+        console.log(itemname);
+        console.log(typeof itemname);
+
+        _.findKey(obj,{"itemname":itemname})
+
+
+        // _.findKey(loc["items"], {"itemname": "silver sword"})
+        //
+        // getId(loc["items"],"silver sword")
+        //
+        // loc["items"]
+        // "silver sword"
+
     }
+
+    //myObject['first name'] = 'John'
+
+
+
+
+
+    // var users = {
+    //     'barney':  { 'age': 36, 'active': true },
+    //     'fred':    { 'age': 40, 'active': false },
+    //     'pebbles': { 'age': 1,  'active': true }
+    // };
+    //
+    // _.findKey(users, { 'age': 1, 'active': true });
+// → 'pebbles'
+
+
+
+
+
+
+
+    // function objSearch(obj, type, value) {
+    //     //checks to see if something exists in an object
+    //     console.log(obj);
+    //     for(var key in obj) {
+    //         if (obj[key][type] === value) {
+    //             console.log("Object found");
+    //             return true;
+    //         } else {
+    //             console.log(obj[key][type]);
+    //             console.log("Object not found");
+    //             return false;
+    //         }
+    //     }
+    // }
+    //
+    // function objByName(obj,value) {
+    //
+    //     console.log(obj);
+    //     for(var key in obj) {
+    //         if (obj[key]["itemname"] === value) {
+    //             console.log("Object found");
+    //             return true;
+    //         } else {
+    //             console.log(obj[key]["itemname"]);
+    //             console.log("Object not found");
+    //             return false;
+    //         }
+    //     }
+    // }
 
     // function objCheck(obj,item,value) {
     //     //check a particular value of an object,
@@ -111,7 +159,6 @@ function game() {
     //     }
     // }
 
-
     function objCheck(obj,field,lookup,value,peram) {
         var result = false;
         _.forEach(obj, function(i) {
@@ -119,12 +166,12 @@ function game() {
                 return;
             }
             if(i[field] === lookup) {
-                console.log("Its here!");
+                console.log("Object Found");
                 if(i[peram] === value) {
-                    console.log("PASSED")
+                    console.log("PASSED");
                     result = true;
                 } else {
-                    console.log("FAILED")
+                    console.log("FAILED");
                     result = false;
                 }
             }
@@ -132,45 +179,45 @@ function game() {
         return result;
     }
 
-    function objCheck2(obj,) {
-        //console.log(obj);
-        // console.log(field);
-        // console.log(value);
-        var found = false;
-
-        _.forEach(obj, function(i) {
-
-            console.log(i);
-            console.log(value);
-            console.log(i[value]);
-            console.log(field);
-
-
-            if (found) {
-                return;
-            }
-
-            if(i["itemname"] === field) {
-                console.log("Its here!");
-
-
-                console.log(i);
-                console.log(value);
-                console.log(i[value]);
-                console.log(field);
-
-                //check field2
-                if(i[value] === field) {
-                    console.log("PASSED")
-                } else {
-                    console.log("FAILED")
-                }
-                found = true;
-            }
-        });
-
-        return found;
-    }
+    // function objCheck2(obj,) {
+    //     //console.log(obj);
+    //     // console.log(field);
+    //     // console.log(value);
+    //     var found = false;
+    //
+    //     _.forEach(obj, function(i) {
+    //
+    //         console.log(i);
+    //         console.log(value);
+    //         console.log(i[value]);
+    //         console.log(field);
+    //
+    //
+    //         if (found) {
+    //             return;
+    //         }
+    //
+    //         if(i["itemname"] === field) {
+    //             console.log("Its here!");
+    //
+    //
+    //             console.log(i);
+    //             console.log(value);
+    //             console.log(i[value]);
+    //             console.log(field);
+    //
+    //             //check field2
+    //             if(i[value] === field) {
+    //                 console.log("PASSED")
+    //             } else {
+    //                 console.log("FAILED")
+    //             }
+    //             found = true;
+    //         }
+    //     });
+    //
+    //     return found;
+    // }
 
 actions = {
     look: function () {
@@ -188,49 +235,13 @@ actions = {
 
     pickup: function() {
 
-        //Check item is present
-        // if (objCheck(loc["items"],inputString, "itemname", "itemname")) {
-        //     console.log(inputString + " found");
-        // } else {
-        //     console.log(inputString + " not found");
-        // }
 
-        //Check item is moveable
-            //match item
-            //check value
-        console.log(objCheck(loc["items"],"itemname",inputString,true,"moveable"));
+        if (objCheck(loc["items"],"itemname",inputString,true,"moveable") === true) {
 
-
-        // if (objCheck(loc["items"],true, "itemname", "moveable")) {
-        //     console.log(inputString + " found");
-        // } else {
-        //     console.log(inputString + " not found");
-        // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            consolePush("You pickup " + inputString,"items");
+        } else {
+            consolePush("You can't do that","error");
+        }
 
         // check to see if object exists in room
         // check to see if object is moveable
@@ -248,28 +259,22 @@ actions = {
 
     test: function() {
 
-        // console.log(objCheck(loc["items"],inputString, "itemname"));
-        //
-        // if (objCheck(loc["items"],inputString, "itemname") == true) {
-        //     console.log("Success");
-        // } else {
-        //     console.log("Fail");
-        // }
+       // console.log(player["equipment"]);
+
+       // console.log(loc["items"]["item0050"]);
+
+       // add(source,itemid,destination)
 
 
-        // is object moveable?
+       // getId("silver sword",loc["items"]);
 
 
-        console.log(objCheck(loc["items"],true, "moveable"));
+        console.log(loc["items"]);
+        console.log(loc["items"]["item0050"]);
 
+        console.log(_.findKey(loc["items"], {"itemname": "silver sword"}));
 
-
-
-
-
-
-
-
+        console.log(getId(loc["items"],"silver sword"));
 
 
     }
