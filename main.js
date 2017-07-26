@@ -112,31 +112,65 @@ function game() {
     // }
 
 
-    function objCheck(obj,field,value) {
-    //console.log(obj);
-    // console.log(field);
-    // console.log(value);
+    function objCheck(obj,field,lookup,value,peram) {
+        var result = false;
+        _.forEach(obj, function(i) {
+            if (result) {
+                return;
+            }
+            if(i[field] === lookup) {
+                console.log("Its here!");
+                if(i[peram] === value) {
+                    console.log("PASSED")
+                    result = true;
+                } else {
+                    console.log("FAILED")
+                    result = false;
+                }
+            }
+        });
+        return result;
+    }
+
+    function objCheck2(obj,) {
+        //console.log(obj);
+        // console.log(field);
+        // console.log(value);
         var found = false;
 
         _.forEach(obj, function(i) {
+
+            console.log(i);
+            console.log(value);
+            console.log(i[value]);
+            console.log(field);
+
 
             if (found) {
                 return;
             }
 
-            if(i[value] === field) {
+            if(i["itemname"] === field) {
                 console.log("Its here!");
+
+
+                console.log(i);
+                console.log(value);
+                console.log(i[value]);
+                console.log(field);
+
+                //check field2
+                if(i[value] === field) {
+                    console.log("PASSED")
+                } else {
+                    console.log("FAILED")
+                }
                 found = true;
             }
         });
 
         return found;
     }
-
-
-
-
-
 
 actions = {
     look: function () {
@@ -154,24 +188,48 @@ actions = {
 
     pickup: function() {
 
-
-    console.log(objCheck(loc["items"],inputString, "itemname"));
-
-
-        // if (objCheck(loc["items"],inputString, "itemname") === true) {
-        //     console.log("Pickup Check: itemname found : PASSED")
+        //Check item is present
+        // if (objCheck(loc["items"],inputString, "itemname", "itemname")) {
+        //     console.log(inputString + " found");
         // } else {
-        //     console.log("Pickup Check: itemname found : FAILED")
+        //     console.log(inputString + " not found");
+        // }
+
+        //Check item is moveable
+            //match item
+            //check value
+        console.log(objCheck(loc["items"],"itemname",inputString,true,"moveable"));
+
+
+        // if (objCheck(loc["items"],true, "itemname", "moveable")) {
+        //     console.log(inputString + " found");
+        // } else {
+        //     console.log(inputString + " not found");
         // }
 
 
-        //check if a defined object has name === inputString
-        //check is defined object has moveable === yes
-
-        //object/type/value
 
 
-       //if (objByName(loc["items"],inputString) === true && objCheck(loc["items"],["moveable"],"yes") === "yes")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // check to see if object exists in room
@@ -190,30 +248,19 @@ actions = {
 
     test: function() {
 
-        console.log(objCheck(loc["items"],inputString, "itemname"));
-
-        if (objCheck(loc["items"],inputString, "itemname") == true) {
-            console.log("Success");
-        } else {
-            console.log("Fail");
-        }
-
-        //console.log(objCheck(loc["items"],inputString, "itemname"));
-
-
-
-
-
-        // _.forEach(loc["items"], function(value) {
-        //     //console.log(value["itemname"]);
+        // console.log(objCheck(loc["items"],inputString, "itemname"));
         //
-        //     if(value["itemname"] === inputString) {
-        //         console.log("Its here!")
-        //     } else {
-        //         console.log("Not a match")
-        //     }
-        // });
+        // if (objCheck(loc["items"],inputString, "itemname") == true) {
+        //     console.log("Success");
+        // } else {
+        //     console.log("Fail");
+        // }
 
+
+        // is object moveable?
+
+
+        console.log(objCheck(loc["items"],true, "moveable"));
 
 
 

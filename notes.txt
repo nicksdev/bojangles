@@ -46,3 +46,43 @@ Handle objects using:
     -   a core template library (just a list of objects)
     -   a spawned_objects list. Contains a list of all spawned objects in the game. Each has a unique id and a location (e.g. charachter inventory)
     -
+
+
+
+//
+
+
+
+Find object:
+    -   foreach does itemname match inputstring
+    -   check specific value matches specific peram
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
