@@ -63,51 +63,34 @@ function game() {
     }
 
     //Add object to something
-    function add(source,itemid,destination) {
-
-
-
-
-
+    function add(source,itemname,destination) {
+        id = getId(source,itemname);
+        if (typeof id !== "undefined") {
+            console.log("id is good");
+            destination[id] = source[id];
+        } else {
+            console.log("id is bad")
+        }
     }
 
     function getId(obj,itemname) {
+        x = _.findKey(obj, {"itemname": itemname});
+        return x;
+    }
 
-        console.log(loc["items"]);
-        console.log(itemname);
-        console.log(typeof itemname);
+    function getObj(parentObj,itemname) {
+        _.forEach(parentObj, function(i) {
 
-        _.findKey(obj,{"itemname":itemname})
+            if(i["itemname"] === itemname) {
+                console.log("Object Found");
+                console.log(i);
+                return(i);
 
-
-        // _.findKey(loc["items"], {"itemname": "silver sword"})
-        //
-        // getId(loc["items"],"silver sword")
-        //
-        // loc["items"]
-        // "silver sword"
-
+            }
+        });
     }
 
     //myObject['first name'] = 'John'
-
-
-
-
-
-    // var users = {
-    //     'barney':  { 'age': 36, 'active': true },
-    //     'fred':    { 'age': 40, 'active': false },
-    //     'pebbles': { 'age': 1,  'active': true }
-    // };
-    //
-    // _.findKey(users, { 'age': 1, 'active': true });
-// → 'pebbles'
-
-
-
-
-
 
 
     // function objSearch(obj, type, value) {
@@ -235,17 +218,21 @@ actions = {
 
     pickup: function() {
 
-
+        // check to see if object exists in room
+        // check to see if object is moveable
         if (objCheck(loc["items"],"itemname",inputString,true,"moveable") === true) {
-
             consolePush("You pickup " + inputString,"items");
+
+            // add object to char inventory
+
+            add(loc["items"],inputString,player["inv"]);
+
         } else {
             consolePush("You can't do that","error");
         }
 
-        // check to see if object exists in room
-        // check to see if object is moveable
-        // add object to char inventory
+
+
         // remove object from room inventory
 
 
@@ -257,24 +244,42 @@ actions = {
             },
 
 
+
+    test2: function() {
+
+        //console.log(player["equipment"]);
+
+        player["equipment"]["item0050"] = loc["items"]["item0050"];
+
+        //console.log(player["equipment"]);
+
+    },
+
     test: function() {
 
        // console.log(player["equipment"]);
-
        // console.log(loc["items"]["item0050"]);
-
        // add(source,itemid,destination)
+        //console.log(loc["items"]);
+        //console.log(loc["items"]["item0050"]);
+        // console.log(_.findKey(loc["items"], {"itemname": "silver sword"}));
 
 
-       // getId("silver sword",loc["items"]);
+
+//        console.log(getId(loc["items"],inputString));
 
 
-        console.log(loc["items"]);
-        console.log(loc["items"]["item0050"]);
 
-        console.log(_.findKey(loc["items"], {"itemname": "silver sword"}));
+        //console.log(getId(loc["items"],"silver sword"));
+        //add(source,itemname,destination);
 
-        console.log(getId(loc["items"],"silver sword"));
+
+
+        add(loc["items"],inputString,player["equipment"]);
+
+
+
+        //getObj(loc["items"],inputString);
 
 
     }
