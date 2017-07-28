@@ -62,16 +62,36 @@ function game() {
         return(array);
     }
 
-    //Add object to something
-    function add(source,itemname,destination) {
-        id = getId(source,itemname);
+    //Add item to Object
+    function addItem(sourceObj,itemname,destObj) {
+        id = getId(sourceObj,itemname);
         if (typeof id !== "undefined") {
             console.log("id is good");
-            destination[id] = source[id];
+            destObj[id] = sourceObj[id];
         } else {
             console.log("id is bad")
         }
     }
+
+
+    //Remove item from Object
+    function minusItem(sourceObj,itemname) {
+        id = getId(sourceObj,itemname);
+        if (typeof id !== "undefined") {
+            console.log("id is good");
+            //destObj[id] = sourceObj[id];
+            delete sourceObj[id];
+        } else {
+            console.log("id is bad")
+        }
+    }
+
+
+
+
+
+
+
 
     function getId(obj,itemname) {
         x = _.findKey(obj, {"itemname": itemname});
@@ -203,6 +223,7 @@ function game() {
     // }
 
 actions = {
+
     look: function () {
         consolePush("You look");
         consolePush(loc["copy"]["default"]);
@@ -217,23 +238,70 @@ actions = {
     },
 
     pickup: function() {
-
         // check to see if object exists in room
         // check to see if object is moveable
-        if (objCheck(loc["items"],"itemname",inputString,true,"moveable") === true) {
-            consolePush("You pickup " + inputString,"items");
+            if (objCheck(loc["items"],"itemname",inputString,true,"moveable") === true) {
+                consolePush("You pickup " + inputString,"items");
+                // add object to char inventory
+                addItem(loc["items"],inputString,player["inv"]);
+                // remove object from room inventory
+                minusItem(loc["items"],inputString);
+            } else {
+                consolePush("You can't do that","error");
+            }
+        },
 
-            // add object to char inventory
-
-            add(loc["items"],inputString,player["inv"]);
-
+    drop: function () {
+        if (objCheck(player["inv"],"itemname",inputString,inputString,"itemname") === true) {
+            console.log("Yep inv");
+            addItem(player["inv"],inputString,loc["items"]);
+            minusItem(player["inv"],inputString);
+        } else if (objCheck(player["equipment"],"itemname",inputString,inputString,"itemname") === true) {
+            console.log("yep Eq");
+            addItem(player["equipment"],inputString,loc["items"]);
+            minusItem(player["equipment"],inputString);
         } else {
-            consolePush("You can't do that","error");
+            console.log("Nope")
+        }
+    },
+
+
+
+    equip: function() {
+        // is class ok
+        // is level ok
+        // if slot empty
+
+        if (objCheck(player["equipment"],"itemname",inputString,player["role"],"role") === true) {
+            console.log("class ok");
+        } else {
+            console.log("class not ok");
         }
 
 
 
-        // remove object from room inventory
+
+
+        if (objCheck(player["inv"],"itemname",inputString,inputString,"itemname") === true) {
+            console.log("Equipping");
+            addItem(player["inv"],inputString,player["equipment"]);
+            minusItem(player["inv"],inputString);
+        }
+    },
+
+
+    unequip: function() {
+        if (objCheck(player["equipment"],"itemname",inputString,inputString,"itemname") === true) {
+            console.log("unequipping");
+            addItem(player["equipment"],inputString,player["inv"]);
+            minusItem(player["equipment"],inputString);
+
+
+        }
+
+
+
+    },
 
 
 
@@ -241,7 +309,6 @@ actions = {
 
 
 
-            },
 
 
 
