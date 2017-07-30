@@ -73,7 +73,6 @@ function game() {
         }
     }
 
-
     //Remove item from Object
     function minusItem(sourceObj,itemname) {
         id = getId(sourceObj,itemname);
@@ -86,32 +85,22 @@ function game() {
         }
     }
 
-
-
-
-
-
-
-
     function getId(obj,itemname) {
         x = _.findKey(obj, {"itemname": itemname});
         return x;
     }
 
-    function getObj(parentObj,itemname) {
-        _.forEach(parentObj, function(i) {
-
-            if(i["itemname"] === itemname) {
-                console.log("Object Found");
-                console.log(i);
-                return(i);
-
-            }
-        });
-    }
-
-    //myObject['first name'] = 'John'
-
+    // function getObj(parentObj,itemname) {
+    //     _.forEach(parentObj, function(i) {
+    //
+    //         if(i["itemname"] === itemname) {
+    //             console.log("Object Found");
+    //             console.log(i);
+    //             return(i);
+    //
+    //         }
+    //     });
+    // }
 
     // function objSearch(obj, type, value) {
     //     //checks to see if something exists in an object
@@ -181,6 +170,30 @@ function game() {
         });
         return result;
     }
+
+    function fetchValue(obj,field,lookup,peram) {
+
+
+//      fetchValue(player["equipment"],"itemname",inputString,"role")
+        //iterate through obj
+        //match name
+        //return object
+        var result;
+
+        _.forEach(obj, function(i) {
+            if(i[field] === lookup) {
+                console.log("lookup match");
+                result = i[peram];
+                return true;
+                // console.log("Fetch Object Found");
+                // console.log(i);
+                // console.log("fetchValue = " + i[peram]);
+            }
+        });
+        return result;
+
+    }
+
 
     // function objCheck2(obj,) {
     //     //console.log(obj);
@@ -268,20 +281,20 @@ actions = {
 
 
     equip: function() {
-        // is class ok
+
         // is level ok
         // if slot empty
 
-        if (objCheck(player["equipment"],"itemname",inputString,player["role"],"role") === true) {
+
+
+        // is class ok
+        if (fetchValue(player["equipment"],"itemname",inputString,"role").includes(player["role"]) === true) {
             console.log("class ok");
         } else {
             console.log("class not ok");
         }
 
-
-
-
-
+        //does item exist in inv
         if (objCheck(player["inv"],"itemname",inputString,inputString,"itemname") === true) {
             console.log("Equipping");
             addItem(player["inv"],inputString,player["equipment"]);
@@ -295,12 +308,7 @@ actions = {
             console.log("unequipping");
             addItem(player["equipment"],inputString,player["inv"]);
             minusItem(player["equipment"],inputString);
-
-
         }
-
-
-
     },
 
 
@@ -324,6 +332,18 @@ actions = {
 
     test: function() {
 
+        console.log(fetchValue(player["equipment"],"itemname",inputString,"role"));
+
+//        [1, 2, 3].includes(2);     // true
+
+        console.log(
+
+            fetchValue(player["equipment"],"itemname",inputString,"role").includes(player["role"])
+
+
+
+        )
+
        // console.log(player["equipment"]);
        // console.log(loc["items"]["item0050"]);
        // add(source,itemid,destination)
@@ -342,7 +362,7 @@ actions = {
 
 
 
-        add(loc["items"],inputString,player["equipment"]);
+       // add(loc["items"],inputString,player["equipment"]);
 
 
 
