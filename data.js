@@ -58,6 +58,20 @@ var player= {
             moveable: "yes"
         },
 
+        "item0050": {
+            itemname: "steel dagger",
+            itemtype: "weapon",
+            desc: "a small iron dagger with a short dull blade",
+            weight: 2,
+            minLevel: 0,
+            use: "equip",
+            min: 1,
+            max: 2,
+            attack: 1,
+            role: ["wizard", "warrior"],
+            moveable: "yes"
+        },
+
     }
 
 };

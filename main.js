@@ -166,7 +166,7 @@ function game() {
                     console.log("FAILED");
                     result = false;
                 }
-            }
+            } else {console.log("Object Not Found")}
         });
         return result;
     }
@@ -285,21 +285,35 @@ actions = {
         // is level ok
         // if slot empty
 
-
-
+        console.log("1 - checking class");
         // is class ok
-        if (fetchValue(player["equipment"],"itemname",inputString,"role").includes(player["role"]) === true) {
+        if (fetchValue(player["inv"],"itemname",inputString,"role").includes(player["role"]) === true) {
             console.log("class ok");
         } else {
             console.log("class not ok");
         }
 
+
+        console.log("2 - checking inv");
         //does item exist in inv
         if (objCheck(player["inv"],"itemname",inputString,inputString,"itemname") === true) {
             console.log("Equipping");
             addItem(player["inv"],inputString,player["equipment"]);
             minusItem(player["inv"],inputString);
+        } else {
+            console.log("inv not ok");
+            console.log(inputString);
         }
+
+
+
+
+
+
+
+
+
+
     },
 
 
