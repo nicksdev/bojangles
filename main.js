@@ -278,48 +278,68 @@ actions = {
         }
     },
 
-
-
     equip: function() {
 
-        // is level ok
-        // if slot empty
-
-        console.log("1 - checking class");
-        // is class ok
-        if (fetchValue(player["inv"],"itemname",inputString,"role").includes(player["role"]) === true) {
-            console.log("class ok");
-        } else {
-            console.log("class not ok");
-        }
-
-
+        //inventory check
         console.log("2 - checking inv");
         //does item exist in inv
         if (objCheck(player["inv"],"itemname",inputString,inputString,"itemname") === true) {
-            console.log("Equipping");
-            addItem(player["inv"],inputString,player["equipment"]);
-            minusItem(player["inv"],inputString);
+            console.log("Item found in inventory");
         } else {
-            console.log("inv not ok");
-            console.log(inputString);
+            consolePush("I don't see " + inputString + " in your inventory");
+            return;
         }
 
 
+        //check itemtype
+        var type = fetchValue(player["inv"],"itemname",inputString,"itemtype");
+        console.log(type);
+        //is itemtype equippable
+        if ( usableTypes.indexOf(type) > -1 ) {
+            console.log("This item is equipable");
+        } else {
+            consolePush("This item is not something that can be worn");
+            return;
+        }
 
 
+        //check itemtype is free
+        if (fetchValue(player["equipment"],"itemtype",type,"itemname") === undefined) {
+            console.log("Slot is free");
+        } else {
+            consolePush(fetchValue(player["equipment"],"itemtype",type,"itemname") + " is already equipped, remove this first");
+            return;
+        }
 
 
+        //check level
+        if (player["level"] >= fetchValue(player["inv"],"itemname",inputString,"minLevel")) {
+            console.log("Level OK");
+        } else {
+            consolePush(inputString + " requires level " + fetchValue(player["inv"],"itemname",inputString,"minLevel"));
+            return;
+        }
 
 
+        //class check
+        if (fetchValue(player["inv"],"itemname",inputString,"role").includes(player["role"]) === true) {
+            console.log("class ok");
+        } else {
+            consolePush("A " + player["role"] + " cannot use " + inputString);
+            console.log("class not ok");
+            return;
+        }
 
 
+        consolePush("You equip the " + inputString);
+        addItem(player["inv"],inputString,player["equipment"]);
+        minusItem(player["inv"],inputString);
     },
-
 
     unequip: function() {
         if (objCheck(player["equipment"],"itemname",inputString,inputString,"itemname") === true) {
             console.log("unequipping");
+            consolePush("You remove the " + inputString);
             addItem(player["equipment"],inputString,player["inv"]);
             minusItem(player["equipment"],inputString);
         }
@@ -336,52 +356,38 @@ actions = {
 
     test2: function() {
 
-        //console.log(player["equipment"]);
+        console.log(player["inv"]);
 
-        player["equipment"]["item0050"] = loc["items"]["item0050"];
+        var x = fetchValue(player["inv"],"itemname",inputString,"itemtype");
 
-        //console.log(player["equipment"]);
+        console.log(x);
+
 
     },
 
     test: function() {
 
-        console.log(fetchValue(player["equipment"],"itemname",inputString,"role"));
+        //parse all equipped items
+        //check to see if any of equipped items have itemtype = type
 
-//        [1, 2, 3].includes(2);     // true
-
-        console.log(
-
-            fetchValue(player["equipment"],"itemname",inputString,"role").includes(player["role"])
+        //objCheck(player["inv"],"itemtype",)
 
 
+        //function fetchValue(obj,field,lookup,peram)
 
-        )
-
-       // console.log(player["equipment"]);
-       // console.log(loc["items"]["item0050"]);
-       // add(source,itemid,destination)
-        //console.log(loc["items"]);
-        //console.log(loc["items"]["item0050"]);
-        // console.log(_.findKey(loc["items"], {"itemname": "silver sword"}));
+        // _.forEach(obj, function(i) {
+        //     if(i[field] === lookup) {
+        //         console.log("lookup match");
+        //         result = i[peram];
 
 
 
-//        console.log(getId(loc["items"],inputString));
 
 
 
-        //console.log(getId(loc["items"],"silver sword"));
-        //add(source,itemname,destination);
+        var z = fetchValue(player["equipment"],"itemtype",inputString,"itemname");
 
-
-
-       // add(loc["items"],inputString,player["equipment"]);
-
-
-
-        //getObj(loc["items"],inputString);
-
+        console.log(z);
 
     }
 };

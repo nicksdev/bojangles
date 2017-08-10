@@ -3,7 +3,7 @@
 var player= {
     pname: "defaultName",
     role: "warrior",
-    level: 1,
+    level: 2,
     xp: 0,
     str: 10,
     agi: 10,
@@ -38,7 +38,7 @@ var player= {
             defence: 1,
             role: ["priest","warrior","wizard"],
             moveable: "yes"
-        },
+        }
 
     },
 
@@ -63,12 +63,12 @@ var player= {
             itemtype: "weapon",
             desc: "a small iron dagger with a short dull blade",
             weight: 2,
-            minLevel: 0,
+            minLevel: 2,
             use: "equip",
             min: 1,
             max: 2,
             attack: 1,
-            role: ["wizard", "warrior"],
+            role: ["warrior"],
             moveable: "yes"
         },
 
@@ -78,3 +78,9 @@ var player= {
 
 
 
+//GLOBALS
+
+//Equipable items
+//This array lists the itemtypes which the main character can equip
+
+const usableTypes = ["weapon", "chest", "legs", "feet", "hands", "ring", "head"];

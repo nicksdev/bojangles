@@ -19,7 +19,7 @@ rooms = {
         mobsDefeated: false,
         mobs: ["weakGoblin", "caveViper"],
         items: {
-            "item0050": {
+            "item0051": {
                 itemname: "silver sword",
                 itemtype: "weapon",
                 desc: "a light and slim blade with a silvered edge",
@@ -34,7 +34,7 @@ rooms = {
                 moveable: true
             },
 
-            "item0051": {
+            "item0052": {
                 itemname: "iron mace",
                 itemtype: "weapon",
                 desc: "a large hunk of iron attached to a large wooden handle",
