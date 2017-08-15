@@ -1,4 +1,4 @@
-
+//ntest
 
 function game() {
 
@@ -25,6 +25,7 @@ function game() {
             }
         });
     }
+
 
     function consolePush(copy,style) {
         if (style == null) {
