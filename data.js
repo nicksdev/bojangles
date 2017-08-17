@@ -1,6 +1,6 @@
 //CHARACTER
 
-var player= {
+var player = {
     pname: "defaultName",
     role: "warrior",
     level: 2,
@@ -13,34 +13,37 @@ var player= {
     mana: 50,
 
 
-    equipment: {
-        "item0010": {
-            itemname: "iron dagger",
-            itemtype: "weapon",
-            desc: "a small iron dagger with a short dull blade",
-            weight: 2,
-            minLevel: 0,
-            use: "equip",
-            min: 1,
-            max: 2,
-            attack: 1,
-            role: ["wizard", "warrior"],
-            moveable: "yes"
-        },
-
-        "item0020": {
-            itemname: "cloth shirt",
-            itemtype: "chest",
-            desc: "a flimsy shirt that provides almost no protection",
-            weight: 2,
-            minLevel: 0,
-            use: "equip",
-            defence: 1,
-            role: ["priest","warrior","wizard"],
-            moveable: "yes"
-        }
-
-    },
+    // equipment: {
+    //     "item0010": {
+    //         itemname: "iron dagger",
+    //         itemtype: "weapon",
+    //         desc: "a small iron dagger with a short dull blade",
+    //         weight: 2,
+    //         minLevel: 0,
+    //         use: "equip",
+    //         min: 1,
+    //         max: 2,
+    //         attack: 1,
+    //         role: ["wizard", "warrior"],
+    //         moveable: "yes"
+    //     },
+    //
+    //     "item0011": {
+    //         itemname: "iron dagger",
+    //         itemtype: "weapon",
+    //         desc: "a small iron dagger with a short dull blade",
+    //         weight: 2,
+    //         minLevel: 0,
+    //         use: "equip",
+    //         min: 1,
+    //         max: 2,
+    //         attack: 1,
+    //         role: ["wizard", "warrior"],
+    //         moveable: "yes"
+    //     }
+    //
+    //
+    // },
 
     inv: {
         "item0040": {
@@ -63,7 +66,7 @@ var player= {
             itemtype: "weapon",
             desc: "a small iron dagger with a short dull blade",
             weight: 2,
-            minLevel: 2,
+            minLevel: 12,
             use: "equip",
             min: 1,
             max: 2,

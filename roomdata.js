@@ -1,4 +1,3 @@
-
 rooms = {
 
 
@@ -7,7 +6,7 @@ rooms = {
 
 
     "room0": {
-        name: "room name",
+        name: "room name - room 0",
         copy:  {
             default: "a default copy message for this room",
             contents: "in the room you see ITEMS + MOBS",
@@ -18,46 +17,47 @@ rooms = {
         hasMobs: true,
         mobsDefeated: false,
         mobs: ["weakGoblin", "caveViper"],
-        items: {
-            "item0051": {
-                itemname: "silver sword",
-                itemtype: "weapon",
-                desc: "a light and slim blade with a silvered edge",
-                weight: 5,
-                minLevel: 2,
-                use: "equip",
-                twohanded: "no",
-                minDamage: 3,
-                maxDamage: 10,
-                attack: 9,
-                role: ["warrior"],
-                moveable: true
-            },
+        // items:
+            //iterate over spawned
+            //if location = x return object id
+            //push results to array
+            //return array
 
-            "item0052": {
-                itemname: "iron mace",
-                itemtype: "weapon",
-                desc: "a large hunk of iron attached to a large wooden handle",
-                weight: 5,
-                minLevel: 2,
-                use: "equip",
-                twohanded: "yes",
-                minDamage: 3,
-                maxDamage: 10,
-                attack: 9,
-                role: ["warrior"],
-                moveable: true
-            },
+            //
+            //
+            //
+            // "item0051": {
+            //     itemname: "silver sword",
+            //     itemtype: "weapon",
+            //     desc: "a light and slim blade with a silvered edge",
+            //     weight: 5,
+            //     minLevel: 2,
+            //     use: "equip",
+            //     twohanded: "no",
+            //     minDamage: 3,
+            //     maxDamage: 10,
+            //     attack: 9,
+            //     role: ["warrior"],
+            //     moveable: true
+            // },
+            //
+            // "item0052": {
+            //     itemname: "iron mace",
+            //     itemtype: "weapon",
+            //     desc: "a large hunk of iron attached to a large wooden handle",
+            //     weight: 5,
+            //     minLevel: 2,
+            //     use: "equip",
+            //     twohanded: "yes",
+            //     minDamage: 3,
+            //     maxDamage: 10,
+            //     attack: 9,
+            //     role: ["warrior"],
+            //     moveable: true
+            // },
+            //
 
 
-
-
-
-
-
-
-
-        },
         exits:  {
             north: {
                 desc: "passing through a low tunnel into ",
