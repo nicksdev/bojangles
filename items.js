@@ -95,9 +95,9 @@
 
         },
         "library": {
-            "item9010": {
+            "item5010": {
                 itemname: "morning star",
-                itemlocation: ["room0"],
+                itemlocation: "",
                 itemtype: "weapon",
                 desc: "a spiked metal ball on a short chain",
                 weight: 2,
@@ -109,9 +109,45 @@
                 role: ["wizard", "warrior"],
                 moveable: "yes"
 
+            },
+            "item9998": {
+                itemname: "test2",
+                itemlocation: "",
+                itemtype: "weapon",
+                desc: "a spiked metal ball on a short chain",
+                weight: 2,
+                minLevel: 0,
+                use: "equip",
+                min: 1,
+                max: 2,
+                attack: 1,
+                role: ["wizard", "warrior"],
+                moveable: "yes"
+            },
+            "item9997": {
+                itemname: "morning star99",
+                itemlocation: "",
+                itemtype: "weapon",
+                desc: "a spiked metal ball on a short chain",
+                weight: 2,
+                minLevel: 0,
+                use: "equip",
+                min: 1,
+                max: 2,
+                attack: 1,
+                role: ["wizard", "warrior"],
+                moveable: "yes"
             }
+
+
+
+
+
+
+
+
         }
-    }
+    };
 
 
 

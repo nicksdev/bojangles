@@ -4,6 +4,8 @@ function game() {
 
 //CORE FUNCTIONS
 
+    var spawnCount = 100001;
+
     function gamewindow() {
         $('#userInput').unbind('keyup');
         $('#userInput').on("keyup", function (event) {
@@ -25,7 +27,6 @@ function game() {
             }
         });
     }
-
 
     function consolePush(copy,style) {
         if (style == null) {
@@ -108,50 +109,6 @@ function game() {
 
     }
 
-    // function getObj(parentObj,itemname) {
-    //     _.forEach(parentObj, function(i) {
-    //
-    //         if(i["itemname"] === itemname) {
-    //             console.log("Object Found");
-    //             console.log(i);
-    //             return(i);
-    //
-    //         }
-    //     });
-    // }
-
-    // function objSearch(obj, type, value) {
-    //     //checks to see if something exists in an object
-    //     console.log(obj);
-    //     for(var key in obj) {
-    //         if (obj[key][type] === value) {
-    //             console.log("Object found");
-    //             return true;
-    //         } else {
-    //             console.log(obj[key][type]);
-    //             console.log("Object not found");
-    //             return false;
-    //         }
-    //     }
-    // }
-    //
-    // function objByName(obj,value) {
-    //
-    //     console.log(obj);
-    //     for(var key in obj) {
-    //         if (obj[key]["itemname"] === value) {
-    //             console.log("Object found");
-    //             return true;
-    //         } else {
-    //             console.log(obj[key]["itemname"]);
-    //             console.log("Object not found");
-    //             return false;
-    //         }
-    //     }
-    // }
-
-    //consolePush(objParse(items["spawned"],"itemlocation",loc));
-
     function objParse(obj,property,value) {
         //check a particular value of an object,
         //find object
@@ -173,25 +130,6 @@ function game() {
         return array;
     }
 
-    // function objCheck(obj,item,value) {
-    //     //check a particular value of an object,
-    //
-    //     //find object
-    //     //check objects value
-    //
-    //     for(var key in obj) {
-    //         if (obj[key]["itemname"] === item) {
-    //             console.log("Object found");
-    //             console.log(obj[key][value])
-    //             return obj[key][value];
-    //         } else {
-    //             console.log(obj[key]["itemname"]);
-    //             console.log("Object not found");
-    //
-    //         }
-    //     }
-    // }
-
     function objCheck(obj,field,lookup,value,peram) {
         var result = false;
         _.forEach(obj, function(i) {
@@ -211,7 +149,6 @@ function game() {
         });
         return result;
     }
-
 
     function itemCheck(field,lookup,value,peram) {
         var result = false;
@@ -276,6 +213,17 @@ function game() {
         return result;
     }
 
+    //SPAWN STUFF
+
+    spawnItem = function(item,loc) {
+
+
+        sourceId = getId(items["library"],item);
+        items["spawned"][spawnCount] = items["library"][sourceId];
+        items["spawned"][spawnCount]["itemlocation"] = loc;
+        spawnCount ++;
+
+    };
 
 
 actions = {
@@ -364,7 +312,6 @@ actions = {
         }
     },
 
-
     test2: function () {
 
         objParse(player["equipment"], "itemname", inputString, "itemname");
@@ -373,19 +320,12 @@ actions = {
 
     test: function () {
 
+        spawnItem("morning star","room0");
+        spawnItem("morning star99","inventory");
 
-
+        console.log(items["spawned"]);
     }
-
-
-
-
-
-
-
-
-
-}
+};
 
 
 
