@@ -61,22 +61,6 @@
             },
 
 
-            "item0040": {
-                itemname: "healing balm",
-                itemlocation: "inventory",
-                itemtype: "usable",
-                desc: "a perfumed ointment that is used for treating wounds",
-                weight: 1,
-                minLevel: 0,
-                use: "cast",
-                effect: "heal",
-                charges: 3,
-                min: 3,
-                max: 8,
-                role: ["wizard","warrior","priest"],
-                moveable: "yes"
-            },
-
             "item0050": {
                 itemname: "steel dagger",
                 itemlocation: "inventory",
@@ -136,6 +120,38 @@
                 max: 2,
                 attack: 1,
                 role: ["wizard", "warrior"],
+                moveable: "yes"
+            },
+
+            "item0040": {
+                itemname: "healing balm",
+                itemlocation: "",
+                itemtype: "usable",
+                desc: "a perfumed ointment that is used for treating wounds",
+                weight: 1,
+                minLevel: 0,
+                use: "cast",
+                effect: "heal",
+                charges: 2,
+                min: 3,
+                max: 8,
+                role: ["wizard","warrior","priest"],
+                moveable: "yes"
+            },
+
+            "item0041": {
+                itemname: "extra healing balm",
+                itemlocation: "",
+                itemtype: "usable",
+                desc: "a perfumed ointment that is used for treating wounds",
+                weight: 1,
+                minLevel: 0,
+                use: "cast",
+                effect: "heal",
+                charges: 2,
+                min: 3,
+                max: 8,
+                role: ["wizard","warrior","priest"],
                 moveable: "yes"
             }
 

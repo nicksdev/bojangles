@@ -39,7 +39,33 @@ function game() {
     }
 
     function init(location) {
+
+
+        if (rooms[loc]["visited"] === false) {
+            //Spawn room items
+            rooms[loc]["items"].forEach(function (z) {
+                spawnItem(z[0], loc, z[1])
+            });
+        }
+
+        //Flag room as visited
+        rooms[loc]["visited"] = true;
+        console.log(rooms[loc]["name"] + " is flagged as visited")
+
+
+
+
         consolePush(location["copy"]["default"]);
+
+        //Display exits
+        consolePush("You can see the following exits: ");
+        consolePush(Object.getOwnPropertyNames(rooms[loc]["exits"]),"movement");
+
+        //Display items
+        consolePush("This room contains: ");
+        for (var i = 0; i < objParse(items["spawned"], "itemlocation", loc).length; i++) {
+            consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", loc)[i]]["itemname"], "items");
+        }
     }
 
     function inputSplit(x) {
@@ -59,6 +85,15 @@ function game() {
         array = [];
         for(var key in object) {
             array.push(object[key][detail]);
+        }
+        // console.log(array);
+        return(array);
+    }
+
+    function list2(object) {
+        array = [];
+        for(var key in object) {
+            array.push(object[key]);
         }
         // console.log(array);
         return(array);
@@ -215,13 +250,18 @@ function game() {
 
     //SPAWN STUFF
 
-    spawnItem = function(item,loc) {
+    spawnItem = function(item,loc,quantity) {
 
 
-        sourceId = getId(items["library"],item);
-        items["spawned"][spawnCount] = items["library"][sourceId];
-        items["spawned"][spawnCount]["itemlocation"] = loc;
-        spawnCount ++;
+        for (i = 0; i < quantity; i++) {
+            sourceId = getId(items["library"],item);
+            items["spawned"][spawnCount] = items["library"][sourceId];
+            items["spawned"][spawnCount]["itemlocation"] = loc;
+            spawnCount ++;
+        }
+
+
+
 
     };
 
@@ -320,10 +360,11 @@ actions = {
 
     test: function () {
 
-        spawnItem("morning star","room0");
-        spawnItem("morning star99","inventory");
 
-        console.log(items["spawned"]);
+       // console.log(list2(rooms[loc]["exits"]))
+
+
+
     }
 };
 

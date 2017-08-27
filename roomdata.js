@@ -16,7 +16,12 @@ rooms = {
         },
         hasMobs: true,
         mobsDefeated: false,
+        visited: false,
         mobs: ["weakGoblin", "caveViper"],
+        items: [
+            ["healing balm",1],
+            ["extra healing balm",1]
+        ],
         // items:
             //iterate over spawned
             //if location = x return object id
