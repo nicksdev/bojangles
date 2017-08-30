@@ -1,12 +1,48 @@
 
 
+CURRENTLY WORKING ON:
+
+ Magic.
+ Finish Apply Magic Effect
+
+
+
 **PRIORITIES**
-Start game with empty spawned list
-Populate from rooms when you first enter - one time event
-Use a room flag that is set to visited : no by default and then set visited : yes on first visit
-If flag is no trigger the ogic to populate spawned list with objects.
+
+Combat system
+Are Mob present, if yes then initiate combat.
+    Set combat flag
+    Include a 'number of attacks function'
+    Consider how to handle pets (Object poperty mob type)
+    Calculate combat order
+    Run a combat action for each mob in turn:
+        Attack - who? Attack type weapon, magic, special (cooldowns & charges)
+        Calc defence rolls
+        If hit calc effects (damage, special or magic effects)
+        Did target die? If so create corpse and remove mob
+        If Character dead, then end game
+    Unset combat flag
+
+
 
 Random object lists
+
+Items that apply constant effects
+
+Magic System
+    Cast Spell
+        - Check magic type (Combat magic?)
+        - Mana check
+        - Skill check (chance to fail)
+        - Apply effect to self, pet or target
+        - Chance to resist?
+
+
+Companion System
+    -   Summonable helpers
+
+
+Money system and shops
 
 
 

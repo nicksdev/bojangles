@@ -22,46 +22,6 @@ rooms = {
             ["healing balm",1],
             ["extra healing balm",1]
         ],
-        // items:
-            //iterate over spawned
-            //if location = x return object id
-            //push results to array
-            //return array
-
-            //
-            //
-            //
-            // "item0051": {
-            //     itemname: "silver sword",
-            //     itemtype: "weapon",
-            //     desc: "a light and slim blade with a silvered edge",
-            //     weight: 5,
-            //     minLevel: 2,
-            //     use: "equip",
-            //     twohanded: "no",
-            //     minDamage: 3,
-            //     maxDamage: 10,
-            //     attack: 9,
-            //     role: ["warrior"],
-            //     moveable: true
-            // },
-            //
-            // "item0052": {
-            //     itemname: "iron mace",
-            //     itemtype: "weapon",
-            //     desc: "a large hunk of iron attached to a large wooden handle",
-            //     weight: 5,
-            //     minLevel: 2,
-            //     use: "equip",
-            //     twohanded: "yes",
-            //     minDamage: 3,
-            //     maxDamage: 10,
-            //     attack: 9,
-            //     role: ["warrior"],
-            //     moveable: true
-            // },
-            //
-
 
         exits:  {
             north: {

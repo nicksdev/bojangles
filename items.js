@@ -166,5 +166,38 @@
     };
 
 
+    effects = {
 
+        "fire bolt": {
+            effectname: "fire bolt",
+            desc: "",
+            type: "damage",
+            effectType: "health",
+            hitroll: "yes",
+            minLevel: 1,
+            min: 1,
+            max: 6,
+            duration: 1,
+            attack: 5,
+            role: ["wizard"]
+
+        },
+
+        "minor heal": {
+            effectname: "minor heal",
+            desc: "",
+            type: "buff",
+            effectType: "health",
+            hitroll: "no",
+            minLevel: 1,
+            min: 1,
+            max: 6,
+            duration: 1,
+            attack: 0,
+            role: ["priest"]
+
+
+        }
+
+    };
 

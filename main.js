@@ -266,6 +266,36 @@ function game() {
     };
 
 
+    function applyEffect(effect,target) {
+
+        console.log(effects[effect]);
+
+        if (effects[effect] != undefined)  {
+
+            switch(effects[effect]["type"]) {
+                case ("buff"):
+                    consolePush("Yep, its a buff spell");
+                    break;
+                case ("damage"):
+                    consolePush("Yep, its a damage spell");
+                    break;
+                default:
+                    consolePush("Unknown Spell Type");
+                    break
+            }
+
+        } else {
+            consolePush("Unknown Spell Type");
+        }
+
+
+
+
+
+
+    }
+
+
 actions = {
 
     look: function () {
@@ -340,6 +370,16 @@ actions = {
 
     },
 
+
+
+
+
+
+
+
+
+
+
     unequip: function () {
 
         //check item is equipped
@@ -359,12 +399,23 @@ actions = {
     },
 
     test: function () {
-
-
        // console.log(list2(rooms[loc]["exits"]))
 
+    },
+
+    cast: function() {
+        a = inputString.match(/^(.*?)($| on (.*?)$)/); //breaks userInputString into array 'a'
+        a.shift(); //strips the original string from the new array
+        castSpell = a[0];
+        target = a[2];
+//        select = "mob" + (a[2] - 1);
 
 
+
+        applyEffect(castSpell,target);
+
+
+        console.log(a);
     }
 };
 
