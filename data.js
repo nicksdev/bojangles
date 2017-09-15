@@ -4,11 +4,12 @@ var player = {
     pname: "defaultName",
     role: "warrior",
     level: 2,
+    attacks: 2,
     xp: 0,
     str: 10,
     agi: 10,
     maxHealth: 50,
-    health: 50,
+    health: 30,
     maxMana: 50,
     mana: 50,
 

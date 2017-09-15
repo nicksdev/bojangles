@@ -6,6 +6,9 @@ CURRENTLY WORKING ON:
  Finish Apply Magic Effect
 
 
+apply effect (effect,buffORDebuff,duration)
+
+
 
 **PRIORITIES**
 

@@ -17,7 +17,7 @@ rooms = {
         hasMobs: true,
         mobsDefeated: false,
         visited: false,
-        mobs: ["weakGoblin", "caveViper"],
+        mobs: ["weakGoblin", "weakGoblin" , "caveViper"],
         items: [
             ["healing balm",1],
             ["extra healing balm",1]

@@ -5,6 +5,7 @@ function game() {
 //CORE FUNCTIONS
 
     var spawnCount = 100001;
+    var count = 1;
 
     function gamewindow() {
         $('#userInput').unbind('keyup');
@@ -19,6 +20,7 @@ function game() {
 
                 if (actions.hasOwnProperty(inputAction) === true) {
                     //console.log("Recognised Action: " + inputAction);
+                    countOne();
                     actions[inputAction]();
                 } else if (move.hasOwnProperty(inputAction) === true) {
                     console.log("Recognised Movement " + inputAction);
@@ -68,6 +70,12 @@ function game() {
         }
     }
 
+    function countOne() {
+        count ++;
+        console.log("Count = " + count);
+        checkState()
+    }
+
     function inputSplit(x) {
 
         //split userInput into array
@@ -81,54 +89,27 @@ function game() {
 
     }
 
-    function list(object,detail) {
-        array = [];
-        for(var key in object) {
-            array.push(object[key][detail]);
+    function dice(minnum,maxnum,freq){
+        result = 0;
+        for (i = 0; i < freq; i++) {
+            x = Math.floor(Math.random() * (maxnum - minnum + 1) + (minnum));
+            //x = Math.floor(Math.random() * 4);
+            console.log(x);
+            result = result + x;
         }
-        // console.log(array);
-        return(array);
+        return result;
+
+
+        //(3 - 7 ) = 3,4,5,6,7. 7-3=4 (0,1,2,3, + 3 + 1
+        //(3 - 7
+        // 0 - 4 + 3
+
     }
 
-    function list2(object) {
-        array = [];
-        for(var key in object) {
-            array.push(object[key]);
-        }
-        // console.log(array);
-        return(array);
-    }
-
-    function updateRoom() {
-        objParse(spawned,"itemlocation",loc)
-    }
-
-    //Add item to Object
-    function addItem(sourceObj,itemname,destObj) {
-        id = getId(sourceObj,itemname);
-        if (typeof id !== "undefined") {
-            console.log("id is good");
-            destObj[id] = sourceObj[id];
-        } else {
-            console.log("id is bad")
-        }
-    }
-
+    //OBJECT MANAGEMENT
     function changeLoc(id,loc) {
         items["spawned"][id]["itemlocation"] = loc
 
-    }
-
-    //Remove item from Object
-    function minusItem(sourceObj,itemname) {
-        id = getId(sourceObj,itemname);
-        if (typeof id !== "undefined") {
-            console.log("id is good");
-            //destObj[id] = sourceObj[id];
-            delete sourceObj[id];
-        } else {
-            console.log("id is bad")
-        }
     }
 
     function getId(obj,itemname) {
@@ -143,6 +124,30 @@ function game() {
 
 
     }
+
+    function getIdCond(obj,itemname,property,value) {
+
+
+
+
+        x = _.findKey(obj, {"itemname": itemname});
+        y = "none";
+
+        if (x !== null) {
+            console.log(obj);
+            console.log(itemname);
+            console.log(obj[itemname]);
+
+
+
+            return x;
+        } else {
+            return y;
+        }
+
+
+    }
+
 
     function objParse(obj,property,value) {
         //check a particular value of an object,
@@ -165,24 +170,25 @@ function game() {
         return array;
     }
 
-    function objCheck(obj,field,lookup,value,peram) {
-        var result = false;
-        _.forEach(obj, function(i) {
-            if (result) {
-                return;
+    function objParse2(obj,property,value,property2,value2) {
+        //check a particular value of an object,
+        //find object
+        //check objects value
+        array = [];
+        for(var key in obj) {
+            if (obj[key][property] == value && obj[key][property2] == value2) {
+                //console.log("Object found");
+                // console.log(obj[key][value]);
+                //console.log(key);
+                array.push(key);
+            } else {
+                //console.log(obj[key]["itemname"]);
+                //console.log("Object not found");
+
             }
-            if(i[field] === lookup) {
-                console.log("Object Found");
-                if(i[peram] === value) {
-                    console.log("PASSED");
-                    result = true;
-                } else {
-                    console.log("FAILED");
-                    result = false;
-                }
-            } else {console.log("Object Not Found")}
-        });
-        return result;
+        }
+        //console.log(array);
+        return array;
     }
 
     function itemCheck(field,lookup,value,peram) {
@@ -204,6 +210,59 @@ function game() {
         console.log("ITEMCHECK = " + result);
         return result;
     }
+
+
+    // function itemCheck2(field,lookup,value,peram,value2,peram2) {
+    //     var result = false;
+    //     _.forEach(items["spawned"], function(i) {
+    //         if (result) {
+    //             return;
+    //         }
+    //         if(i[field] === lookup) {
+    //             if(i[peram] === value) {
+    //                     if (i[peram2] === value2) {
+    //                         console.log("PASSED");
+    //                         result = true;
+    //                     }
+    //             } else {
+    //                 console.log("FAILED");
+    //                 result = false;
+    //             }
+    //         } else {console.log("Object Not Found")}
+    //     });
+    //     console.log("ITEMCHECK = " + result);
+    //     return result;
+    // }
+
+    function itemReturn2(obj,peram,value,peram2,value2) {
+        // console.log("Running itemReturn2");
+        // console.log(obj);
+        for(var key in obj) {
+            // console.log(key);
+            // console.log(obj[key][peram]);
+            // console.log(value);
+            // console.log(obj[key][peram2]);
+            // console.log(value2);
+
+            if (obj[key][peram] === value && obj[key][peram2] === value2) {
+                // console.log("MATCH");
+                return key;
+            }
+        }
+        return null;
+    }
+
+    function itemReturn3(obj,peram,value,peram2,value2,peram3,value3) {
+        for (var key in obj) {
+            if (obj[key][peram] === value && obj[key][peram2] === value2 && obj[key][peram3] === value3) {
+                return key;
+
+            }
+        }
+        return null;
+    }
+
+
 
     function fetchValue(obj,field,lookup,peram) {
 //      fetchValue(player["equipment"],"itemname",inputString,"role")
@@ -248,8 +307,22 @@ function game() {
         return result;
     }
 
-    //SPAWN STUFF
+    function ownedList() {
+        return objParse(items["spawned"],"itemlocation","player")
+    }
 
+    function invList() {
+        return objParse2(items["spawned"],"itemlocation","player","equipped",false)
+    }
+
+    function equippedList() {
+        return objParse2(items["spawned"],"itemlocation","player","equipped",true)
+    }
+
+
+
+
+    //SPAWN STUFF
     spawnItem = function(item,loc,quantity) {
 
 
@@ -266,26 +339,101 @@ function game() {
     };
 
 
-    function applyEffect(effect,target) {
 
-        console.log(effects[effect]);
 
-        if (effects[effect] != undefined)  {
 
-            switch(effects[effect]["type"]) {
-                case ("buff"):
-                    consolePush("Yep, its a buff spell");
-                    break;
-                case ("damage"):
-                    consolePush("Yep, its a damage spell");
-                    break;
-                default:
-                    consolePush("Unknown Spell Type");
-                    break
+    //STATE STUFF
+    function stateSet (category,obtype,source,target) {
+        // console.log(obtype);
+        // console.log(source);
+        // console.log(obtype[source]);
+        state[category + count] = Object.create(null);
+        state[category + count]["end"] = obtype[source]["duration"] + count;
+        state[category + count]["target"] = target;
+        state[category + count]["source"] = source;
+        state[category + count]["type"] = obtype[source]["type"];
+
+    }
+
+    function checkState() {
+        //console.log(Object.keys(state).length);
+
+        if (Object.keys(state).length > 0) {
+            console.log("State has objects");
+
+            console.log(state);
+
+            for(var key in state) {
+                // console.log(state[key]["type"]);
+                // console.log(state[key]["target"]);
+                // console.log(state[key]["source"]);
+
+                if (state[key]["end"] <= count) {
+                    delete state[key];
+                } else {
+                    applyEffect(state[key]["type"],state[key]["target"],state[key]["source"]);
+                }
             }
 
+
+
         } else {
-            consolePush("Unknown Spell Type");
+            console.log("State is empty")
+        }
+
+
+
+
+    }
+
+
+
+
+    //MAGIC & EFFECTS
+    function castSpell(spell, target) {
+
+        console.log("Casting " + spell + " on " + target);
+
+        applyEffect(effects[spell]["type"],target,spell);
+
+        if (effects[spell]["duration"] > 0) {
+            console.log("Setting state");
+            console.log(spell);
+            stateSet("effect",effects,spell,target)
+            console.log(state);
+
+        }
+
+        //stateSet("effect",effects,"hearth heal","player");
+
+
+    }
+
+    function applyEffect(effect,target,source) {
+
+        console.log("Applying effect " + effect + " on " + target + " from " + source);
+
+
+
+        switch (effect) {
+            case ("heal"):
+
+                consolePush(player["health"]);
+
+                player["health"] = player["health"] + dice(effects[source]["min"],effects[source]["max"],effects[source]["quantity"]);
+                if (player.health > player.maxHealth) {
+                    player.health = player.maxHealth;
+                    consolePush("Your health is at maximum","error");
+                }
+
+                consolePush(player["health"]);
+
+
+                break;
+
+            case ("firedamage"):
+
+                break;
         }
 
 
@@ -293,7 +441,77 @@ function game() {
 
 
 
+
     }
+
+
+
+
+    //UNUSED
+    function objCheck(obj,field,lookup,value,peram) {
+        var result = false;
+        _.forEach(obj, function(i) {
+            if (result) {
+                return;
+            }
+            if(i[field] === lookup) {
+                console.log("Object Found");
+                if(i[peram] === value) {
+                    console.log("PASSED");
+                    result = true;
+                } else {
+                    console.log("FAILED");
+                    result = false;
+                }
+            } else {console.log("Object Not Found")}
+        });
+        return result;
+    }
+
+    function minusItem(sourceObj,itemname) {
+        id = getId(sourceObj,itemname);
+        if (typeof id !== "undefined") {
+            console.log("id is good");
+            //destObj[id] = sourceObj[id];
+            delete sourceObj[id];
+        } else {
+            console.log("id is bad")
+        }
+    }
+
+    function addItem(sourceObj,itemname,destObj) {
+        id = getId(sourceObj,itemname);
+        if (typeof id !== "undefined") {
+            console.log("id is good");
+            destObj[id] = sourceObj[id];
+        } else {
+            console.log("id is bad")
+        }
+    }
+
+    function list(object,detail) {
+        array = [];
+        for(var key in object) {
+            array.push(object[key][detail]);
+        }
+        // console.log(array);
+        return(array);
+    }
+
+    function list2(object) {
+        array = [];
+        for(var key in object) {
+            array.push(object[key]);
+        }
+        // console.log(array);
+        return(array);
+    }
+
+    function updateRoom() {
+        objParse(spawned,"itemlocation",loc)
+    }
+
+
 
 
 actions = {
@@ -309,13 +527,13 @@ actions = {
     inv: function () {
 
         consolePush("You have the following equipped:");
-        for (var i = 0; i < objParse(items["spawned"], "itemlocation", "equipped").length; i++) {
-            consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", "equipped")[i]]["itemname"], "items");
+        for (var i = 0; i < equippedList().length; i++) {
+            consolePush(items["spawned"][equippedList()[i]]["itemname"], "items");
         }
 
         consolePush("You are carrying the following:");
-        for (var i = 0; i < objParse(items["spawned"], "itemlocation", "inventory").length; i++) {
-            consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", "inventory")[i]]["itemname"], "items");
+        for (var i = 0; i < invList().length; i++) {
+            consolePush(items["spawned"][invList()[i]]["itemname"], "items");
         }
     },
 
@@ -323,9 +541,9 @@ actions = {
         // check to see if object exists in room
         if (itemCheck("itemname", inputString, loc, "itemlocation") === true) {
             // check to see if object is moveable
-            if (itemCheck("itemname", inputString, "yes", "moveable") === true) {
+            if (itemCheck("itemname", inputString, true, "moveable") === true) {
                 //move to inventory
-                changeLoc(getId(items["spawned"], inputString), "inventory")
+                changeLoc(getId(items["spawned"], inputString), "player")
             } else {
                 consolePush("You can't move " + inputString, "error")
             }
@@ -335,20 +553,84 @@ actions = {
     },
 
     drop: function () {
+
         // check to see if object exists in inventory
-        if (itemCheck("itemname", inputString, "inventory", "itemlocation") === true) {
-            //move to room
-            changeLoc(getId(items["spawned"], inputString), loc)
+
+
+
+        // check to if item in unequipped
+        //change location to room
+
+    itemID = itemReturn2(items["spawned"],"itemname",inputString,"itemlocation","player");
+
+    if (itemID !== null) {
+
+        if (items["spawned"][itemID]["equipped"] === true) {
+            consolePush("Remove the item first","error")
         } else {
-            consolePush(inputString + " is not in your inventory", "error")
+            changeLoc(itemID,loc);
+            consolePush("You drop the " + items["spawned"][itemID]["itemname"])
         }
+
+    } else {
+        consolePush("You don't seem to have " + inputString,"error")
+    }
+
+
+
+
+
+
+
+        //
+        // if (itemCheck("itemname", inputString, "player", "itemlocation") === true) {
+        //     if (equippedList().includes(getId(items["spawned"], inputString))) {
+        //         actions.unequip(inputString);
+        //     }
+        //
+        //     //if equipped items includes inpputstring
+        //     //fails because inputstring has more than once match
+        //     //not all matches are in equipped
+        //     //returning an id by name alone is not enough
+        //     //
+        //     //change location of an object from inventory to room
+        //     //IF said object is in inventory
+        //
+        //
+        //
+        //
+        //
+        //     changeLoc(getId(items["spawned"], inputString), loc);
+        //     items["spawned"][getId(items["spawned"],inputString)]["equipped"] = true;
+        //     //GETID GRABS THE WRONG OBJECT WHEN THERE ARE TWO WITH THE SAME NAME
+        //
+        //
+        //
+        //     consolePush("You drop the " + inputString);
+        //
+        //
+        // } else {
+        //     consolePush(inputString + " is not in your inventory", "error")
+        // }
+
+
+
+
+
     },
+
 
     equip: function () {
         switch (false) {
-            case (itemCheck("itemname", inputString, "inventory", "itemlocation")):
-                consolePush("Not in inventory", "error");
+
+            case (itemCheck("itemname",inputString,"player","itemlocation")):
+                consolePush("You don't have " + inputString,"error");
                 break;
+
+            case (equippedList().includes(getId(items["spawned"], inputString)) != true):
+                consolePush("Already Equipped", "error");
+                break;
+
             case (itemCheck("itemname", inputString, "equip", "use")):
                 consolePush("Not equippable", "error");
                 break;
@@ -360,35 +642,27 @@ actions = {
                 break;
             default:
 
-                if (itemCheck("itemlocation", "equipped", items["spawned"][getId(items["spawned"], inputString)]["itemtype"], "itemtype") !== true) {
-                    consolePush("Error Free", "error");
-                } else {
-                    consolePush("You need to remove " + fetchValue2(items["spawned"],"itemlocation","equipped","itemtype",items["spawned"][getId(items["spawned"], inputString)]["itemtype"],"itemname") + " first", "error");
-                }
-                break;
+                console.log(equippedList());
+
+                equippedList().forEach(function(id) {
+                    console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
+                    if (items["spawned"][getId(items["spawned"],inputString)]["itemtype"] === items["spawned"][id]["itemtype"]) {
+                        consolePush("You need to unequip something first","error")
+                    } else {
+                        items["spawned"][getId(items["spawned"],inputString)]["equipped"] = true;
+                        consolePush("You equip the " + items["spawned"][getId(items["spawned"],inputString)]["itemname"])
+                    }
+                });
         }
 
     },
 
-
-
-
-
-
-
-
-
-
-
     unequip: function () {
-
-        //check item is equipped
-        if (itemCheck("itemname", inputString, "equipped", "itemlocation") === true) {
-            //Move to Inventory
-            changeLoc(getId(items["spawned"], inputString), "inventory");
-            consolePush("You remove the " + inputString, "default")
+        if (equippedList().includes(getId(items["spawned"], inputString)) === true) {
+            items["spawned"][getId(items["spawned"],inputString)]["equipped"] = false;
+            consolePush("You remove " + inputString);
         } else {
-            consolePush(inputString + " is not currently equipped", "error")
+            consolePush("You don't have that item equipped","error")
         }
     },
 
@@ -399,23 +673,24 @@ actions = {
     },
 
     test: function () {
-       // console.log(list2(rooms[loc]["exits"]))
+
+     console.log(itemReturn3(items["spawned"],"itemname",inputString,"itemlocation","player","equipped",true));
+
 
     },
 
     cast: function() {
         a = inputString.match(/^(.*?)($| on (.*?)$)/); //breaks userInputString into array 'a'
         a.shift(); //strips the original string from the new array
-        castSpell = a[0];
+        thisSpell = a[0];
         target = a[2];
-//        select = "mob" + (a[2] - 1);
+
+        if (typeof target === "undefined" || target === "self") {
+            target = "player"
+        }
 
 
-
-        applyEffect(castSpell,target);
-
-
-        console.log(a);
+        castSpell(thisSpell,target);
     }
 };
 
