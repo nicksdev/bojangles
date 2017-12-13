@@ -2,10 +2,12 @@
 
 function game() {
 
-//CORE FUNCTIONS
+    //CORE FUNCTIONS
 
     var spawnCount = 100001;
     var count = 1;
+    var combatArray = [];
+    var combatFlag = "";
 
     function gamewindow() {
         $('#userInput').unbind('keyup');
@@ -46,16 +48,22 @@ function game() {
         if (rooms[loc]["visited"] === false) {
             //Spawn room items
             rooms[loc]["items"].forEach(function (z) {
-                spawnItem(z[0], loc, z[1])
+                spawnItem(z[0], loc, z[1]);
+
             });
+
+            //Spawn room mobs
+            rooms[loc]["mobs"].forEach(function (z) {
+                // console.log(z);
+                spawnMob(z[0], loc);
+
+            });
+
         }
 
         //Flag room as visited
         rooms[loc]["visited"] = true;
         console.log(rooms[loc]["name"] + " is flagged as visited")
-
-
-
 
         consolePush(location["copy"]["default"]);
 
@@ -68,6 +76,13 @@ function game() {
         for (var i = 0; i < objParse(items["spawned"], "itemlocation", loc).length; i++) {
             consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", loc)[i]]["itemname"], "items");
         }
+
+        //Display Mobs
+        for (var i = 0; i < mobParse(mobs["spawned"], "location", loc).length; i++) {
+            consolePush(mobs["spawned"][mobParse(mobs["spawned"], "location", loc)[i]]["name"], "mobs");
+        }
+
+        checkState()
     }
 
     function countOne() {
@@ -94,16 +109,10 @@ function game() {
         for (i = 0; i < freq; i++) {
             x = Math.floor(Math.random() * (maxnum - minnum + 1) + (minnum));
             //x = Math.floor(Math.random() * 4);
-            console.log(x);
+            // console.log(x);
             result = result + x;
         }
         return result;
-
-
-        //(3 - 7 ) = 3,4,5,6,7. 7-3=4 (0,1,2,3, + 3 + 1
-        //(3 - 7
-        // 0 - 4 + 3
-
     }
 
     //OBJECT MANAGEMENT
@@ -122,34 +131,42 @@ function game() {
             return y;
         }
 
-
     }
 
-    function getIdCond(obj,itemname,property,value) {
-
-
-
-
-        x = _.findKey(obj, {"itemname": itemname});
+    function getMobId(obj,mobname) {
+        x = _.findKey(obj, {"name": mobname});
         y = "none";
 
         if (x !== null) {
-            console.log(obj);
-            console.log(itemname);
-            console.log(obj[itemname]);
-
-
-
             return x;
         } else {
             return y;
         }
 
-
     }
 
-
     function objParse(obj,property,value) {
+        //check a particular value of an object,
+        //find object
+        //check objects value
+        array = [];
+        for(var key in obj) {
+            if (obj[key][property] == value) {
+                //console.log("Object found");
+                // console.log(obj[key][value]);
+                //console.log(key);
+                array.push(key);
+            } else {
+                //console.log(obj[key]["itemname"]);
+                //console.log("Object not found");
+
+            }
+        }
+        //console.log(array);
+        return array;
+    }
+
+    function mobParse(obj,property,value) {
         //check a particular value of an object,
         //find object
         //check objects value
@@ -243,8 +260,10 @@ function game() {
             // console.log(value);
             // console.log(obj[key][peram2]);
             // console.log(value2);
-
+            // console.log(items["spawned"][key]["itemtype"]);
+            // console.log(items["spawned"][key]["equipped"]);
             if (obj[key][peram] === value && obj[key][peram2] === value2) {
+
                 // console.log("MATCH");
                 return key;
             }
@@ -284,32 +303,7 @@ function game() {
         return result;
     }
 
-    function fetchValue2(obj,field,lookup,field2,lookup2,peram) {
 
-
-        var result;
-
-        _.forEach(obj, function(i) {
-            if(i[field] === lookup) {
-                console.log("lookup1 match");
-                if(i[field2] === lookup2) {
-                    console.log("lookup1 match");
-                    result = i[peram];
-                    return true;
-                }
-
-
-                // console.log("Fetch Object Found");
-                // console.log(i);
-                // console.log("fetchValue = " + i[peram]);
-            }
-        });
-        return result;
-    }
-
-    function ownedList() {
-        return objParse(items["spawned"],"itemlocation","player")
-    }
 
     function invList() {
         return objParse2(items["spawned"],"itemlocation","player","equipped",false)
@@ -320,26 +314,40 @@ function game() {
     }
 
 
+    //ARRAY MANAGEMENT
+    function arraySearch(nameKey, myArray){
+        for (var i=0; i < myArray.length; i++) {
+            if (myArray[i].name === nameKey) {
+                return myArray[i];
+            }
+        }
+         return consolePush("There is no " + inputString + " here", "error");
+
+    }
 
 
     //SPAWN STUFF
     spawnItem = function(item,loc,quantity) {
-
-
         for (i = 0; i < quantity; i++) {
             sourceId = getId(items["library"],item);
             items["spawned"][spawnCount] = items["library"][sourceId];
             items["spawned"][spawnCount]["itemlocation"] = loc;
             spawnCount ++;
         }
-
-
-
-
     };
 
+    function spawnMob(mob,loc) {
+
+        // console.log(mob);
+        // console.log(loc);
+        // console.log(getMobId(mobs["library"],mob));
+        sourceId = getMobId(mobs["library"],mob);
+        mobs["spawned"][spawnCount] = mobs["library"][sourceId];
+        mobs["spawned"][spawnCount]["location"] = loc;
+        spawnCount ++;
 
 
+    }
 
 
     //STATE STUFF
@@ -379,6 +387,14 @@ function game() {
 
         } else {
             console.log("State is empty")
+        }
+
+        if (mobParse(mobs["spawned"], "location", loc).length >= 1) {
+
+            console.log("START COMBAT");
+
+            combatInit();
+
         }
 
 
@@ -447,6 +463,125 @@ function game() {
 
 
 
+    //COMBAT
+
+    function combatRound() {
+        console.log("combatFlag = " + combatFlag);
+        console.log(combatArray[combatFlag].type);
+        if (combatArray[combatFlag].type === "player") {
+            console.log("PLAYER ATTACK ROUND");
+            //console.log(combatArray);
+            consolePush("What do you want to do?");
+
+
+        } else if (combatArray[combatFlag].type === "mob") {
+            console.log("MOB ATTACK ROUND")
+        } else {
+            console.log("ERROR: Unrecognised combatFlag")
+        }
+
+    }
+
+    function listMob() { //lists the mobs in order from combat array. Strips out player
+                         //may wish to add entity types other than 'mob' later
+        for (i=0; i < combatArray.length; i++) {
+            //console.log(combatArray[i]);
+            if (combatArray[i].type === "mob") {
+                consolePush(i + " : " + combatArray[i].name)
+            }
+        }
+    }
+
+    function combatInit(){
+        consolePush("You are under attack!!!");
+        listMob();
+        mobPush(mobs["spawned"]);
+
+        //may with to change this to either random, or based on initiative, or based on the combat array order
+        //for now player always goes first
+        combatFlag = 0;
+
+        combatRound();
+
+    }
+
+    function mobPush(obj) {
+
+        combatArray = [];
+        for(var key in obj) {
+            //console.log(obj[key]);
+            if (obj[key]["location"] === loc)
+            combatArray.push(obj[key]);
+        }
+
+        combatArray.push(player);
+        // console.log(array);
+
+
+        combatArray.sort(function (a,b) {
+           return a.agi - b.agi;
+        });
+
+        combatArray.reverse();
+
+
+        return(combatArray);
+
+    }
+
+    function combatOrder() {
+        for (var i = 0; i < combatArray.length; i++) {
+            consolePush(i + ": " + combatArray[i]["name"],"mobs");
+        }
+    }
+
+    function targetObj(x) {  //returns target object
+        y = parseInt(x);
+        if (isNaN(y) === false) {
+            return (typeof combatArray[y] === "undefined"
+                ? consolePush("Enter a number between 0 and " + (combatArray.length - 1))
+                : combatArray[y]
+            );
+        } else {
+            console.log("ITS A STRING");
+            return arraySearch(inputString,combatArray)
+        }
+    }
+
+    function attackInst(attacker,target,weapon) {
+
+
+        //attacker - attackrole = attacker strength + weapon attack + dice(2d6);
+        //target - defencerole = target agi + target armour + dice(2d6)
+
+        attackRole = attacker["str"] + weapon["attack"] + dice(1,6,2);
+        console.log(attackRole);
+
+        defenceRole = target["agi"] + target["armour"] + dice(1,6,2);
+        console.log(defenceRole);
+
+
+        if (attackRole > defenceRole) {
+            consolePush("YOU HIT");
+            return;
+        } else {
+            consolePush("YOU MISS");
+            return;
+        };
+
+
+
+        // console.log(attacker);
+        // console.log(target);
+        // console.log(weapon);
+
+
+    }
+
+
+
+
+
     //UNUSED
     function objCheck(obj,field,lookup,value,peram) {
         var result = false;
@@ -511,10 +646,66 @@ function game() {
         objParse(spawned,"itemlocation",loc)
     }
 
+    function fetchValue2(obj,field,lookup,field2,lookup2,peram) {
 
+
+        var result;
+
+        _.forEach(obj, function(i) {
+            if(i[field] === lookup) {
+                console.log("lookup1 match");
+                if(i[field2] === lookup2) {
+                    console.log("lookup1 match");
+                    result = i[peram];
+                    return true;
+                }
+
+
+                // console.log("Fetch Object Found");
+                // console.log(i);
+                // console.log("fetchValue = " + i[peram]);
+            }
+        });
+        return result;
+    }
+
+    function ownedList() {
+        return objParse(items["spawned"],"itemlocation","player")
+    }
 
 
 actions = {
+
+    attack: function () {
+
+      target = targetObj(inputString);
+      weapon = items["spawned"][itemReturn2(items["spawned"],"itemtype","weapon","equipped",true)];
+
+        //console.log(itemReturn2(items["spawned"],"itemtype","weapon","equipped",true));
+
+      consolePush("YOU ATTACK THE " + target["name"] + " with your " + weapon["itemname"]);
+
+
+      attackInst(player,target,weapon);
+
+      console.log("Attack complete");
+      combatFlag++;
+      combatRound();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    },
 
     look: function () {
         consolePush("You look");
@@ -522,6 +713,25 @@ actions = {
         for (var i = 0; i < objParse(items["spawned"], "itemlocation", loc).length; i++) {
             consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", loc)[i]]["itemname"], "items");
         }
+
+        for (var i = 0; i < mobParse(mobs["spawned"], "location", loc).length; i++) {
+            consolePush(mobs["spawned"][mobParse(mobs["spawned"], "location", loc)[i]]["name"], "mobs");
+        }
+
+
+    },
+
+    char: function () {
+        consolePush("NAME :" + player.name);
+        consolePush("CLASS :" + player.role);
+        consolePush("LEVEL :" + player.level);
+        consolePush("ATTACKS :" + player.attacks);
+        consolePush("XP :" + player.xp);
+        consolePush("STRENGTH :" + player.str);
+        consolePush("AGILITY :" + player.agi);
+        consolePush("ARMOUR :" + player.armour);
+        consolePush("HEALTH :" + player.health);
+        consolePush("MANA :" + player.mana);
     },
 
     inv: function () {
@@ -553,11 +763,7 @@ actions = {
     },
 
     drop: function () {
-
         // check to see if object exists in inventory
-
-
-
         // check to if item in unequipped
         //change location to room
 
@@ -576,49 +782,7 @@ actions = {
         consolePush("You don't seem to have " + inputString,"error")
     }
 
-
-
-
-
-
-
-        //
-        // if (itemCheck("itemname", inputString, "player", "itemlocation") === true) {
-        //     if (equippedList().includes(getId(items["spawned"], inputString))) {
-        //         actions.unequip(inputString);
-        //     }
-        //
-        //     //if equipped items includes inpputstring
-        //     //fails because inputstring has more than once match
-        //     //not all matches are in equipped
-        //     //returning an id by name alone is not enough
-        //     //
-        //     //change location of an object from inventory to room
-        //     //IF said object is in inventory
-        //
-        //
-        //
-        //
-        //
-        //     changeLoc(getId(items["spawned"], inputString), loc);
-        //     items["spawned"][getId(items["spawned"],inputString)]["equipped"] = true;
-        //     //GETID GRABS THE WRONG OBJECT WHEN THERE ARE TWO WITH THE SAME NAME
-        //
-        //
-        //
-        //     consolePush("You drop the " + inputString);
-        //
-        //
-        // } else {
-        //     consolePush(inputString + " is not in your inventory", "error")
-        // }
-
-
-
-
-
     },
-
 
     equip: function () {
         switch (false) {
@@ -674,8 +838,12 @@ actions = {
 
     test: function () {
 
-     console.log(itemReturn3(items["spawned"],"itemname",inputString,"itemlocation","player","equipped",true));
 
+    },
+
+    start: function() {
+
+       consolePush("pickup healing balm");
 
     },
 
@@ -693,8 +861,6 @@ actions = {
         castSpell(thisSpell,target);
     }
 };
-
-
 
 
 

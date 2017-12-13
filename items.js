@@ -4,35 +4,20 @@
     items = {
     //SPAWNED LIST
         "spawned": {
-            "item9010":     {
-                itemname: "morning star",
-                itemlocation: "player",
-                equipped: false ,
-                itemtype: "weapon",
-                desc: "a spiked metal ball on a short chain",
-                weight: 2,
-                minLevel: 0,
-                use: "equip",
-                min: 1,
-                max: 2,
-                attack: 1,
-                role: ["wizard", "warrior"],
-                moveable: true
-            },
 
-            "item9011": {
-                itemname: "another morning star",
-                itemlocation: "room1",
-                equipped: false,
+            "item0050": {
+                itemname: "steel dagger",
+                itemlocation: "player",
+                equipped: true,
                 itemtype: "weapon",
-                desc: "a spiked metal ball on a short chain",
+                desc: "a small iron dagger with a short dull blade",
                 weight: 2,
-                minLevel: 0,
+                minLevel: 2,
                 use: "equip",
                 min: 1,
                 max: 2,
                 attack: 1,
-                role: ["wizard", "warrior"],
+                role: ["warrior"],
                 moveable: true
             },
 
@@ -48,26 +33,34 @@
                 defence: 1,
                 role: ["priest","warrior","wizard"],
                 moveable: true
-            },
+            }
 
-            "item0021": {
-                itemname: "leather shirt",
-                itemlocation: "player",
-                equipped: false,
-                itemtype: "chest",
-                desc: "a flimsy shirt that provides almost no protection",
+
+
+
+        },
+
+
+        "library": {
+            "item5010": {
+                itemname: "morning star",
+                itemlocation: "",
+                equipped: false ,
+                itemtype: "weapon",
+                desc: "a spiked metal ball on a short chain",
                 weight: 2,
                 minLevel: 0,
                 use: "equip",
-                defence: 1,
-                role: ["wizard"],
+                min: 1,
+                max: 2,
+                attack: 1,
+                role: ["wizard", "warrior"],
                 moveable: true
             },
 
-
             "item0050": {
                 itemname: "steel dagger",
-                itemlocation: "player",
+                itemlocation: "",
                 equipped: false,
                 itemtype: "weapon",
                 desc: "a small iron dagger with a short dull blade",
@@ -81,69 +74,34 @@
                 moveable: true
             },
 
-            "item0040": {
-                itemname: "healing balm",
-                itemlocation: "player",
+            "item0020": {
+                itemname: "cloth shirt",
+                itemlocation: "",
                 equipped: false,
-                itemtype: "usable",
-                desc: "a perfumed ointment that is used for treating wounds",
-                weight: 1,
-                minLevel: 0,
-                use: "cast",
-                effect: "heal",
-                charges: 2,
-                min: 3,
-                max: 8,
-                role: ["wizard","warrior","priest"],
-                moveable: "yes"
-            },
-
-
-        },
-        "library": {
-            "item5010": {
-                itemname: "morning star",
-                itemlocation: "",
-                itemtype: "weapon",
-                desc: "a spiked metal ball on a short chain",
+                itemtype: "chest",
+                desc: "a flimsy shirt that provides almost no protection",
                 weight: 2,
                 minLevel: 0,
                 use: "equip",
-                min: 1,
-                max: 2,
-                attack: 1,
-                role: ["wizard", "warrior"],
-                moveable: "yes"
+                defence: 1,
+                role: ["priest","warrior","wizard"],
+                moveable: true
+            },
 
-            },
-            "item9998": {
-                itemname: "test2",
+            "item0021": {
+                itemname: "leather shirt",
                 itemlocation: "",
-                itemtype: "weapon",
-                desc: "a spiked metal ball on a short chain",
+                equipped: false,
+                itemtype: "chest",
+                desc: "a flimsy shirt that provides almost no protection",
                 weight: 2,
                 minLevel: 0,
                 use: "equip",
-                min: 1,
-                max: 2,
-                attack: 1,
-                role: ["wizard", "warrior"],
-                moveable: "yes"
+                defence: 2,
+                role: ["warrior","priest"],
+                moveable: true
             },
-            "item9997": {
-                itemname: "morning star99",
-                itemlocation: "",
-                itemtype: "weapon",
-                desc: "a spiked metal ball on a short chain",
-                weight: 2,
-                minLevel: 0,
-                use: "equip",
-                min: 1,
-                max: 2,
-                attack: 1,
-                role: ["wizard", "warrior"],
-                moveable: "yes"
-            },
+
             "item0040": {
                 itemname: "healing balm",
                 itemlocation: "",
@@ -270,40 +228,48 @@
     mobs = {
 
         "spawned": {
-            "item9010": {
-                itemname: "morning star",
-                itemlocation: "equipped",
-                itemtype: "weapon",
-                desc: "a spiked metal ball on a short chain",
-                weight: 2,
-                minLevel: 0,
-                use: "equip",
-                min: 1,
-                max: 2,
-                attack: 1,
-                role: ["wizard", "warrior"],
-                moveable: "yes"
-            }
+
+
+
         },
 
         "library": {
-            "mob0021": {
+            "mob0001": {
                 name: "weak goblin",
+                location: "",
+                type: "mob",
+                level: 1,
+                attacks: 1,
+                str: 3,
+                agi: 5,
+                armour: 2,
+                maxHealth: 20,
+                health: 20,
+                maxMana: 0,
+                mana: 0,
+                attackType: ["melee"],
+                melee: "claws",
+                spells: [],
+                special: []
+            },
 
-
-                itemname: "morning star",
-                itemlocation: "",
-                itemtype: "weapon",
-                desc: "a spiked metal ball on a short chain",
-                weight: 2,
-                minLevel: 0,
-                use: "equip",
-                min: 1,
-                max: 2,
-                attack: 1,
-                role: ["wizard", "warrior"],
-                moveable: "yes"
-
+            "mob0002": {
+                name: "cave worm",
+                location: "",
+                type: "mob",
+                level: 1,
+                attacks: 1,
+                str: 10,
+                agi: 2,
+                armour: 14,
+                maxHealth: 10,
+                health: 10,
+                maxMana: 0,
+                mana: 0,
+                attackType: ["melee"],
+                melee: "bite",
+                spells: [],
+                special: []
             }
         }
     }

@@ -16,8 +16,13 @@ Combat system
 Are Mob present, if yes then initiate combat.
     Set combat flag
     Include a 'number of attacks function'
-    Consider how to handle pets (Object poperty mob type)
+    Consider how to handle pets (Object property mob type)
     Calculate combat order
+
+        *
+        *
+
+
     Run a combat action for each mob in turn:
         Attack - who? Attack type weapon, magic, special (cooldowns & charges)
         Calc defence rolls
@@ -70,12 +75,12 @@ Actions List:
 north, south, east, west, up
 
 
-pickup
-drop
-look
+pickup - DONE
+drop - DONE
+look - - DONE
 look in / search
-equip
-unequip
+equip - IN PROGRESS
+unequip - IN PROGRESS
 cast
 attack
 use
@@ -84,7 +89,8 @@ load
 save
 flee
 help
-
+inv - DONE
+char - IN PROGRESS
 
 
 Functions:
