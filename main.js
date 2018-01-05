@@ -82,7 +82,10 @@ function game() {
             consolePush(mobs["spawned"][mobParse(mobs["spawned"], "location", loc)[i]]["name"], "mobs");
         }
 
-        checkState()
+        checkState();
+
+        checkMobs();
+
     }
 
     function countOne() {
@@ -337,16 +340,14 @@ function game() {
     };
 
     function spawnMob(mob,loc) {
-
         // console.log(mob);
         // console.log(loc);
         // console.log(getMobId(mobs["library"],mob));
         sourceId = getMobId(mobs["library"],mob);
         mobs["spawned"][spawnCount] = mobs["library"][sourceId];
         mobs["spawned"][spawnCount]["location"] = loc;
+        mobs["spawned"][spawnCount]["key"] = spawnCount;
         spawnCount ++;
-
-
     }
 
 
@@ -389,17 +390,17 @@ function game() {
             console.log("State is empty")
         }
 
+    }
+
+    function checkMobs() {
         if (mobParse(mobs["spawned"], "location", loc).length >= 1) {
 
             console.log("START COMBAT");
+            console.log(state);
 
             combatInit();
 
-        }
-
-
-
-
+        };
     }
 
 
@@ -471,28 +472,41 @@ function game() {
         if (combatArray[combatFlag].type === "player") {
             console.log("PLAYER ATTACK ROUND");
             //console.log(combatArray);
+            // consolePush(combatOrder());
+            listMob();
             consolePush("What do you want to do?");
 
 
         } else if (combatArray[combatFlag].type === "mob") {
             console.log("MOB ATTACK ROUND")
+            mobAttack();
+
         } else {
             console.log("ERROR: Unrecognised combatFlag")
         }
 
     }
 
-    function listMob() { //lists the mobs in order from combat array. Strips out player
-                         //may wish to add entity types other than 'mob' later
-        for (i=0; i < combatArray.length; i++) {
+    function mobAttack() {
+        console.log(mobs.spawned);
+        console.log(combatArray);
+
+        //attackInst()
+    }
+
+    function listMob() {
+        //lists the mobs in order from combat array. Strips out player
+        //may wish to add entity types other than 'mob' later
+        for (var i=0; i < combatArray.length; i++) {
             //console.log(combatArray[i]);
             if (combatArray[i].type === "mob") {
-                consolePush(i + " : " + combatArray[i].name)
+                // console.log(i + " : " + combatArray[i].name);
+                consolePush(i + " : " + combatArray[i].name,"mobs")
             }
         }
     }
 
-    function combatInit(){
+    function combatInit() {
         consolePush("You are under attack!!!");
         listMob();
         mobPush(mobs["spawned"]);
@@ -505,13 +519,18 @@ function game() {
 
     }
 
-    function mobPush(obj) {
+    function mobPush(obj) { //Object.keys(mobs.spawned)[1]
 
         combatArray = [];
         for(var key in obj) {
             //console.log(obj[key]);
+            //console.log([key][0]);
+
             if (obj[key]["location"] === loc)
             combatArray.push(obj[key]);
+
+
+           // console.log(combatArray);
         }
 
         combatArray.push(player);
@@ -692,19 +711,6 @@ actions = {
       combatFlag++;
       combatRound();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     },
 
     look: function () {
@@ -837,6 +843,15 @@ actions = {
     },
 
     test: function () {
+
+        console.log(combatArray);
+//        console.log(mobs.spawned)
+        // consolePush(mobs.spawned);
+        // console.log(Object.keys(mobs.spawned)[1]);
+        //
+        // for (property in mobs.spawned) {
+        //     console.log(property);
+        // }
 
 
     },

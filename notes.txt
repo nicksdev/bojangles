@@ -2,6 +2,27 @@
 
 CURRENTLY WORKING ON:
 
+Combat..
+ - currently using combatArray to track the combat objects. This needs to change to the mobs.spawned object.
+ - need to include the mobs.spawned parent id as property in the combatArray
+ + Added spawned id to the combatArray
+
+
+ Basic Attack function:
+ Attack:
+ Hit or Miss
+ Miss = next actor
+ Hit = Calculated Damage (Damage roll - Defence Roll)
+ Damage Roll (Weapon damage, Strength, Random modifier)
+ Defence Roll (Armour, Random Modifier)
+ 
+
+
+
+
+
+
+
  Magic.
  Finish Apply Magic Effect
 
