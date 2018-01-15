@@ -15,7 +15,7 @@
                 minLevel: 2,
                 use: "equip",
                 min: 1,
-                max: 2,
+                max: 13,
                 attack: 1,
                 role: ["warrior"],
                 moveable: true
@@ -68,7 +68,7 @@
                 minLevel: 2,
                 use: "equip",
                 min: 1,
-                max: 2,
+                max: 3,
                 attack: 1,
                 role: ["warrior"],
                 moveable: true

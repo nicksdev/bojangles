@@ -7,7 +7,7 @@ var player = {
     level: 2,
     attacks: 2,
     xp: 0,
-    str: 10,
+    str: 12,
     agi: 10,
     armour: 3,
     maxHealth: 50,

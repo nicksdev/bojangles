@@ -574,19 +574,20 @@ function game() {
         //target - defencerole = target agi + target armour + dice(2d6)
 
         attackRole = attacker["str"] + weapon["attack"] + dice(1,6,2);
-        console.log(attackRole);
+        //console.log(attackRole);
 
         defenceRole = target["agi"] + target["armour"] + dice(1,6,2);
-        console.log(defenceRole);
+        //console.log(defenceRole);
 
 
         if (attackRole > defenceRole) {
             consolePush("YOU HIT");
+            calcDamage(attacker,target,weapon);
             return;
         } else {
             consolePush("YOU MISS");
             return;
-        };
+        }
 
 
 
@@ -597,6 +598,19 @@ function game() {
 
     }
 
+    function calcDamage(attacker,target,weapon) {
+        damage = (Math.round(attacker["str"]/10 + dice(weapon["min"],weapon["max"],1)) - target["armour"]);
+        consolePush("You hit the " + target["name"] + " for " + damage + " damage");
+
+        console.log(target["health"]);
+        target["health"] = target["health"] - damage;
+        console.log(target["health"]);
+
+        if (target["health"] <= 0) {
+            consolePush("TARGET IS DEAD!!!");
+        }
+
+    }
 
 
 
