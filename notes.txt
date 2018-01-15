@@ -6,6 +6,8 @@ Combat..
  - currently using combatArray to track the combat objects. This needs to change to the mobs.spawned object.
  - need to include the mobs.spawned parent id as property in the combatArray
  + Added spawned id to the combatArray
+ + Character to hot and damage
+ ? DO NEXT = MOB ATTACK ROUND FUNCTION
 
 
  Basic Attack function:
