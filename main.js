@@ -468,7 +468,13 @@ function game() {
 
     function combatRound() {
         console.log("combatFlag = " + combatFlag);
-        console.log(combatArray[combatFlag].type);
+        // console.log(combatArray.length);
+        // console.log(combatArray[combatFlag].type);
+
+        if (combatArray.length == combatFlag) {
+            combatFlag = 0;
+        }
+
         if (combatArray[combatFlag].type === "player") {
             console.log("PLAYER ATTACK ROUND");
             //console.log(combatArray);
@@ -488,8 +494,27 @@ function game() {
     }
 
     function mobAttack() {
-        console.log(mobs.spawned);
-        console.log(combatArray);
+
+        mob = mobs.spawned[combatArray[combatFlag]["key"]];
+        weapon = mobs.weapons[mob[mob["attackType"]]];
+
+        console.log(mob);
+        console.log(weapon);
+
+
+        attackInst(mob,player,weapon);
+
+        console.log("Mob Attack complete");
+        combatFlag++;
+        combatRound();
+
+        // console.log(mobs.spawned);
+        // console.log(combatArray);
+        //
+        // console.log(combatArray[combatFlag]["key"]);
+        // console.log(mobs.spawned[combatArray[combatFlag]["key"]]);
+
+
 
         //attackInst()
     }
@@ -569,24 +594,25 @@ function game() {
 
     function attackInst(attacker,target,weapon) {
 
+        consolePush(attacker["name"] + " attacks " + target["name"]);
 
         //attacker - attackrole = attacker strength + weapon attack + dice(2d6);
         //target - defencerole = target agi + target armour + dice(2d6)
 
         attackRole = attacker["str"] + weapon["attack"] + dice(1,6,2);
-        //console.log(attackRole);
+        console.log(attackRole);
 
         defenceRole = target["agi"] + target["armour"] + dice(1,6,2);
-        //console.log(defenceRole);
+        console.log(defenceRole);
 
 
         if (attackRole > defenceRole) {
-            consolePush("YOU HIT");
+            consolePush(attacker["name"] + " HITS!");
             calcDamage(attacker,target,weapon);
-            return;
+
         } else {
-            consolePush("YOU MISS");
-            return;
+            consolePush(attacker["name"] + " MISSES!");
+
         }
 
 
@@ -600,14 +626,14 @@ function game() {
 
     function calcDamage(attacker,target,weapon) {
         damage = (Math.round(attacker["str"]/10 + dice(weapon["min"],weapon["max"],1)) - target["armour"]);
-        consolePush("You hit the " + target["name"] + " for " + damage + " damage");
+        consolePush(attacker["name"] + " hits " + target["name"] + " for " + damage + " damage");
 
         console.log(target["health"]);
         target["health"] = target["health"] - damage;
         console.log(target["health"]);
 
         if (target["health"] <= 0) {
-            consolePush("TARGET IS DEAD!!!");
+            consolePush(target["name"] + " IS DEAD!!!");
         }
 
     }
@@ -721,7 +747,7 @@ actions = {
 
       attackInst(player,target,weapon);
 
-      console.log("Attack complete");
+      console.log("Player Attack complete");
       combatFlag++;
       combatRound();
 

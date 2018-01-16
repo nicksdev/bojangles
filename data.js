@@ -1,7 +1,7 @@
 //CHARACTER
 
 var player = {
-    name: "defaultName",
+    name: "Bojangles",
     role: "warrior",
     type: "player",
     level: 2,

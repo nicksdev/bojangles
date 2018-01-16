@@ -234,13 +234,17 @@
         },
 
         "library": {
+
+            //MOB TEMPLATES
+
+
             "mob0001": {
                 name: "weak goblin",
                 location: "",
                 type: "mob",
                 level: 1,
                 attacks: 1,
-                str: 3,
+                str: 30,
                 agi: 5,
                 armour: 2,
                 maxHealth: 20,
@@ -270,6 +274,34 @@
                 melee: "bite",
                 spells: [],
                 special: []
-            }
+            },
+
+        },
+
+        "weapons": {
+            "claws": {
+                    effectname: "claws",
+                    desc: "",
+                    min: 4,
+                    max: 4,
+                    attack: 1
+
+            },
+
+            "bite": {
+                effectname: "bite",
+                desc: "",
+                min: 4,
+                max: 4,
+                attack: 1
+
+            },
+
+
+
+
         }
+
+
+
     }
