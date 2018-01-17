@@ -610,6 +610,7 @@ function game() {
             consolePush(attacker["name"] + " HITS!");
             calcDamage(attacker,target,weapon);
 
+
         } else {
             consolePush(attacker["name"] + " MISSES!");
 
@@ -634,8 +635,7 @@ function game() {
 
         if (target["health"] <= 0) {
             consolePush(target["name"] + " IS DEAD!!!");
-            console.log(combatArray);
-
+            deathHandler(target);
         }
 
         console.log("Combat Flag = " + combatFlag);
@@ -643,6 +643,19 @@ function game() {
     }
 
 
+    function deathHandler(target) {
+
+        console.log("launching deathHandler");
+
+        if (target["name"] === player["name"]) {
+            console.log("HANDLE CHARACTER DEATH");
+        } else {
+
+            combatArray.splice(combatArray.indexOf(target),1);
+        }
+
+
+    }
 
 
     //UNUSED
@@ -882,20 +895,10 @@ actions = {
 
     test2: function () {
 
-        objParse(player["equipment"], "itemname", inputString, "itemname");
 
     },
 
     test: function () {
-
-        console.log(combatArray);
-//        console.log(mobs.spawned)
-        // consolePush(mobs.spawned);
-        // console.log(Object.keys(mobs.spawned)[1]);
-        //
-        // for (property in mobs.spawned) {
-        //     console.log(property);
-        // }
 
 
     },
