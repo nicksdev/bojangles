@@ -498,8 +498,8 @@ function game() {
         mob = mobs.spawned[combatArray[combatFlag]["key"]];
         weapon = mobs.weapons[mob[mob["attackType"]]];
 
-        console.log(mob);
-        console.log(weapon);
+        // console.log(mob);
+        // console.log(weapon);
 
 
         attackInst(mob,player,weapon);
@@ -600,10 +600,10 @@ function game() {
         //target - defencerole = target agi + target armour + dice(2d6)
 
         attackRole = attacker["str"] + weapon["attack"] + dice(1,6,2);
-        console.log(attackRole);
+        // console.log(attackRole);
 
         defenceRole = target["agi"] + target["armour"] + dice(1,6,2);
-        console.log(defenceRole);
+        // console.log(defenceRole);
 
 
         if (attackRole > defenceRole) {
@@ -628,13 +628,17 @@ function game() {
         damage = (Math.round(attacker["str"]/10 + dice(weapon["min"],weapon["max"],1)) - target["armour"]);
         consolePush(attacker["name"] + " hits " + target["name"] + " for " + damage + " damage");
 
-        console.log(target["health"]);
+        // console.log(target["health"]);
         target["health"] = target["health"] - damage;
-        console.log(target["health"]);
+        // console.log(target["health"]);
 
         if (target["health"] <= 0) {
             consolePush(target["name"] + " IS DEAD!!!");
+            console.log(combatArray);
+
         }
+
+        console.log("Combat Flag = " + combatFlag);
 
     }
 
