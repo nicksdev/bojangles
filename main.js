@@ -648,10 +648,31 @@ function game() {
         console.log("launching deathHandler");
 
         if (target["name"] === player["name"]) {
-            console.log("HANDLE CHARACTER DEATH");
-        } else {
+            console.log("HANDLING CHARACTER DEATH");
 
+            consolePush("YOU ARE DEAD");
+            game();
+
+        } else {
+            //remove mobs from combatarray and spawned list
             combatArray.splice(combatArray.indexOf(target),1);
+            mobId = getMobId(mobs["spawned"],target["name"]);
+            delete mobs["spawned"][mobId];
+
+
+
+
+
+            if (combatArray.length == 1) {
+
+                consolePush("YOU ARE VICTORIOUS!!!!");
+                console.log(loc);
+                rooms[loc]["mobsDefeated"] = true;
+                init(rooms[loc]);
+
+
+            }
+
         }
 
 
@@ -899,6 +920,11 @@ actions = {
     },
 
     test: function () {
+
+        console.log(getId(mobs["spawned"],target["name"]));
+
+
+
 
 
     },
