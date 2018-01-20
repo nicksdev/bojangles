@@ -8,6 +8,7 @@ function game() {
     var count = 1;
     var combatArray = [];
     var combatFlag = "";
+    var status = "normal";
 
     function gamewindow() {
         $('#userInput').unbind('keyup');
@@ -19,14 +20,20 @@ function game() {
                 consolePush(input,"default");
                 inputSplit(input);
                 //console.log("Location = " + loc["name"]);
-
+                console.log("Status = " + status);
                 if (actions.hasOwnProperty(inputAction) === true) {
                     //console.log("Recognised Action: " + inputAction);
                     countOne();
                     actions[inputAction]();
                 } else if (move.hasOwnProperty(inputAction) === true) {
                     console.log("Recognised Movement " + inputAction);
-                    move[inputAction]();
+
+                    if (status === "normal") {
+                        move[inputAction]();
+                    } else if (status === "in combat") {
+                        consolePush("You cant leave, you are in combat");
+                    }
+
                 }
             }
         });
@@ -63,7 +70,6 @@ function game() {
 
         //Flag room as visited
         rooms[loc]["visited"] = true;
-        console.log(rooms[loc]["name"] + " is flagged as visited")
 
         consolePush(location["copy"]["default"]);
 
@@ -284,8 +290,6 @@ function game() {
         return null;
     }
 
-
-
     function fetchValue(obj,field,lookup,peram) {
 //      fetchValue(player["equipment"],"itemname",inputString,"role")
         //iterate through obj
@@ -305,8 +309,6 @@ function game() {
         });
         return result;
     }
-
-
 
     function invList() {
         return objParse2(items["spawned"],"itemlocation","player","equipped",false)
@@ -387,20 +389,16 @@ function game() {
 
 
         } else {
-            console.log("State is empty")
+            //console.log("State is empty")
         }
 
     }
 
     function checkMobs() {
         if (mobParse(mobs["spawned"], "location", loc).length >= 1) {
-
-            console.log("START COMBAT");
-            console.log(state);
-
             combatInit();
 
-        };
+        }
     }
 
 
@@ -462,14 +460,9 @@ function game() {
     }
 
 
-
-
     //COMBAT
 
     function combatRound() {
-        console.log("combatFlag = " + combatFlag);
-        // console.log(combatArray.length);
-        // console.log(combatArray[combatFlag].type);
 
         if (combatArray.length == combatFlag) {
             combatFlag = 0;
@@ -477,11 +470,8 @@ function game() {
 
         if (combatArray[combatFlag].type === "player") {
             console.log("PLAYER ATTACK ROUND");
-            //console.log(combatArray);
-            // consolePush(combatOrder());
             listMob();
             consolePush("What do you want to do?");
-
 
         } else if (combatArray[combatFlag].type === "mob") {
             console.log("MOB ATTACK ROUND")
@@ -498,25 +488,11 @@ function game() {
         mob = mobs.spawned[combatArray[combatFlag]["key"]];
         weapon = mobs.weapons[mob[mob["attackType"]]];
 
-        // console.log(mob);
-        // console.log(weapon);
-
-
         attackInst(mob,player,weapon);
 
         console.log("Mob Attack complete");
         combatFlag++;
         combatRound();
-
-        // console.log(mobs.spawned);
-        // console.log(combatArray);
-        //
-        // console.log(combatArray[combatFlag]["key"]);
-        // console.log(mobs.spawned[combatArray[combatFlag]["key"]]);
-
-
-
-        //attackInst()
     }
 
     function listMob() {
@@ -533,6 +509,7 @@ function game() {
 
     function combatInit() {
         consolePush("You are under attack!!!");
+        status = "in combat";
         listMob();
         mobPush(mobs["spawned"]);
 
@@ -593,55 +570,27 @@ function game() {
     }
 
     function attackInst(attacker,target,weapon) {
-
-        consolePush(attacker["name"] + " attacks " + target["name"]);
-
-        //attacker - attackrole = attacker strength + weapon attack + dice(2d6);
-        //target - defencerole = target agi + target armour + dice(2d6)
-
+        consolePush(attacker["name"] + " attacks " + target["name"],"combat" + attacker["type"]);
         attackRole = attacker["str"] + weapon["attack"] + dice(1,6,2);
-        // console.log(attackRole);
-
         defenceRole = target["agi"] + target["armour"] + dice(1,6,2);
-        // console.log(defenceRole);
-
 
         if (attackRole > defenceRole) {
-            consolePush(attacker["name"] + " HITS!");
+            consolePush(attacker["name"] + " HITS!","combat" + attacker["type"]);
             calcDamage(attacker,target,weapon);
-
-
         } else {
-            consolePush(attacker["name"] + " MISSES!");
-
+            consolePush(attacker["name"] + " MISSES!","combat" + attacker["type"]);
         }
-
-
-
-        // console.log(attacker);
-        // console.log(target);
-        // console.log(weapon);
-
-
     }
 
     function calcDamage(attacker,target,weapon) {
         damage = (Math.round(attacker["str"]/10 + dice(weapon["min"],weapon["max"],1)) - target["armour"]);
-        consolePush(attacker["name"] + " hits " + target["name"] + " for " + damage + " damage");
-
-        // console.log(target["health"]);
+        consolePush(attacker["name"] + " hits " + target["name"] + " for " + damage + " damage","combat" + attacker["type"]);
         target["health"] = target["health"] - damage;
-        // console.log(target["health"]);
-
         if (target["health"] <= 0) {
-            consolePush(target["name"] + " IS DEAD!!!");
+            consolePush(target["name"] + " IS DEAD!!!","combat" + attacker["type"]);
             deathHandler(target);
         }
-
-        console.log("Combat Flag = " + combatFlag);
-
     }
-
 
     function deathHandler(target) {
 
@@ -649,8 +598,8 @@ function game() {
 
         if (target["name"] === player["name"]) {
             console.log("HANDLING CHARACTER DEATH");
-
             consolePush("YOU ARE DEAD");
+            status = "normal";
             game();
 
         } else {
@@ -659,17 +608,13 @@ function game() {
             mobId = getMobId(mobs["spawned"],target["name"]);
             delete mobs["spawned"][mobId];
 
-
-
-
-
             if (combatArray.length == 1) {
 
                 consolePush("YOU ARE VICTORIOUS!!!!");
+                status = "normal";
                 console.log(loc);
                 rooms[loc]["mobsDefeated"] = true;
                 init(rooms[loc]);
-
 
             }
 
@@ -780,7 +725,7 @@ actions = {
 
         //console.log(itemReturn2(items["spawned"],"itemtype","weapon","equipped",true));
 
-      consolePush("YOU ATTACK THE " + target["name"] + " with your " + weapon["itemname"]);
+      consolePush("YOU ATTACK THE " + target["name"] + " with your " + weapon["itemname"],"combatPlayer");
 
 
       attackInst(player,target,weapon);
@@ -921,9 +866,6 @@ actions = {
 
     test: function () {
 
-        console.log(getId(mobs["spawned"],target["name"]));
-
-
 
 
 
@@ -962,7 +904,62 @@ move = {
         } else {
             consolePush("You can't go that way","movement");
         }
+    },
+
+    south: function(){
+        if (rooms[loc]["exits"].hasOwnProperty(inputAction) === true){
+            consolePush("You go South, " + rooms[loc]["exits"][inputAction]["desc"],"movement");
+            loc = rooms[loc]["exits"][inputAction]["nextRoom"];
+            init(rooms[loc]);
+        } else {
+            consolePush("You can't go that way","movement");
+        }
+    },
+
+
+    east: function(){
+        if (rooms[loc]["exits"].hasOwnProperty(inputAction) === true){
+            consolePush("You go East, " + rooms[loc]["exits"][inputAction]["desc"],"movement");
+            loc = rooms[loc]["exits"][inputAction]["nextRoom"];
+            init(rooms[loc]);
+        } else {
+            consolePush("You can't go that way","movement");
+        }
+    },
+
+
+    west: function(){
+        if (rooms[loc]["exits"].hasOwnProperty(inputAction) === true){
+            consolePush("You go West, " + rooms[loc]["exits"][inputAction]["desc"],"movement");
+            loc = rooms[loc]["exits"][inputAction]["nextRoom"];
+            init(rooms[loc]);
+        } else {
+            consolePush("You can't go that way","movement");
+        }
+    },
+
+    up: function(){
+        if (rooms[loc]["exits"].hasOwnProperty(inputAction) === true){
+            consolePush("You go Up, " + rooms[loc]["exits"][inputAction]["desc"],"movement");
+            loc = rooms[loc]["exits"][inputAction]["nextRoom"];
+            init(rooms[loc]);
+        } else {
+            consolePush("You can't go that way","movement");
+        }
+    },
+
+    down: function(){
+        if (rooms[loc]["exits"].hasOwnProperty(inputAction) === true){
+            consolePush("You go Down, " + rooms[loc]["exits"][inputAction]["desc"],"movement");
+            loc = rooms[loc]["exits"][inputAction]["nextRoom"];
+            init(rooms[loc]);
+        } else {
+            consolePush("You can't go that way","movement");
+        }
     }
+
+
+
 };
 
     window.onload = function () {
