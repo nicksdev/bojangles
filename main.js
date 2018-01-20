@@ -428,16 +428,23 @@ function game() {
 
     function applyEffect(effect,target,source) {
 
-        console.log("Applying effect " + effect + " on " + target + " from " + source);
+
+        console.log(effect);
+        console.log(target);
+        console.log(source);
+        console.log(effects[effect]["type"]);
+
+
+        console.log("Applying effect " + effect + " on " + target + " from " + source["itemname"]);
 
 
 
-        switch (effect) {
+        switch (effects[effect]["type"]) {
             case ("heal"):
 
                 consolePush(player["health"]);
 
-                player["health"] = player["health"] + dice(effects[source]["min"],effects[source]["max"],effects[source]["quantity"]);
+                player["health"] = player["health"] + dice(effects[effect]["min"],effects[effect]["max"],effects[effect]["quantity"]);
                 if (player.health > player.maxHealth) {
                     player.health = player.maxHealth;
                     consolePush("Your health is at maximum","error");
@@ -871,8 +878,7 @@ actions = {
 
     test: function () {
 
-    console.log(state);
-
+        console.log(items["spawned"][getId(items["spawned"], inputString)]);
 
     },
 
@@ -898,14 +904,47 @@ actions = {
 
     use: function() {
 
+        a = inputString.match(/^(.*?)($| on (.*?)$)/); //breaks userInputString into array 'a'
+        a.shift(); //strips the original string from the new array
+        console.log(a);
+
+
+
+
+
+        id = getId(items["spawned"], a[0]);
+
+
+        target = a[2];
+        //source =
+
 
 
         // check to see if object is in Inventory
-        if (itemCheck("itemname", inputString, "player", "itemlocation") === true) {
-            console.log(inputString + " is in inventory");
+        if (itemCheck("itemname", a[0], "player", "itemlocation") === true) {
+            console.log(a[0] + " is in inventory");
             // check to see if object is Usable
-            if (itemCheck("itemname", inputString, "usable", "itemtype") === true) {
-                console.log(inputString + " is usable");
+            if (itemCheck("itemname", a[0], "usable", "itemtype") === true) {
+                console.log(a[0] + " is usable");
+
+
+
+
+
+
+
+
+                //applyEffect(effect,target,source)
+
+                applyEffect(items["spawned"][id]["effect"],target,items["spawned"][id]);
+
+
+
+
+
+
+
+
 
 
             } else {

@@ -111,10 +111,8 @@
                 weight: 1,
                 minLevel: 0,
                 use: "cast",
-                effect: "heal",
+                effect: "minor heal",
                 charges: 2,
-                min: 3,
-                max: 8,
                 role: ["wizard","warrior","priest"],
                 moveable: true
             },
