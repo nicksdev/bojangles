@@ -105,6 +105,7 @@
             "item0040": {
                 itemname: "healing balm",
                 itemlocation: "",
+                equipped: false,
                 itemtype: "usable",
                 desc: "a perfumed ointment that is used for treating wounds",
                 weight: 1,
@@ -115,11 +116,12 @@
                 min: 3,
                 max: 8,
                 role: ["wizard","warrior","priest"],
-                moveable: "yes"
+                moveable: true
             },
             "item0041": {
                 itemname: "extra healing balm",
                 itemlocation: "",
+                equipped: false,
                 itemtype: "usable",
                 desc: "a perfumed ointment that is used for treating wounds",
                 weight: 1,
@@ -130,7 +132,7 @@
                 min: 3,
                 max: 8,
                 role: ["wizard","warrior","priest"],
-                moveable: "yes"
+                moveable: true
             }
         }
     };

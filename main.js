@@ -311,6 +311,8 @@ function game() {
     }
 
     function invList() {
+
+
         return objParse2(items["spawned"],"itemlocation","player","equipped",false)
     }
 
@@ -782,6 +784,7 @@ actions = {
             // check to see if object is moveable
             if (itemCheck("itemname", inputString, true, "moveable") === true) {
                 //move to inventory
+
                 changeLoc(getId(items["spawned"], inputString), "player")
             } else {
                 consolePush("You can't move " + inputString, "error")
@@ -861,12 +864,14 @@ actions = {
 
     test2: function () {
 
+        console.log(items["spawned"]);
+
 
     },
 
     test: function () {
 
-
+    console.log(state);
 
 
     },
@@ -889,7 +894,38 @@ actions = {
 
 
         castSpell(thisSpell,target);
-    }
+    },
+
+    use: function() {
+
+
+
+        // check to see if object is in Inventory
+        if (itemCheck("itemname", inputString, "player", "itemlocation") === true) {
+            console.log(inputString + " is in inventory");
+            // check to see if object is Usable
+            if (itemCheck("itemname", inputString, "usable", "itemtype") === true) {
+                console.log(inputString + " is usable");
+
+
+            } else {
+                consolePush(inputString + " is not usable", "error")
+            }
+        } else {
+            consolePush(inputString + " is not in your inventory", "error")
+        }
+    },
+
+
+
+
+
+
+
+
+  //      consolePush("You use the " + inputString);
+
+
 };
 
 
