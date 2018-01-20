@@ -460,8 +460,6 @@ function game() {
                 break;
         }
 
-
-
     }
 
 

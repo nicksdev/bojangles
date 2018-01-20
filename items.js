@@ -127,8 +127,6 @@
                 use: "cast",
                 effect: "heal",
                 charges: 2,
-                min: 3,
-                max: 8,
                 role: ["wizard","warrior","priest"],
                 moveable: true
             }

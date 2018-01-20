@@ -4,7 +4,6 @@ rooms = {
 
 
 
-
     "room0": {
         name: "room name - room 0",
         copy:  {
