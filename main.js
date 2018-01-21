@@ -2,6 +2,9 @@
 
 function game() {
 
+    //document.getElementById("statsDiv").innerHTML = 5 + 6;
+    //document.getElementById("consoleDiv").innerHTML += "test2";
+
     //CORE FUNCTIONS
 
     var spawnCount = 100001;
@@ -472,12 +475,12 @@ function game() {
         }
 
         if (combatArray[combatFlag].type === "player") {
-            console.log("PLAYER ATTACK ROUND");
+            //console.log("PLAYER ATTACK ROUND");
             listMob();
             consolePush("What do you want to do?");
 
         } else if (combatArray[combatFlag].type === "mob") {
-            console.log("MOB ATTACK ROUND")
+            //console.log("MOB ATTACK ROUND")
             mobAttack();
 
         } else {
@@ -493,7 +496,7 @@ function game() {
 
         attackInst(mob,player,weapon);
 
-        console.log("Mob Attack complete");
+        //console.log("Mob Attack complete");
         combatFlag++;
         combatRound();
     }
@@ -733,7 +736,7 @@ actions = {
 
       attackInst(player,target,weapon);
 
-      console.log("Player Attack complete");
+      //console.log("Player Attack complete");
       combatFlag++;
       combatRound();
 
@@ -872,8 +875,8 @@ actions = {
 
     test: function () {
 
-        console.log(items["spawned"][getId(items["spawned"], inputString)]);
-
+        //console.log(items["spawned"][getId(items["spawned"], inputString)]);
+        document.getElementById("statsDiv").innerHTML += "HEALTH = " + player["health"] + "/" + player["maxHealth"];
     },
 
     start: function() {
@@ -933,6 +936,12 @@ actions = {
                 applyEffect(items["spawned"][id]["effect"],target,items["spawned"][id]);
 
 
+                if (status === "in combat") {
+                    combatFlag++;
+                    combatRound();
+                }
+
+
 
 
 
@@ -948,15 +957,6 @@ actions = {
             consolePush(inputString + " is not in your inventory", "error")
         }
     },
-
-
-
-
-
-
-
-
-  //      consolePush("You use the " + inputString);
 
 
 };

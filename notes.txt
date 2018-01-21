@@ -5,8 +5,8 @@ CURRENTLY WORKING ON:
 Combat..
 + Char basic attack done
 + Mob basic attack done
-- need to remove mobs from array when killed
-- need to handle character death
++ need to remove mobs from array when killed
++ need to handle character death
 
 
  Basic Attack function:
