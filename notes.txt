@@ -2,6 +2,17 @@
 
 CURRENTLY WORKING ON:
 
+
+MobCorpses:
++ created spawnCorpse function
+- make corpses containers
+- make containers work (chest?)
+
+
+
+
+
+
 Combat..
 + Char basic attack done
 + Mob basic attack done

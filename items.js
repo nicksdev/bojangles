@@ -129,7 +129,32 @@
                 charges: 2,
                 role: ["wizard","warrior","priest"],
                 moveable: true
+            },
+
+            "mobcorpse": {
+
+                itemname: "corpse name",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "chest",
+                desc: "a corpse of a dead creature",
+                weight: 100,
+                minLevel: 0,
+                use: "",
+                effect: "",
+                charges: 0,
+                role: ["wizard","warrior","priest"],
+                moveable: true
+
+
             }
+
+
+
+
+
+
+
         }
     };
 
@@ -252,7 +277,8 @@
                 attackType: ["melee"],
                 melee: "claws",
                 spells: [],
-                special: []
+                special: [],
+                lootlist: "Z1"
             },
 
             "mob0002": {
@@ -271,7 +297,8 @@
                 attackType: ["melee"],
                 melee: "bite",
                 spells: [],
-                special: []
+                special: [],
+                lootlist: "Z2"
             },
 
         },
@@ -302,4 +329,30 @@
 
 
 
-    }
+    };
+
+    loot = {
+
+        "Z1": {
+            length: 5,
+            1: "a",
+            2: "b",
+            3: "c",
+            4: "d",
+            5: "e"
+        },
+
+        "Z2": {
+            length: 7,
+            1: "a",
+            2: "b",
+            3: "c",
+            4: "d",
+            5: "e",
+            6: "e",
+            7: "e"
+
+        }
+
+
+    };

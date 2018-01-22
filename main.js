@@ -81,10 +81,8 @@ function game() {
         consolePush(Object.getOwnPropertyNames(rooms[loc]["exits"]),"movement");
 
         //Display items
-        consolePush("This room contains: ");
-        for (var i = 0; i < objParse(items["spawned"], "itemlocation", loc).length; i++) {
-            consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", loc)[i]]["itemname"], "items");
-        }
+        displayItems();
+
 
         //Display Mobs
         for (var i = 0; i < mobParse(mobs["spawned"], "location", loc).length; i++) {
@@ -323,6 +321,15 @@ function game() {
         return objParse2(items["spawned"],"itemlocation","player","equipped",true)
     }
 
+    function displayItems() {
+
+        consolePush("This room contains: ");
+        for (var i = 0; i < objParse(items["spawned"], "itemlocation", loc).length; i++) {
+            consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", loc)[i]]["itemname"], "items");
+        }
+
+    }
+
 
     //ARRAY MANAGEMENT
     function arraySearch(nameKey, myArray){
@@ -345,6 +352,24 @@ function game() {
             spawnCount ++;
         }
     };
+
+
+
+    spawnCorpse = function(name) {
+
+        console.log("spawning corpse");
+        items["spawned"][spawnCount] = items["library"]["mobcorpse"];
+        items["spawned"][spawnCount]["itemlocation"] = loc;
+        items["spawned"][spawnCount]["itemname"] = name + " corpse";
+
+        console.log(items["spawned"]);
+        spawnCount++;
+    };
+
+
+
+
+
 
     function spawnMob(mob,loc) {
         // console.log(mob);
@@ -614,6 +639,22 @@ function game() {
             mobId = getMobId(mobs["spawned"],target["name"]);
             delete mobs["spawned"][mobId];
 
+            consolePush(target["name"] + " is a dead body now","error");
+
+            //create corpse
+            // mobname + corpse
+
+
+
+
+
+
+
+
+
+
+
+
             if (combatArray.length == 1) {
 
                 consolePush("YOU ARE VICTORIOUS!!!!");
@@ -745,13 +786,15 @@ actions = {
     look: function () {
         consolePush("You look");
         consolePush(rooms[loc]["copy"]["default"]);
-        for (var i = 0; i < objParse(items["spawned"], "itemlocation", loc).length; i++) {
-            consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", loc)[i]]["itemname"], "items");
-        }
+        // for (var i = 0; i < objParse(items["spawned"], "itemlocation", loc).length; i++) {
+        //     consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", loc)[i]]["itemname"], "items");
+        // }
 
         for (var i = 0; i < mobParse(mobs["spawned"], "location", loc).length; i++) {
             consolePush(mobs["spawned"][mobParse(mobs["spawned"], "location", loc)[i]]["name"], "mobs");
         }
+
+        displayItems()
 
 
     },
@@ -875,8 +918,13 @@ actions = {
 
     test: function () {
 
+        console.log(loc);
+
+        console.log(items["spawned"]);
+
         //console.log(items["spawned"][getId(items["spawned"], inputString)]);
         document.getElementById("statsDiv").innerHTML += "HEALTH = " + player["health"] + "/" + player["maxHealth"];
+        spawnCorpse(inputString);
     },
 
     start: function() {
