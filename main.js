@@ -330,6 +330,17 @@ function game() {
 
     }
 
+    function displayContents(ident){
+        consolePush("The " + inputString + " contains: ");
+
+
+        for (var i = 0; i < objParse(items["spawned"], "itemlocation", ident).length; i++) {
+            consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", ident)[i]]["itemname"], "items");
+        }
+
+
+    }
+
 
     //ARRAY MANAGEMENT
     function arraySearch(nameKey, myArray){
@@ -345,12 +356,74 @@ function game() {
 
     //SPAWN STUFF
     spawnItem = function(item,loc,quantity) {
-        for (i = 0; i < quantity; i++) {
-            sourceId = getId(items["library"],item);
+
+        sourceId = getId(items["library"],item);
+        //console.log(items["library"][sourceId]["itemtype"]);
+
+        if (items["library"][sourceId]["itemtype"] !== "containerFixed") {
+
+            //console.log("NOT FIXED CONTAINER");
+            for (i = 0; i < quantity; i++) {                //Loop handles multiple quantities
+                items["spawned"][spawnCount] = items["library"][sourceId];
+                items["spawned"][spawnCount]["itemlocation"] = loc;
+                spawnCount ++;
+            }
+
+        } else {
+
+            //console.log("FIXED CONTAINER");
+
+            //Spawn containerFixed
             items["spawned"][spawnCount] = items["library"][sourceId];
             items["spawned"][spawnCount]["itemlocation"] = loc;
+            containerID = spawnCount;
             spawnCount ++;
+
+
+
+
+            //Spawn contents of the container
+            //console.log(items["spawned"][containerID]["spawncontents"]);
+
+
+
+            // console.log(items["spawned"][containerID]["spawncontents"]);
+            // console.log(rooms["room0"]["items"]);
+
+
+            items["spawned"][containerID]["spawncontents"].forEach(function (z) {
+                spawnItem(z[0], containerID, z[1]);
+
+                // console.log(loc);
+                // console.log(containerID);
+
+            });
+
+            // items["spawned"][containerID]["spawncontents"].forEach(function (z) {
+            //
+            //     console.log(items["spawned"][containerID]);
+            //
+            //     spawnItem(z[0], items["spawned"][containerID]["contents"], z[1]);
+            //
+            // });
+
+
+
+
         }
+
+
+
+
+
+
+
+        // console.log(item);
+        // console.log(getId(items["spawned"],item));
+        // console.log(items["spawned"][getId(items["spawned"],item)]);
+
+
+
     };
 
 
@@ -880,7 +953,7 @@ actions = {
             case (fetchValue(items["spawned"], "itemname", inputString, "role").includes(player["role"])):
                 consolePush("Wrong Class", "error");
                 break;
-            case (fetchValue(items["spawned"], "itemname", inputString, "minLevel") <= player["level"]):
+            case (fetchValue(items["spawned"], "itemname", inputString, "itemLevel") <= player["level"]):
                 consolePush("Wrong Level", "error");
                 break;
             default:
@@ -1003,6 +1076,15 @@ actions = {
             }
         } else {
             consolePush(inputString + " is not in your inventory", "error")
+        }
+    },
+
+    search: function() {
+        if (itemCheck("itemname", inputString, loc, "itemlocation") === true) {
+            consolePush("I search the " + inputString);
+            displayContents(getId(items["spawned"],inputString));
+        } else {
+            consolePush("I don't see the " + inputString + " here","error");
         }
     },
 

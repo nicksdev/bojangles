@@ -8,7 +8,13 @@ MobCorpses:
 - make corpses containers
 - make containers work (chest?)
 
++ spawn chest
++ spawn contents of chest
++ set items spawned from inside chest to location = spawned chest
 
+- tidy items library and ensure consistent object values
+- containers with contents generated from loot lists
+- create a SPAWN admin function that lists all spawned items, in room as an option
 
 
 

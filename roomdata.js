@@ -18,10 +18,9 @@ rooms = {
         visited: false,
         mobs: [],
         items: [
-            ["healing balm",1],
-            ["extra healing balm",1],
             ["steel dagger",1],
-            ["leather shirt",1]
+            ["leather shirt",1],
+            ["old wooden chest",1]
 
         ],
 
