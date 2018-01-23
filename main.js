@@ -127,7 +127,9 @@ function game() {
 
     //OBJECT MANAGEMENT
     function changeLoc(id,loc) {
-        items["spawned"][id]["itemlocation"] = loc
+        console.log(id);
+        console.log(items["spawned"][id]);
+        items["spawned"][id]["itemlocation"] = loc;
 
     }
 
@@ -959,13 +961,15 @@ actions = {
 
     test: function () {
 
-        console.log(loc);
 
-        console.log(items["spawned"]);
 
-        //console.log(items["spawned"][getId(items["spawned"], inputString)]);
-        document.getElementById("statsDiv").innerHTML += "HEALTH = " + player["health"] + "/" + player["maxHealth"];
-        spawnCorpse(inputString);
+
+        console.log(items["spawned"][100004]);
+
+        items["spawned"]["100004"]["itemlocation"] = "test";
+
+        console.log(items["spawned"][100004]);
+
     },
 
     start: function() {
@@ -1064,11 +1068,27 @@ actions = {
         object = a[0];
         source = a[2];
 
-        console.log(object);
-        console.log(source);
-        console.log(getId(items["spawned"],object));
+        // console.log(object);
+         sourceId = getId(items["spawned"],source);
+        // console.log(getId(items["spawned"],object));
 
-        changeLoc(getId(items["spawned"],object),"player");
+        objId = objParse2(items["spawned"],"itemlocation",sourceId,"itemname","healing balm")[0];
+
+        items["spawned"][100004]["itemlocation"] = "test";
+
+
+
+        // console.log(objParse(items["spawned"],"itemlocation",sourceId))
+        //
+        // console.log(objParse2(items["spawned"],"itemlocation",sourceId,"itemname","healing balm")[0]);
+
+
+        // id = getId(items["spawned"],object);
+        // console.log(id);
+        //
+        // changeLoc(id,"player");
+
+        //return the id of the first item in the source matching the object variable
 
 
     },
