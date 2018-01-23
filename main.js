@@ -369,60 +369,28 @@ function game() {
                 spawnCount ++;
             }
 
-        } else {
+        } else if (items["library"][sourceId]["itemtype"] === "containerFixed") {
 
             //console.log("FIXED CONTAINER");
 
-            //Spawn containerFixed
+            //Spawn Container of type containerFixed
             items["spawned"][spawnCount] = items["library"][sourceId];
             items["spawned"][spawnCount]["itemlocation"] = loc;
             containerID = spawnCount;
             spawnCount ++;
 
 
-
-
             //Spawn contents of the container
-            //console.log(items["spawned"][containerID]["spawncontents"]);
-
-
-
-            // console.log(items["spawned"][containerID]["spawncontents"]);
-            // console.log(rooms["room0"]["items"]);
-
-
             items["spawned"][containerID]["spawncontents"].forEach(function (z) {
                 spawnItem(z[0], containerID, z[1]);
+            }
 
-                // console.log(loc);
-                // console.log(containerID);
+            );
 
-            });
+        } else {
 
-            // items["spawned"][containerID]["spawncontents"].forEach(function (z) {
-            //
-            //     console.log(items["spawned"][containerID]);
-            //
-            //     spawnItem(z[0], items["spawned"][containerID]["contents"], z[1]);
-            //
-            // });
-
-
-
-
+            console.log("UNRECOGNIZED SPAWNITEM");
         }
-
-
-
-
-
-
-
-        // console.log(item);
-        // console.log(getId(items["spawned"],item));
-        // console.log(items["spawned"][getId(items["spawned"],item)]);
-
-
 
     };
 
@@ -1086,6 +1054,33 @@ actions = {
         } else {
             consolePush("I don't see the " + inputString + " here","error");
         }
+    },
+
+    take: function() {
+      //take ITEM from CONTAINER
+
+        a = inputString.match(/^(.*?)($| from (.*?)$)/); //breaks userInputString into array 'a'
+        a.shift(); //strips the original string from the new array
+        object = a[0];
+        source = a[2];
+
+        console.log(object);
+        console.log(source);
+        console.log(getId(items["spawned"],object));
+
+        changeLoc(getId(items["spawned"],object),"player");
+
+
+    },
+
+
+
+    spawn: function() {
+
+        console.log("The following items are spawned: ");
+        console.log(items["spawned"]);
+
+
     },
 
 

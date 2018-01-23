@@ -11,10 +11,12 @@ MobCorpses:
 + spawn chest
 + spawn contents of chest
 + set items spawned from inside chest to location = spawned chest
++ take object from item
+- fix bug with multiple items with same name be transferred at same time
 
 - tidy items library and ensure consistent object values
 - containers with contents generated from loot lists
-- create a SPAWN admin function that lists all spawned items, in room as an option
++ create a SPAWN admin function that lists all spawned items, in room as an option
 
 
 
