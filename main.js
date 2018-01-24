@@ -400,41 +400,108 @@ function game() {
     // };
 
 
-    spawnNew = function(item,loc,quantity) {
 
+    spawnNew = function (item,loc,quantity) {
 
         sourceId = getId(items["library"],item);
 
-
-        if (items["library"][sourceId]["itemtype"] !== "containerFixed") {
-
-            for (i = 0; i < quantity; i++) {                //Loop handles multiple quantities
+        switch(items["library"][sourceId]["itemtype"]) {
+            case "containerFixed":
+                console.log("Spawning Container Fixed");
 
                 items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
                 items["spawned"][spawnCount]["itemlocation"] = loc;
+                containerID = spawnCount;
                 spawnCount++;
 
-            }
+                //Spawn contents of the container
+                items["spawned"][containerID]["spawncontents"].forEach(function (z) {
+                        spawnNew(z[0], containerID, z[1]);
+                    }
+                );
 
-        } else if (items["library"][sourceId]["itemtype"] === "containerFixed") {
-            items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
-            items["spawned"][spawnCount]["itemlocation"] = loc;
-            containerID = spawnCount;
-            spawnCount++;
 
-            //Spawn contents of the container
-            items["spawned"][containerID]["spawncontents"].forEach(function (z) {
-                spawnNew(z[0], containerID, z[1]);
-            }
-            );
 
-        } else {
-            console.log("UNRECOGNIZED SPAWNITEM");
+                break;
+            case "containerVariable":
+                console.log("Spawning Container Variable");
+
+                items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
+                items["spawned"][spawnCount]["itemlocation"] = loc;
+                containerID = spawnCount;
+                spawnCount++;
+
+                //Spawn contents of the container
+                // items["spawned"][containerID]["spawncontents"].forEach(function (z) {
+                //     spawnNew(z[0], containerID, z[1]);
+
+
+
+
+
+                break;
+            default:
+                console.log("Spawning Everything Else");
+
+                for (i = 0; i < quantity; i++) {                //Loop handles multiple quantities
+
+                    items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
+                    items["spawned"][spawnCount]["itemlocation"] = loc;
+                    spawnCount++;
+
+                }
+
         }
 
-    };
+    }
 
-    spawnCorpse = function(name) {
+
+    // spawnNew2 = function(item,loc,quantity) {
+    //
+    //
+    //     sourceId = getId(items["library"],item);
+    //
+    //
+    //     if (items["library"][sourceId]["itemtype"] !== "containerFixed") {
+    //         console.log("Spawning item");
+    //
+    //         for (i = 0; i < quantity; i++) {                //Loop handles multiple quantities
+    //
+    //             items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
+    //             items["spawned"][spawnCount]["itemlocation"] = loc;
+    //             spawnCount++;
+    //
+    //         }
+    //
+    //     } else if (items["library"][sourceId]["itemtype"] === "containerFixed") {
+    //         console.log("Spawning fixed container");
+    //         items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
+    //         items["spawned"][spawnCount]["itemlocation"] = loc;
+    //         containerID = spawnCount;
+    //         spawnCount++;
+    //
+    //         //Spawn contents of the container
+    //         items["spawned"][containerID]["spawncontents"].forEach(function (z) {
+    //             spawnNew(z[0], containerID, z[1]);
+    //         }
+    //         );
+    //
+    //     } else if (items["library"][sourceId]["itemtype"] === "containerVariable") {
+    //
+    //         console.log("Spawning variable container");
+    //     }
+    //
+    //
+    //
+    //     else {
+    //
+    //
+    //         console.log("UNRECOGNIZED SPAWNITEM");
+    //     }
+    //
+    // };
+
+    spawnCorpse = function(name,level) {
 
         console.log("spawning corpse");
         items["spawned"][spawnCount] = items["library"]["mobcorpse"];
@@ -716,9 +783,18 @@ function game() {
             //remove mobs from combatarray and spawned list
             combatArray.splice(combatArray.indexOf(target),1);
             mobId = getMobId(mobs["spawned"],target["name"]);
-            delete mobs["spawned"][mobId];
+
+
+            console.log(mobs["spawned"][mobId]);
+
+            //delete mobs["spawned"][mobId];
 
             consolePush(target["name"] + " is a dead body now","error");
+
+
+
+
+            //spawnCorpse()
 
             //create corpse
             // mobname + corpse
@@ -1119,6 +1195,7 @@ actions = {
 
         console.log("The following items are spawned: ");
         console.log(items["spawned"]);
+        console.log(mobs["spawned"]);
 
 
     }

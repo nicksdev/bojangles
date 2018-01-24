@@ -152,6 +152,26 @@
                 moveable: false
             },
 
+
+            "item0052": {
+                itemname: "red chest",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "containerVariable",
+                spawncontents: [],
+                lootlist: "Z",
+                contents: "",
+                locked: false,
+                desc: "red chest",
+                weight: 1,
+                itemLevel: 0,
+                use: "",
+                effect: "",
+                charges: 0,
+                role: ["wizard","warrior","priest"],
+                moveable: false
+            },
+
             "mobcorpse": {
 
                 itemname: "corpse name",
@@ -291,15 +311,15 @@
                 str: 30,
                 agi: 5,
                 armour: 2,
-                maxHealth: 20,
-                health: 20,
+                maxHealth: 2,
+                health: 2,
                 maxMana: 0,
                 mana: 0,
                 attackType: ["melee"],
                 melee: "claws",
                 spells: [],
                 special: [],
-                lootlist: "Z1"
+                lootlist: "Z"
             },
 
             "mob0002": {
@@ -311,8 +331,8 @@
                 str: 10,
                 agi: 2,
                 armour: 2,
-                maxHealth: 10,
-                health: 10,
+                maxHealth: 2,
+                health: 2,
                 maxMana: 0,
                 mana: 0,
                 attackType: ["melee"],
