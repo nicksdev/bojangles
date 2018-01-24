@@ -137,7 +137,7 @@
                 equipped: false,
                 itemtype: "containerFixed",
                 spawncontents: [
-                    ["healing balm",2],
+                    ["healing balm",3],
                     ["extra healing balm",1]
                 ],
                 contents: "",
