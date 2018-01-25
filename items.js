@@ -42,6 +42,62 @@
 
 
         "library": {
+
+
+            //WEAPONS
+
+
+            "item0050": {
+                itemname: "rusty dagger",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "weapon",
+                desc: "a small rusty dagger with a short blade",
+                weight: 2,
+                itemLevel:0,
+                use: "equip",
+                min: 1,
+                max: 3,
+                attack: 1,
+                role: ["priest","warrior","wizard"],
+                moveable: true
+            },
+
+            "item0051": {
+                itemname: "steel dagger",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "weapon",
+                desc: "a small iron dagger with a short dull blade",
+                weight: 2,
+                itemLevel: 2,
+                use: "equip",
+                min: 2,
+                max: 6,
+                attack: 1,
+                role: ["priest","warrior","wizard"],
+                moveable: true
+            },
+
+            "item0052": {
+                itemname: "iron shortsword",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "weapon",
+                desc: "a short sowrd made of iron",
+                weight: 2,
+                itemLevel: 1,
+                use: "equip",
+                min: 1,
+                max: 10,
+                attack: 1,
+                role: ["priest","warrior","wizard"],
+                moveable: true
+            },
+
+
+
+
             "item5010": {
                 itemname: "morning star",
                 itemlocation: "",
@@ -58,21 +114,11 @@
                 moveable: true
             },
 
-            "item0050": {
-                itemname: "steel dagger",
-                itemlocation: "",
-                equipped: false,
-                itemtype: "weapon",
-                desc: "a small iron dagger with a short dull blade",
-                weight: 2,
-                itemLevel: 2,
-                use: "equip",
-                min: 10,
-                max: 30,
-                attack: 1,
-                role: ["warrior"],
-                moveable: true
-            },
+
+
+
+            //ARMOUR
+
 
             "item0020": {
                 itemname: "cloth shirt",
@@ -101,6 +147,64 @@
                 role: ["warrior","priest"],
                 moveable: true
             },
+
+            "item0022": {
+                itemname: "leather boots",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "feet",
+                desc: "polished leather boots",
+                weight: 2,
+                itemLevel: 1,
+                use: "equip",
+                defence: 1,
+                role: ["warrior","priest"],
+                moveable: true
+            },
+
+            "item0023": {
+                itemname: "leather pants",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "legs",
+                desc: "pants made of leather",
+                weight: 2,
+                itemLevel: 1,
+                use: "equip",
+                defence: 2,
+                role: ["warrior","priest"],
+                moveable: true
+            },
+
+            "item0024": {
+                itemname: "iron helm",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "head",
+                desc: "a helm made of iron",
+                weight: 2,
+                itemLevel: 2,
+                use: "equip",
+                defence: 3,
+                role: ["warrior","priest"],
+                moveable: true
+            },
+
+            "item0025": {
+                itemname: "steel breastplate",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "chest",
+                desc: "a shining breastplate made of steel",
+                weight: 2,
+                itemLevel: 3,
+                use: "equip",
+                defence: 6,
+                role: ["warrior","priest"],
+                moveable: true
+            },
+
+
 
             "item0040": {
                 itemname: "healing balm",
@@ -131,7 +235,7 @@
                 moveable: true
             },
 
-            "item0051": {
+            "item0091": {
                 itemname: "old wooden chest",
                 itemlocation: "",
                 equipped: false,
@@ -153,7 +257,7 @@
             },
 
 
-            "item0052": {
+            "item0092": {
                 itemname: "red chest",
                 itemlocation: "",
                 equipped: false,
@@ -164,7 +268,7 @@
                 locked: false,
                 desc: "red chest",
                 weight: 1,
-                itemLevel: 0,
+                itemLevel: 1,
                 use: "",
                 effect: "",
                 charges: 0,
@@ -374,13 +478,38 @@
 
     loot = {
 
-        "Z1": {
-            length: 5,
-            1: "a",
-            2: "b",
-            3: "c",
-            4: "d",
-            5: "e"
+        "Z": {
+
+            1: {
+                length: 5,
+                1: "leather boots",
+                2: "iron helm",
+                3: "healing balm",
+                4: "leather shirt",
+                5: "steel dagger"
+            },
+
+            2: {
+                length: 5,
+                1: "item 2a",
+                2: "item 2b",
+                3: "item 2c",
+                4: "item 2d",
+                5: "item 2e"
+            },
+
+            3: {
+                length: 5,
+                1: "item 3a",
+                2: "item 3b",
+                3: "item 3c",
+                4: "item 3d",
+                5: "item 3e"
+            }
+
+
+
+
         },
 
         "Z2": {

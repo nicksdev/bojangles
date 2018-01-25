@@ -432,6 +432,22 @@ function game() {
                 spawnCount++;
 
                 //Spawn contents of the container
+
+                lootlist = items["spawned"][containerID]["lootlist"];
+                lootlevel = items["spawned"][containerID]["itemLevel"];
+                select = dice(1,loot[lootlist][lootlevel]["length"],1);
+
+
+                console.log(loot[lootlist][lootlevel][select]);
+                name = loot[lootlist][lootlevel][select];
+                spawnNew(name,containerID,1);
+
+                //console.log(select);
+
+
+
+
+
                 // items["spawned"][containerID]["spawncontents"].forEach(function (z) {
                 //     spawnNew(z[0], containerID, z[1]);
 

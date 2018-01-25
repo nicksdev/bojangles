@@ -175,6 +175,52 @@ Find object:
 
 
 
+Some items:
+
+weapons and armour
+
+rusty
+iron
+steel
+silver
+mithril
+adamantine
+
+
+dagger
+shortsword
+longsword
+
+torso
+legs
+feet
+head
+
+cloth
+leather
+iron
+steel
+silver
+mithril
+adamantine
+
+chain
+plate
+
+
+rusty dagger
+steel dagger
+iron shortsword
+
+
+leather boots
+leather pants
+iron helm
+steel breastplate
+
+
+
+
 
 
 
