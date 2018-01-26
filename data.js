@@ -13,7 +13,8 @@ var player = {
     maxHealth: 50,
     health: 30,
     maxMana: 50,
-    mana: 50
+    mana: 50,
+    gold: 10
 
 
     // equipment: {

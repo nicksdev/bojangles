@@ -419,31 +419,8 @@ function game() {
                         spawnNew(z[0], containerID, z[1]);
                     }
                 );
-
-
-
                 break;
-            // case "containerVariableOLD":
-            //
-            //     items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
-            //     items["spawned"][spawnCount]["itemlocation"] = loc;
-            //     containerID = spawnCount;
-            //     spawnCount++;
-            //
-            //     //Spawn contents of the container
-            //
-            //     lootlist = items["spawned"][containerID]["lootlist"];
-            //     lootqty = items["spawned"][containerID]["contents"];
-            //     lootlevel = items["spawned"][containerID]["itemLevel"];
-            //
-            //     //Iterate over container quantity
-            //     for (z = 0; z<lootqty; z++) {
-            //     select = dice(1,loot[lootlist][lootlevel]["length"],1);
-            //     name = loot[lootlist][lootlevel][select];
-            //     spawnNew(name,containerID,1);
-            //     }
-            //
-            //     break;
+
             case "containerVariable":
 
                 // console.log("Spawning Container Variable");
@@ -466,7 +443,7 @@ function game() {
                     x = Math.floor(Math.random() * 100);
                     //console.log(x);
 
-                    loot["X"].forEach(function(k) {
+                    loot[lootlist][lootlevel].forEach(function(k) {
 
                      //   console.log(x);
                      //   console.log(k[0] + " to " + k[1]);
@@ -488,7 +465,19 @@ function game() {
 
                 break;
 
+            case "money":
+                // console.log("SPAWNING SOME GOLD" + quantity);
+                //
+                // console.log(items["library"][sourceId]);
+                items["spawned"][spawnCount] = jQuery.extend({}, items["library"]["item0002"]);
+                items["spawned"][spawnCount]["itemlocation"] = loc;
+                items["spawned"][spawnCount]["quantity"] = quantity;
+                spawnCount++;
 
+
+
+
+                break;
 
 
 
@@ -1018,6 +1007,7 @@ actions = {
         consolePush("ARMOUR :" + player.armour);
         consolePush("HEALTH :" + player.health);
         consolePush("MANA :" + player.mana);
+        consolePush("GOLD :" + player.gold);
     },
 
     inv: function () {
@@ -1038,9 +1028,26 @@ actions = {
         if (itemCheck("itemname", inputString, loc, "itemlocation") === true) {
             // check to see if object is moveable
             if (itemCheck("itemname", inputString, true, "moveable") === true) {
-                //move to inventory
 
-                changeLoc(getId(items["spawned"], inputString), "player")
+                console.log(inputString);
+                console.log(getId(items["spawned"], inputString));
+                id = getId(items["spawned"], inputString);
+                console.log(items["spawned"][id]["itemtype"]);
+                type = items["spawned"][getId(items["spawned"], inputString)]["itemtype"];
+
+                switch(type) {
+                    case "money":
+                        player["gold"] += items["spawned"][getId(items["spawned"], inputString)]["quantity"];
+                        consolePush("You pickup " + items["spawned"][getId(items["spawned"], inputString)]["quantity"] + " gold pieces","items");
+                        delete items["spawned"][getId(items["spawned"], inputString)];
+                        break;
+
+                    default:
+                    //move to inventory
+                        changeLoc(getId(items["spawned"], inputString), "player")
+
+                }
+
             } else {
                 consolePush("You can't move " + inputString, "error")
             }
@@ -1128,65 +1135,9 @@ actions = {
 
 
 
-        x = Math.floor(Math.random() * 100);
-        console.log(x);
+        console.log(loot["W"]);
+        console.log(loot["W"]["1"]);
 
-        loot["X"].forEach(function(k) {
-
-            console.log(x);
-            console.log(k[0] + " to " + k[1]);
-
-            if (x >= k[0] && x <= k[1]) {
-
-                console.log("SPAWNING " + k[2]);
-                spawnNew(k[2],loc,1)
-
-            }
-
-            }
-        );
-
-
-
-
-
-
-
-
-
-        //console.log(loot["Z"][2][1]);
-
-
-
-        // low = loot["Z"]["2"][2][0];
-        // high = loot["Z"]["2"][2][1];
-        //
-        // console.log(low);
-        // console.log(high);
-        //
-        //
-        // if (x >= low && x <= high) {
-        //
-        //     console.log("win");
-        // }
-
-
-//        forEach(function(id)
-
-
-
-        // loot["Z"]["2"].forEach(function () {
-        //
-        //     low = loot["Z"]["2"][z][0];
-        //     high = loot["Z"]["2"][z][1];
-        //
-        //     console.log(low);
-        //     console.log(high);
-
-
-            //spawnNew(z[0], loc, z[1]);
-
-        // });
 
 
 

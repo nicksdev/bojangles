@@ -205,6 +205,49 @@
             },
 
 
+            //MISC
+
+            "item0001": {
+                itemname: "gold",
+                itemlocation: "",
+                equipped: false ,
+                itemtype: "money",
+                desc: "pieces of gold",
+                weight: 0,
+                itemLevel: 0,
+                use: "",
+                min: 1,
+                max: 2,
+                attack: 1,
+                role: [],
+                moveable: true
+            },
+
+            "item0002": {
+                itemname: "pile of gold",
+                quantity: 0,
+                itemlocation: "",
+                equipped: false ,
+                itemtype: "money",
+                desc: "pieces of gold",
+                weight: 0,
+                itemLevel: 0,
+                use: "",
+                min: 1,
+                max: 2,
+                attack: 1,
+                role: [],
+                moveable: true
+            },
+
+
+
+
+
+
+
+            //MAGIC
+
 
             "item0040": {
                 itemname: "healing balm",
@@ -220,6 +263,7 @@
                 role: ["wizard","warrior","priest"],
                 moveable: true
             },
+
             "item0041": {
                 itemname: "extra healing balm",
                 itemlocation: "",
@@ -234,6 +278,10 @@
                 role: ["wizard","warrior","priest"],
                 moveable: true
             },
+
+
+            //CONTAINERS
+
 
             "item0091": {
                 itemname: "old wooden chest",
@@ -256,15 +304,14 @@
                 moveable: false
             },
 
-
             "item0092": {
                 itemname: "red chest",
                 itemlocation: "",
                 equipped: false,
                 itemtype: "containerVariable",
                 spawncontents: [],
-                lootlist: "Z",
-                contents: 10,
+                lootlist: "W",
+                contents: 3,
                 locked: false,
                 desc: "red chest",
                 weight: 1,
@@ -477,6 +524,16 @@
     };
 
     loot = {
+
+        "W": {
+            "1" : [
+                [1,10,"leather boots"],
+                [11,20,"iron helm"],
+                [21,70,"healing balm"],
+                [71,80,"leather shirt"],
+                [81,100,"steel dagger"]
+            ]
+        },
 
 
 
