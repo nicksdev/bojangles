@@ -264,7 +264,7 @@
                 itemtype: "containerVariable",
                 spawncontents: [],
                 lootlist: "Z",
-                contents: "",
+                contents: 10,
                 locked: false,
                 desc: "red chest",
                 weight: 1,
@@ -478,6 +478,22 @@
 
     loot = {
 
+
+
+
+        "X": [
+
+        [1,10,"leather boots"],
+        [11,20,"iron helm"],
+        [21,70,"healing balm"],
+        [71,80,"leather shirt"],
+        [81,100,"steel dagger"]
+
+
+
+        ],
+
+
         "Z": {
 
             1: {
@@ -490,12 +506,13 @@
             },
 
             2: {
-                length: 5,
-                1: "item 2a",
-                2: "item 2b",
-                3: "item 2c",
-                4: "item 2d",
-                5: "item 2e"
+
+                1: [1,10,"leather boots"],
+                2: [11,20,"iron helm"],
+                3: [21,70,"healing balm"],
+                4: [71,80,"leather shirt"],
+                5: [80,100,"steel dagger"]
+
             },
 
             3: {
