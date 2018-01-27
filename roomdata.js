@@ -18,13 +18,13 @@ rooms = {
         visited: false,
         mobs: [],
         items: [
-            ["steel dagger",1],
-            ["leather shirt",1],
-            ["blue purse",1]
+            ["steel dagger",1,1,0,0],
+            // ["leather shirt",1],
+            // ["blue purse",1]
             //["red chest",1],
             //["gold",5,10]
-
             // ["old wooden chest",1]
+            ["black chest",1,1,0,0]
 
 
         ],

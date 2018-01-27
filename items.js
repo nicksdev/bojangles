@@ -344,6 +344,35 @@
                 moveable: true
             },
 
+            "item0094": {
+                itemname: "black chest",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "container",
+                spawnFixed: true,
+                spawnVari: true,
+                fixedContent: [
+                    // ["healing balm",1,4,,],
+                    // ["extra healing balm",1,1,,]
+                    // ["extra healing balm",1,1,,]
+                ],
+                variContent: {
+                    quantity: 5,
+                    lootlist: "Z",
+                    lootlevel: 1
+                },
+                locked: false,
+                desc: "a big black chest",
+                weight: 1,
+                itemLevel: 1,
+                use: "",
+                effect: "",
+                charges: 0,
+                role: ["wizard","warrior","priest"],
+                moveable: false
+            },
+
+
             "mobcorpse": {
 
                 itemname: "corpse name",
@@ -546,61 +575,19 @@
 
     loot = {
 
-        "W": {
-            "1" : [
-                [1,10,"leather boots",1],
-                [11,20,"iron helm",1],
-                [21,70,"blue purse",1],
-                [71,80,"leather shirt",1],
-                [81,100,"steel dagger",1]
-            ]
-        },
-
-
-
-
-        "X": [
-
-        [1,10,"leather boots"],
-        [11,20,"iron helm"],
-        [21,70,"healing balm"],
-        [71,80,"leather shirt"],
-        [81,100,"steel dagger"]
-
-
-
-        ],
-
-
         "Z": {
 
-            1: {
-                length: 5,
-                1: "leather boots",
-                2: "iron helm",
-                3: "healing balm",
-                4: "leather shirt",
-                5: "steel dagger"
-            },
 
-            2: {
+            "1" : [
 
-                1: [1,10,"leather boots"],
-                2: [11,20,"iron helm"],
-                3: [21,70,"healing balm"],
-                4: [71,80,"leather shirt"],
-                5: [80,100,"steel dagger"]
+                ["steel dagger",1,1,1,10],
+                ["iron helm",1,1,11,20],
+                ["healing balm",1,1,21,70],
+                ["leather shirt",1,1,71,80],
+                ["steel breastplate",1,1,81,100]
 
-            },
+            ]
 
-            3: {
-                length: 5,
-                1: "item 3a",
-                2: "item 3b",
-                3: "item 3c",
-                4: "item 3d",
-                5: "item 3e"
-            }
 
 
 

@@ -41,7 +41,7 @@ Combat..
  Defence Roll (Armour, Random Modifier)
  
 
-
+lockable itemts
 
 
 
@@ -220,6 +220,45 @@ steel breastplate
 
 
 
+
+
+
+
+
+CONTAINER SPAWNING
+
+- Containers that spawn fixed content
+- Containers that spawn dynamic content (loot lists)
+- Items that spawn fixed qunatity
+- Items that spawn dynamic quantity
+- Loot lists that vary by level
+
+
+
+spawnItem(itemname,qtyLow,qtyHi,percLow,percHi)
+
+loot[level][perc];
+
+container: [
+
+    spawnFixed : true,
+    fixedContent: [
+        [itemnameOne,1,1,1,49],
+        [itemnameTwo,1,1,50,100]
+    spawnVari : true,
+    variContent:
+        quantity:   5,
+        lootlist:   Z,
+        lootlevel:  1
+
+spawn gold q500
+
+
+
+
+
+
+]
 
 
 

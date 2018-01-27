@@ -58,8 +58,8 @@ function game() {
         if (rooms[loc]["visited"] === false) {
             //Spawn room items
             rooms[loc]["items"].forEach(function (z) {
-                spawnNew(z[0], loc, z[1],z[2]);
-
+                console.log(rooms[loc]["items"]);
+                spawn(z[0],z[1],z[2],z[3],z[4]);
             });
 
             //Spawn room mobs
@@ -399,6 +399,125 @@ function game() {
     //
     // };
 
+
+
+    spawn = function(item,qtyLow,qtyHi,percLow,percHi) {
+
+
+
+        sourceId = getId(items["library"],item);
+
+        //[containerID[spawnFixed] = ()
+
+        switch(items["library"][sourceId]["itemtype"]) {
+
+            case "container":
+                console.log("Spawning the Container");
+                containerID = spawnCount;
+                spawnItem(spawnCount,sourceId,loc,qtyLow,qtyHi);
+
+                console.log("TestContainerID = " + containerID);
+
+                if (items["spawned"][containerID]["spawnFixed"] === true) {
+                    console.log("Spawning the Containers Fixed Content");
+                    items["spawned"][containerID]["fixedContent"].forEach(function (z) {
+                        spawnItem(spawnCount,getId(items["library"],z[0]),containerID,z[1],z[2]);
+                    });
+                }
+
+
+                if (items["spawned"][containerID]["spawnVari"] === true) {
+
+
+                    console.log("Spawning the Containers Variable Content");
+
+                    //Spawn contents of the container
+
+                    lootlist = items["spawned"][containerID]["variContent"]["lootlist"];
+                    lootqty =  items["spawned"][containerID]["variContent"]["quantity"];
+                    lootlevel =  items["spawned"][containerID]["variContent"]["lootlevel"];
+
+                    for (z = 0; z<lootqty; z++) {
+                        random = Math.floor(Math.random() * 100);
+
+                        loot[lootlist][lootlevel].forEach(function(k) {
+
+                            if (random >= k[3] && random <= k[4]) {
+                                spawnItem(spawnCount,getId(items["library"],k[0]),containerID,k[1],k[2]);
+                                spawnCount++
+                            }
+                        })
+                    }
+
+
+
+                    //Iterate over container quantity
+                    for (z = 0; z<lootqty; z++) {
+
+                        x = Math.floor(Math.random() * 100);
+                        //console.log(x);
+
+                        loot[lootlist][lootlevel].forEach(function(k) {
+
+                                //   console.log(x);
+                                //   console.log(k[0] + " to " + k[1]);
+
+                                if (x >= k[0] && x <= k[1]) {
+
+                                    // console.log("SPAWNING " + k[2] + "CONTAINER CONTENTSs");
+                                    console.log(items["spawned"][containerID]);
+                                    spawnNew(k[2],containerID,k[3],k[4]);
+
+                                }
+
+                            }
+
+
+                        );
+
+                    }
+
+                    break;
+
+
+
+
+
+                }
+
+
+        }
+
+
+
+    };
+
+
+    spawnItem = function(id,source,loc,minQ,maxQ) {
+
+        // console.log(id);
+        // console.log(source);
+        // console.log(loc);
+        // console.log(minQ);
+        // console.log(maxQ);
+
+        nomi = Math.floor(Math.random() * (maxQ - minQ));
+        quantity = nomi + minQ;
+        // console.log("Quantity = " + quantity);
+        // console.log("Nomi = " + nomi);
+
+       for (i = 0; i < quantity; i++) {                //Loop handles multiple quantities
+
+            // console.log(id);
+            id = spawnCount;
+            items["spawned"][id] = jQuery.extend({}, items["library"][source]);
+            items["spawned"][id]["itemlocation"] = loc;
+            spawnCount++;
+
+        }
+
+
+   };
 
 
     spawnNew = function (item,loc,quantity,min) {
