@@ -58,7 +58,7 @@ function game() {
         if (rooms[loc]["visited"] === false) {
             //Spawn room items
             rooms[loc]["items"].forEach(function (z) {
-                spawnNew(z[0], loc, z[1]);
+                spawnNew(z[0], loc, z[1],z[2]);
 
             });
 
@@ -401,7 +401,7 @@ function game() {
 
 
 
-    spawnNew = function (item,loc,quantity) {
+    spawnNew = function (item,loc,quantity,min) {
 
         sourceId = getId(items["library"],item);
 
@@ -416,7 +416,9 @@ function game() {
 
                 //Spawn contents of the container
                 items["spawned"][containerID]["spawncontents"].forEach(function (z) {
-                        spawnNew(z[0], containerID, z[1]);
+                        spawnNew(z[0], containerID, z[1], z[2]);
+
+
                     }
                 );
                 break;
@@ -451,8 +453,8 @@ function game() {
                         if (x >= k[0] && x <= k[1]) {
 
                             // console.log("SPAWNING " + k[2] + "CONTAINER CONTENTSs");
-                            // console.log(items["spawned"][containerID]);
-                            spawnNew(k[2],containerID,1)
+                            console.log(items["spawned"][containerID]);
+                            spawnNew(k[2],containerID,k[3],k[4]);
 
                         }
 
@@ -466,16 +468,12 @@ function game() {
                 break;
 
             case "money":
-                // console.log("SPAWNING SOME GOLD" + quantity);
-                //
-                // console.log(items["library"][sourceId]);
                 items["spawned"][spawnCount] = jQuery.extend({}, items["library"]["item0002"]);
                 items["spawned"][spawnCount]["itemlocation"] = loc;
-                items["spawned"][spawnCount]["quantity"] = quantity;
+                diff = quantity - min;
+                value = min + Math.floor(Math.random() * diff);
+                items["spawned"][spawnCount]["quantity"] = value;
                 spawnCount++;
-
-
-
 
                 break;
 

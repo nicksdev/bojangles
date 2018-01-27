@@ -20,9 +20,9 @@ rooms = {
         items: [
             ["steel dagger",1],
             ["leather shirt",1],
-            ["red chest",1],
-            ["gold",100],
-            ["gold",300],
+            ["blue purse",1]
+            //["red chest",1],
+            //["gold",5,10]
 
             // ["old wooden chest",1]
 

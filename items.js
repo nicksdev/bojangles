@@ -323,6 +323,27 @@
                 moveable: false
             },
 
+            "item0093": {
+                itemname: "blue purse",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "containerFixed",
+                spawncontents: [
+                    ["gold",100,1000]
+                ],
+                lootlist: "",
+                contents: 0,
+                locked: false,
+                desc: "blue purse",
+                weight: 1,
+                itemLevel: 1,
+                use: "",
+                effect: "",
+                charges: 0,
+                role: ["wizard","warrior","priest"],
+                moveable: true
+            },
+
             "mobcorpse": {
 
                 itemname: "corpse name",
@@ -527,11 +548,11 @@
 
         "W": {
             "1" : [
-                [1,10,"leather boots"],
-                [11,20,"iron helm"],
-                [21,70,"healing balm"],
-                [71,80,"leather shirt"],
-                [81,100,"steel dagger"]
+                [1,10,"leather boots",1],
+                [11,20,"iron helm",1],
+                [21,70,"blue purse",1],
+                [71,80,"leather shirt",1],
+                [81,100,"steel dagger",1]
             ]
         },
 
