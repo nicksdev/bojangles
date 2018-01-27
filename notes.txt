@@ -253,7 +253,7 @@ container: [
 
 spawn gold q500
 
-
+- fix take pile of gold from container. Should add to char total gold not add pile to inventory
 
 
 

@@ -350,11 +350,11 @@
                 equipped: false,
                 itemtype: "container",
                 spawnFixed: true,
-                spawnVari: true,
+                spawnVari: false,
                 fixedContent: [
-                    // ["healing balm",1,4,,],
-                    // ["extra healing balm",1,1,,]
-                    // ["extra healing balm",1,1,,]
+                    ["extra healing balm",1,1,,],
+                    ["gold",5,10,,]
+
                 ],
                 variContent: {
                     quantity: 5,

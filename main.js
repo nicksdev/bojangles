@@ -404,10 +404,14 @@ function game() {
     spawn = function(item,qtyLow,qtyHi,percLow,percHi) {
 
 
+        //console.log("Spawning + " + item);
+
 
         sourceId = getId(items["library"],item);
 
         //[containerID[spawnFixed] = ()
+
+        console.log(items["library"][sourceId]["itemtype"]);
 
         switch(items["library"][sourceId]["itemtype"]) {
 
@@ -421,7 +425,32 @@ function game() {
                 if (items["spawned"][containerID]["spawnFixed"] === true) {
                     console.log("Spawning the Containers Fixed Content");
                     items["spawned"][containerID]["fixedContent"].forEach(function (z) {
-                        spawnItem(spawnCount,getId(items["library"],z[0]),containerID,z[1],z[2]);
+
+                    console.log(items["library"][sourceId]["itemtype"]);
+
+
+
+                        switch(items["library"][getId(items["library"],z[0])]["itemtype"]) {
+
+                            case "money":
+                                console.log("Spawning Container Money");
+                                spawnGold(spawnCount,"item0002",containerID,qtyLow,qtyHi);
+                                break;
+
+                            default:
+                                spawnItem(spawnCount,getId(items["library"],z[0]),containerID,z[1],z[2]);
+
+                        }
+
+                        // console.log(z);
+                        // console.log(getId(items["library"],z[0]));
+                        // console.log(items["library"][getId(items["library"],z[0])]["itemtype"]);
+                        //
+                        //
+                        // spawnItem(spawnCount,getId(items["library"],z[0]),containerID,z[1],z[2]);
+
+
+
                     });
                 }
 
@@ -434,30 +463,29 @@ function game() {
                     //Spawn contents of the container
 
                     lootlist = items["spawned"][containerID]["variContent"]["lootlist"];
-                    lootqty =  items["spawned"][containerID]["variContent"]["quantity"];
-                    lootlevel =  items["spawned"][containerID]["variContent"]["lootlevel"];
+                    lootqty = items["spawned"][containerID]["variContent"]["quantity"];
+                    lootlevel = items["spawned"][containerID]["variContent"]["lootlevel"];
 
-                    for (z = 0; z<lootqty; z++) {
+                    for (z = 0; z < lootqty; z++) {
                         random = Math.floor(Math.random() * 100);
 
-                        loot[lootlist][lootlevel].forEach(function(k) {
+                        loot[lootlist][lootlevel].forEach(function (k) {
 
                             if (random >= k[3] && random <= k[4]) {
-                                spawnItem(spawnCount,getId(items["library"],k[0]),containerID,k[1],k[2]);
+                                spawnItem(spawnCount, getId(items["library"], k[0]), containerID, k[1], k[2]);
                                 spawnCount++
                             }
                         })
                     }
 
 
-
                     //Iterate over container quantity
-                    for (z = 0; z<lootqty; z++) {
+                    for (z = 0; z < lootqty; z++) {
 
                         x = Math.floor(Math.random() * 100);
                         //console.log(x);
 
-                        loot[lootlist][lootlevel].forEach(function(k) {
+                        loot[lootlist][lootlevel].forEach(function (k) {
 
                                 //   console.log(x);
                                 //   console.log(k[0] + " to " + k[1]);
@@ -466,18 +494,61 @@ function game() {
 
                                     // console.log("SPAWNING " + k[2] + "CONTAINER CONTENTSs");
                                     console.log(items["spawned"][containerID]);
-                                    spawnNew(k[2],containerID,k[3],k[4]);
+                                    spawnNew(k[2], containerID, k[3], k[4]);
 
                                 }
 
                             }
-
-
                         );
 
                     }
 
+                }
+
                     break;
+
+
+
+
+                case "money":
+
+                    console.log(items["library"][sourceId]["itemtype"]);
+
+                    spawnGold(spawnCount,"item0002",loc,qtyLow,qtyHi);
+
+
+
+
+                    // items["spawned"][spawnCount] = jQuery.extend({}, items["library"]["item0002"]);
+                    // items["spawned"][spawnCount]["itemlocation"] = loc;
+
+
+                    break;
+
+
+            default:
+
+                spawnItem(spawnCount,sourceId,loc,qtyLow,qtyHi);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -486,14 +557,16 @@ function game() {
                 }
 
 
-        }
+        };
 
 
 
-    };
+
 
 
     spawnItem = function(id,source,loc,minQ,maxQ) {
+
+        console.log("Spawning + " + items["library"][source]["itemname"]);
 
         // console.log(id);
         // console.log(source);
@@ -518,6 +591,34 @@ function game() {
 
 
    };
+
+
+    spawnGold = function(id,source,loc,minQ,maxQ) {
+
+        //create pile of gold
+        // pile of gold quantity = quantity
+        // figure out how to handle loc
+
+        console.log(id);
+        console.log(containerID);
+
+        id = spawnCount;
+        diff = maxQ - minQ;
+        quantity = minQ + Math.floor(Math.random() * diff);
+
+
+        items["spawned"][id] = jQuery.extend({}, items["library"]["item0002"]);
+        items["spawned"][id]["itemlocation"] = loc;
+        items["spawned"][id]["quantity"] = quantity;
+
+        spawnCount++;
+
+
+
+
+    };
+
+
 
 
     spawnNew = function (item,loc,quantity,min) {
@@ -1356,9 +1457,13 @@ actions = {
         a.shift(); //strips the original string from the new array
         object = a[0];
         source = a[2];
-
         sourceId = getId(items["spawned"],source);
         objId = objParse2(items["spawned"],"itemlocation",sourceId,"itemname",object)[0];
+
+
+
+
+
 
         if (itemCheck("itemname", source, loc, "itemlocation") === true) {
             if (itemCheck("itemname", object, sourceId, "itemlocation") === true) {
