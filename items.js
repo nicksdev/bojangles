@@ -352,8 +352,8 @@
                 spawnFixed: true,
                 spawnVari: false,
                 fixedContent: [
-                    ["extra healing balm",1,1,,],
-                    ["gold",5,10,,]
+                    ["healing balm",1,1,,],
+                   // ["gold",5,10,,]
 
                 ],
                 variContent: {
