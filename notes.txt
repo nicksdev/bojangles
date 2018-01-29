@@ -21,6 +21,7 @@ MobCorpses:
 + fix take cuntion to handle non existant items
 + depricate spawnItem
 - fix spawnCorpse
+- drop item fails if you have a duplicate equipped
 
 
 

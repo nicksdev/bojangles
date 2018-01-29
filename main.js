@@ -1498,6 +1498,7 @@ actions = {
                     default:
                         console.log("Picking up items from room");
                         //item handler
+                        moveItem(a[0],["player"]);
 
 
                 }
@@ -1515,27 +1516,28 @@ actions = {
 
 
         } else {
-            //Handle taking objeect from a room
+            //Handle taking object from a container
             console.log("taking an item from a container")
 
 
 
-            //checking item is spawned and in the room
+            //checking item is spawned and in the container
             if (itemReturn2(items["spawned"],"itemname",item,"itemlocation",sourceId) === itemId) {
                 console.log("Object found in container");
 
 
                 switch (items["spawned"][itemId]["itemtype"]) {
                     case "money":
-                        console.log("Picking up money from room");
+                        console.log("Picking up money from container");
                         //money handler
 
 
                         break;
 
                     default:
-                        console.log("Picking up items from room");
+                        console.log("Picking up items from container");
                     //item handler
+
 
 
                 }
@@ -1717,7 +1719,18 @@ function moveItem(itemname,destination) {
     console.log(items["spawned"][getId(items["spawned"],itemname)]);
     console.log(destination);
 
-    items["spawned"][getId(items["spawned"],itemname)]["itemlocation"] = destination;
+
+
+//    elvisLives = Math.PI > 4 ? 'Yep' : 'Nope';
+    console.log(items["spawned"][getId(items["spawned"],itemname)]["moveable"]);
+
+
+    if (items["spawned"][getId(items["spawned"],itemname)]["moveable"] === true) {
+        items["spawned"][getId(items["spawned"],itemname)]["itemlocation"] = destination;
+        consolePush("You take the " + itemname, "items");
+    } else {
+        consolePush("You can't move that","error");
+    }
 
 
 
