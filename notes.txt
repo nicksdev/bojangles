@@ -22,7 +22,7 @@ MobCorpses:
 + depricate spawnItem
 - fix spawnCorpse
 - drop item fails if you have a duplicate equipped
-
+- cant take object from container if it exists in a room
 
 
 

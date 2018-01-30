@@ -353,7 +353,9 @@
                 spawnVari: false,
                 fixedContent: [
                     ["healing balm",1,1,,],
-                   // ["gold",5,10,,]
+                    ["gold",5,10,,],
+                    ["steel dagger",1,1,,],
+
 
                 ],
                 variContent: {

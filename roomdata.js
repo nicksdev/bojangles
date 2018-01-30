@@ -25,7 +25,7 @@ rooms = {
             //["gold",5,10]
             // ["old wooden chest",1]
             ["black chest",1,1,0,0],
-            ["gold",50,50,0,0]
+            //["gold",50,50,0,0]
 
 
         ],
