@@ -240,29 +240,6 @@ function game() {
         return result;
     }
 
-
-    // function itemCheck2(field,lookup,value,peram,value2,peram2) {
-    //     var result = false;
-    //     _.forEach(items["spawned"], function(i) {
-    //         if (result) {
-    //             return;
-    //         }
-    //         if(i[field] === lookup) {
-    //             if(i[peram] === value) {
-    //                     if (i[peram2] === value2) {
-    //                         console.log("PASSED");
-    //                         result = true;
-    //                     }
-    //             } else {
-    //                 console.log("FAILED");
-    //                 result = false;
-    //             }
-    //         } else {console.log("Object Not Found")}
-    //     });
-    //     console.log("ITEMCHECK = " + result);
-    //     return result;
-    // }
-
     function itemReturn2(obj,peram,value,peram2,value2) {
         // console.log("Running itemReturn2");
         // console.log(obj);
@@ -357,49 +334,6 @@ function game() {
 
 
     //SPAWN STUFF
-
-    // spawnItem = function(item,loc,quantity) {
-    //
-    //     sourceId = getId(items["library"],item);
-    //     //console.log(items["library"][sourceId]["itemtype"]);
-    //
-    //     if (items["library"][sourceId]["itemtype"] !== "containerFixed") {
-    //
-    //         //console.log("NOT FIXED CONTAINER");
-    //         for (i = 0; i < quantity; i++) {                //Loop handles multiple quantities
-    //             console.log("Spawning + " + items["library"][sourceId]["itemname"] + spawnCount);
-    //             items["spawned"][spawnCount] = items["library"][sourceId];
-    //             items["spawned"][spawnCount]["itemlocation"] = loc;
-    //             spawnCount = spawnCount + 5;
-    //         }
-    //
-    //     } else if (items["library"][sourceId]["itemtype"] === "containerFixed") {
-    //
-    //         //console.log("FIXED CONTAINER");
-    //
-    //         //Spawn Container of type containerFixed
-    //         console.log("Spawning + " + items["library"][sourceId]["itemname"] + spawnCount);
-    //         items["spawned"][spawnCount] = items["library"][sourceId];
-    //         items["spawned"][spawnCount]["itemlocation"] = loc;
-    //         containerID = spawnCount;
-    //         spawnCount = spawnCount + 5;
-    //
-    //
-    //         //Spawn contents of the container
-    //         items["spawned"][containerID]["spawncontents"].forEach(function (z) {
-    //             spawnNew(z[0], containerID, z[1]);
-    //         }
-    //
-    //         );
-    //
-    //     } else {
-    //
-    //         console.log("UNRECOGNIZED SPAWNITEM");
-    //     }
-    //
-    // };
-
-
 
     spawn = function(item,qtyLow,qtyHi,percLow,percHi) {
 
@@ -536,11 +470,6 @@ function game() {
 
         };
 
-
-
-
-
-
     spawnItem = function(id,source,loc,minQ,maxQ) {
 
         // console.log("Spawning + " + items["library"][source]["itemname"]);
@@ -569,7 +498,6 @@ function game() {
 
    };
 
-
     spawnGold = function(id,source,loc,minQ,maxQ) {
 
         //create pile of gold
@@ -594,9 +522,6 @@ function game() {
 
 
     };
-
-
-
 
     spawnNew = function (item,loc,quantity,min) {
 
@@ -692,52 +617,6 @@ function game() {
 
     }
 
-
-    // spawnNew2 = function(item,loc,quantity) {
-    //
-    //
-    //     sourceId = getId(items["library"],item);
-    //
-    //
-    //     if (items["library"][sourceId]["itemtype"] !== "containerFixed") {
-    //         console.log("Spawning item");
-    //
-    //         for (i = 0; i < quantity; i++) {                //Loop handles multiple quantities
-    //
-    //             items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
-    //             items["spawned"][spawnCount]["itemlocation"] = loc;
-    //             spawnCount++;
-    //
-    //         }
-    //
-    //     } else if (items["library"][sourceId]["itemtype"] === "containerFixed") {
-    //         console.log("Spawning fixed container");
-    //         items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
-    //         items["spawned"][spawnCount]["itemlocation"] = loc;
-    //         containerID = spawnCount;
-    //         spawnCount++;
-    //
-    //         //Spawn contents of the container
-    //         items["spawned"][containerID]["spawncontents"].forEach(function (z) {
-    //             spawnNew(z[0], containerID, z[1]);
-    //         }
-    //         );
-    //
-    //     } else if (items["library"][sourceId]["itemtype"] === "containerVariable") {
-    //
-    //         console.log("Spawning variable container");
-    //     }
-    //
-    //
-    //
-    //     else {
-    //
-    //
-    //         console.log("UNRECOGNIZED SPAWNITEM");
-    //     }
-    //
-    // };
-
     spawnCorpse = function(name,level) {
 
         console.log("spawning corpse");
@@ -748,11 +627,6 @@ function game() {
         console.log(items["spawned"]);
         spawnCount++;
     };
-
-
-
-
-
 
     function spawnMob(mob,loc) {
         // console.log(mob);
@@ -813,8 +687,6 @@ function game() {
 
         }
     }
-
-
 
 
     //MAGIC & EFFECTS
@@ -1218,39 +1090,6 @@ actions = {
         }
     },
 
-    // pickup: function () {
-    //     // check to see if object exists in room
-    //     if (itemCheck("itemname", inputString, loc, "itemlocation") === true) {
-    //         // check to see if object is moveable
-    //         if (itemCheck("itemname", inputString, true, "moveable") === true) {
-    //
-    //             console.log(inputString);
-    //             console.log(getId(items["spawned"], inputString));
-    //             id = getId(items["spawned"], inputString);
-    //             console.log(items["spawned"][id]["itemtype"]);
-    //             type = items["spawned"][getId(items["spawned"], inputString)]["itemtype"];
-    //
-    //             switch(type) {
-    //                 case "money":
-    //                     player["gold"] += items["spawned"][getId(items["spawned"], inputString)]["quantity"];
-    //                     consolePush("You pickup " + items["spawned"][getId(items["spawned"], inputString)]["quantity"] + " gold pieces","items");
-    //                     delete items["spawned"][getId(items["spawned"], inputString)];
-    //                     break;
-    //
-    //                 default:
-    //                 //move to inventory
-    //                     changeLoc(getId(items["spawned"], inputString), "player")
-    //
-    //             }
-    //
-    //         } else {
-    //             consolePush("You can't move " + inputString, "error")
-    //         }
-    //     } else {
-    //         consolePush("I don't see " + inputString + " here", "error")
-    //     }
-    // },
-
     drop: function () {
         // check to see if object exists in inventory
         // check to if item in unequipped
@@ -1427,7 +1266,6 @@ actions = {
         }
     },
 
-
     take: function() {
 
         //take item from <loc> or <container>
@@ -1462,8 +1300,6 @@ actions = {
             //checking item is spawned and in the room
             if (itemReturn2(items["spawned"],"itemname",item,"itemlocation",loc) === itemId) {
                 console.log("Object found");
-
-
                 switch (items["spawned"][itemId]["itemtype"]) {
                     case "money":
                         console.log("Picking up money from room");
@@ -1495,22 +1331,11 @@ actions = {
             }
 
 
-
-
-
-
         } else {
             //Handle taking object from a container
             console.log("taking an item from a container");
-
-
-            // rooms[loc]["items"].forEach(function (z) {
-            //     console.log(rooms[loc]["items"]);
-            //   //  spawn(z[0],z[1],z[2],z[3],z[4]);
-            // });
-
-
             console.log(objParse(items["spawned"],"itemname",item));
+
 
 
             console.log(rooms[loc]["items"]);
@@ -1523,6 +1348,7 @@ actions = {
                 //if item with matching source is found
                 if (items["spawned"][w]["itemlocation"] === sourceId) {
                     console.log("Object found in container");
+                    console.log(items["spawned"][w]);
 
                     // console.log(typeof sourceId);
                     // console.log(typeof items["spawned"][w]["itemlocation"]);
@@ -1544,225 +1370,19 @@ actions = {
                             console.log("Picking up items from container");
 
                             //item handler
-                            moveItem(itemId,["player"]);
+                            moveItem(w,["player"]);
                     }
-
-
-
-
-
-
 
                 } else {
                     console.log("FAILURE");
                     console.log("Object NOT found in container");
                 }
 
-
-
-
             } );
-
-
-
-        //     //checking item is spawned and in the container
-        //     if (itemReturn2(items["spawned"],"itemname",item,"itemlocation",sourceId) === itemId) {
-        //
-        //
-        //
-        //         switch (items["spawned"][itemId]["itemtype"]) {
-        //             case "money":
-        //                 console.log("Picking up money from container");
-        //                 //money handler
-        //
-        //                 player["gold"] += items["spawned"][itemId]["quantity"];
-        //                 consolePush("You pickup " + items["spawned"][itemId]["quantity"] + " gold pieces","items");
-        //                 delete items["spawned"][itemId];
-        //
-        //                 break;
-        //
-        //             default:
-        //                 console.log("Picking up items from container");
-        //                 console.log(item);
-        //             //item handler
-        //                 moveItem(item,["player"]);
-        //         }
-        //
-        //
-        // } else {
-        //         console.log("Object NOT found in container");
-        //
-        //
-        //
-        //     }
-        //
-        //
 
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
     },
-
-
-    // take2: function() {
-    //   //take ITEM from CONTAINER
-    //
-    //     a = inputString.match(/^(.*?)($| from (.*?)$)/); //breaks userInputString into array 'a'
-    //     a.shift(); //strips the original string from the new array
-    //     object = a[0];
-    //     source = a[2];
-    //
-    //
-    //
-    //     sourceId = getId(items["spawned"],source);
-    //     objId = objParse2(items["spawned"],"itemlocation",sourceId,"itemname",object)[0];
-    //
-    //
-    //
-    //     //elvisLives = Math.PI > 4 ? 'Yep' : 'Nope';
-    //     sourceId !== undefined ? console.log("source not undefined") : console.log("soource undefined , switching to " + loc); sourceId = loc;
-    //
-    //
-    //
-    //     console.log(a);
-    //     console.log(object);
-    //
-    //     console.log(source);
-    //     console.log(sourceId);
-    //     console.log(objId);
-    //
-    //
-    //
-    //     console.log(getId(items["spawned"],object));
-    //     console.log(items["spawned"][getId(items["spawned"],object) ]["itemtype"]);
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //     // Handeler for taking items that ARE and ARE NOT in a container
-    //     if (source !== undefined) {
-    //         console.log("source defined i.e. from a container");
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //
-    //         if (itemCheck("itemname", source, loc, "itemlocation") === true) {
-    //             if (itemCheck("itemname", object, sourceId, "itemlocation") === true) {
-    //
-    //
-    //                // items["spawned"][getId(items["spawned"],object) ]["itemtype"]
-    //
-    //
-    //                 switch(items["spawned"][getId(items["spawned"],object) ]["itemtype"]) {
-    //                     case "money":
-    //
-    //                     console.log("CASE: Taking Money from " + sourceId);
-    //
-    //                         player["gold"] += items["spawned"][getId(items["spawned"], inputString)]["quantity"];
-    //                         consolePush("You pickup " + items["spawned"][getId(items["spawned"], inputString)]["quantity"] + " gold pieces","items");
-    //                         delete items["spawned"][getId(items["spawned"], inputString)];
-    //
-    //                         break;
-    //
-    //                     default:
-    //                         console.log("CASE: Taking NOT Money");
-    //
-    //                         moveItem(a[0],["player"]);
-    //                         items["spawned"][objId]["itemlocation"] = "player";
-    //                         consolePush("You take the " + object + " from the " + source,"items");
-    //
-    //
-    //
-    //                 }
-    //
-    //
-    //
-    //
-    //
-    //
-    //             } else {
-    //                 consolePush(object + " not found inside " + source,"error");
-    //             }
-    //
-    //         } else {
-    //             consolePush("There is no " + source + " here.","error");
-    //         }
-    //
-    //
-    //     }
-    //     // else {
-    //     //     console.log("source undefined i.e. not from a container");
-    //     //
-    //     //
-    //     //
-    //     //
-    //     //
-    //     //
-    //     //     switch(items["spawned"][getId(items["spawned"],object) ]["itemtype"]) {
-    //     //         case "money":
-    //     //             console.log("CASE: Taking Money");
-    //     //
-    //     //
-    //     //
-    //     //
-    //     //                                 player["gold"] += items["spawned"][getId(items["spawned"], inputString)]["quantity"];
-    //     //                                 consolePush("You pickup " + items["spawned"][getId(items["spawned"], inputString)]["quantity"] + " gold pieces","items");
-    //     //                                 delete items["spawned"][getId(items["spawned"], inputString)];
-    //     //
-    //     //
-    //     //
-    //     //             break;
-    //     //
-    //     //         default:
-    //     //             console.log("CASE: Taking NOT Money");
-    //     //
-    //     //
-    //     //             if (itemCheck("itemname", object, loc, "itemlocation") === true) {
-    //     //
-    //     //
-    //     //                 moveItem(a[0], ["player"]);
-    //     //                 //items["spawned"][objId]["itemlocation"] = "player";
-    //     //
-    //     //
-    //     //                 consolePush("You take the " + object + " from the " + source, "items");
-    //     //
-    //     //             } else {
-    //     //                 consolePush("I dont see that here","error");
-    //     //
-    //     //             }
-    //     //
-    //     //
-    //     //
-    //     //     }
-    //     //
-    //     // }
-    //
-    //
-    //
-    //
-    // },
-
-
 
     spawn: function() {
 
@@ -1776,43 +1396,20 @@ actions = {
 
 };
 
-// function moveItem(itemname,destination) {
-//
-//     console.log("Moving " + itemname + " to " + destination);
-//     console.log(items["spawned"][getId(items["spawned"],itemname)]);
-//     console.log(destination);
-//
-//
-//
-//     console.log(items["spawned"][getId(items["spawned"],itemname)]["moveable"]);
-//
-//
-//     if (items["spawned"][getId(items["spawned"],itemname)]["moveable"] === true) {
-//         items["spawned"][getId(items["spawned"],itemname)]["itemlocation"] = destination;
-//         consolePush("You take the " + itemname, "items");
-//     } else {
-//         consolePush("You can't move that","error");
-//     }
-//
-// }
-
 
 function moveItem(id,destination) {
 
-
     if (items["spawned"][id]["moveable"] === true) {
+
+        console.log("Taking " + items["spawned"][id]["itemname"]);
+
         items["spawned"][id]["itemlocation"] = destination;
         consolePush("You take the " + items["spawned"][id]["itemname"], "items");
     } else {
         consolePush("You can't move that","error");
     }
 
-
 }
-
-
-
-
 
 move = {
     north: function(){
