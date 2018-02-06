@@ -342,6 +342,14 @@ function game() {
 
 
         sourceId = getId(items["library"],item);
+        // console.log(items["library"]);
+        // console.log(item);
+        // console.log(items["library"][item]);
+        //
+        // console.log(getId(items["library"],item));
+        //
+        // console.log(sourceId);
+
 
         //[containerID[spawnFixed] = ()
 
@@ -896,6 +904,21 @@ function game() {
 
             console.log(mobs["spawned"][mobId]);
 
+
+            spawn("corpse01",1,1,0,0);
+            console.log(spawnCount);
+            console.log(items["spawned"]);
+            corpseId = getId(items["spawned"],"corpse01");
+            console.log(corpseId);
+            console.log(items["spawned"][corpseId]["itemname"]);
+            console.log(mobs["spawned"][mobId]["name"]);
+
+            items["spawned"][corpseId]["itemname"] = mobs["spawned"][mobId]["name"] + " corpse";
+
+            //spawnItem(spawnCount,items["library"]["mobcorpse"],loc,1,1);
+
+
+
             //delete mobs["spawned"][mobId];
 
             consolePush(target["name"] + " is a dead body now","error");
@@ -1161,7 +1184,7 @@ actions = {
     test2: function () {
 
         console.log(items["spawned"]);
-
+        console.log(mobs["spawned"]);
 
     },
 

@@ -46,7 +46,6 @@
 
             //WEAPONS
 
-
             "item0050": {
                 itemname: "rusty dagger",
                 itemlocation: "",
@@ -95,9 +94,6 @@
                 moveable: true
             },
 
-
-
-
             "item5010": {
                 itemname: "morning star",
                 itemlocation: "",
@@ -115,10 +111,7 @@
             },
 
 
-
-
             //ARMOUR
-
 
             "item0020": {
                 itemname: "cloth shirt",
@@ -241,11 +234,6 @@
             },
 
 
-
-
-
-
-
             //MAGIC
 
 
@@ -283,66 +271,8 @@
             //CONTAINERS
 
 
-            "item0091": {
-                itemname: "old wooden chest",
-                itemlocation: "",
-                equipped: false,
-                itemtype: "containerFixed",
-                spawncontents: [
-                    ["healing balm",3],
-                    ["extra healing balm",1]
-                ],
-                contents: "",
-                locked: false,
-                desc: "an old wooden chest",
-                weight: 1,
-                itemLevel: 0,
-                use: "",
-                effect: "",
-                charges: 0,
-                role: ["wizard","warrior","priest"],
-                moveable: false
-            },
 
-            "item0092": {
-                itemname: "red chest",
-                itemlocation: "",
-                equipped: false,
-                itemtype: "containerVariable",
-                spawncontents: [],
-                lootlist: "W",
-                contents: 3,
-                locked: false,
-                desc: "red chest",
-                weight: 1,
-                itemLevel: 1,
-                use: "",
-                effect: "",
-                charges: 0,
-                role: ["wizard","warrior","priest"],
-                moveable: false
-            },
 
-            "item0093": {
-                itemname: "blue purse",
-                itemlocation: "",
-                equipped: false,
-                itemtype: "containerFixed",
-                spawncontents: [
-                    ["gold",100,1000]
-                ],
-                lootlist: "",
-                contents: 0,
-                locked: false,
-                desc: "blue purse",
-                weight: 1,
-                itemLevel: 1,
-                use: "",
-                effect: "",
-                charges: 0,
-                role: ["wizard","warrior","priest"],
-                moveable: true
-            },
 
             "item0094": {
                 itemname: "black chest",
@@ -355,8 +285,6 @@
                     ["healing balm",1,1,,],
                     ["gold",5,10,,],
                     ["steel dagger",1,1,,],
-
-
                 ],
                 variContent: {
                     quantity: 5,
@@ -373,6 +301,36 @@
                 role: ["wizard","warrior","priest"],
                 moveable: false
             },
+
+
+            "corpse01": {
+                itemname: "corpse01",
+                itemlocation: "",
+                equipped: false,
+                itemtype: "container",
+                spawnFixed: true,
+                spawnVari: false,
+                fixedContent: [
+                    ["healing balm",1,1,,],
+                    ["gold",5,10,,],
+                    ["steel dagger",1,1,,],
+                ],
+                variContent: {
+                    quantity: 5,
+                    lootlist: "Z",
+                    lootlevel: 1
+                },
+                locked: false,
+                desc: "a big black chest",
+                weight: 1,
+                itemLevel: 1,
+                use: "",
+                effect: "",
+                charges: 0,
+                role: ["wizard","warrior","priest"],
+                moveable: false
+            },
+
 
 
             "mobcorpse": {
