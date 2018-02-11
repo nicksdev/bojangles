@@ -950,6 +950,8 @@ function game() {
                 rooms[loc]["mobsDefeated"] = true;
                 init(rooms[loc]);
 
+                console.log("IF = " + mobId);
+
             }
 
         }

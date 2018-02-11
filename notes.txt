@@ -3,6 +3,11 @@
 CURRENTLY WORKING ON:
 
 
+BUGS:
+After winning combat, mobs respawn
+
+
+
 MobCorpses:
 + created spawnCorpse function
 - make corpses containers
