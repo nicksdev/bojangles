@@ -4,7 +4,7 @@ CURRENTLY WORKING ON:
 
 
 BUGS:
-After winning combat, mobs respawn
+When mobs are killed, need to remove fromm Spawned list
 
 
 

@@ -60,6 +60,7 @@ function game() {
             rooms[loc]["items"].forEach(function (z) {
                 // console.log(rooms[loc]["items"]);
                 spawn(z[0],z[1],z[2],z[3],z[4]);
+
             });
 
             //Spawn room mobs
@@ -69,6 +70,8 @@ function game() {
 
             });
 
+        } else {
+            consolePush("REINITIALISING A VISITED ROOM");
         }
 
         //Flag room as visited
@@ -911,31 +914,16 @@ function game() {
             corpseId = getId(items["spawned"],"corpse01");
             console.log(corpseId);
             console.log(items["spawned"][corpseId]["itemname"]);
+            console.log(mobs["spawned"][mobId]);
             console.log(mobs["spawned"][mobId]["name"]);
 
             items["spawned"][corpseId]["itemname"] = mobs["spawned"][mobId]["name"] + " corpse";
 
-            //spawnItem(spawnCount,items["library"]["mobcorpse"],loc,1,1);
 
-
-
-            //delete mobs["spawned"][mobId];
+            //REMOVING MOB FROM SPAWNED LIST
+            delete mobs["spawned"][mobId];
 
             consolePush(target["name"] + " is a dead body now","error");
-
-
-
-
-            //spawnCorpse()
-
-            //create corpse
-            // mobname + corpse
-
-
-
-
-
-
 
 
 
@@ -1187,6 +1175,7 @@ actions = {
 
         console.log(items["spawned"]);
         console.log(mobs["spawned"]);
+        console.log(rooms[loc]);
 
     },
 
