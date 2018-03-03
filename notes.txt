@@ -2,16 +2,20 @@
 
 CURRENTLY WORKING ON:
 
+- Add take all function
+
+
 
 BUGS:
-When mobs are killed, need to remove fromm Spawned list
+
 
 
 
 MobCorpses:
 + created spawnCorpse function
-- make corpses containers
++ make corpses containers
 + make containers work (chest?)
++ add ability to trash item and corpses from the game
 
 + spawn chest
 + spawn contents of chest
@@ -20,13 +24,13 @@ MobCorpses:
 + fix bug with multiple items with same name be transferred at same time
 
 - tidy items library and ensure consistent object values
-- containers with contents generated from loot lists
++ containers with contents generated from loot lists
 + create a SPAWN admin function that lists all spawned items, in room as an option
 
 + fix take cuntion to handle non existant items
 + depricate spawnItem
-- fix spawnCorpse
-- drop item fails if you have a duplicate equipped
++ fix spawnCorpse
++ drop item fails if you have a duplicate equipped
 + cant take object from container if it exists in a room
 
 

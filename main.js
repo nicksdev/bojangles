@@ -1398,6 +1398,82 @@ actions = {
 
     },
 
+    trash: function() {
+
+        //take item from <loc> or <container>
+
+
+        //      "item"          "source"
+        //take "itemname" from "container"
+        //take "itemname" from "loc"
+
+        //
+
+        a = inputString.match(/^(.*?)($| from (.*?)$)/); //breaks userInputString into array 'a'
+        a.shift(); //strips the original string from the new array
+
+        item = a[0];
+        source = a[2];
+
+        itemId = getId(items["spawned"], item);
+        sourceId = parseInt(getId(items["spawned"], source));
+
+
+        console.log(item);
+        console.log(source);
+        console.log(itemId);
+        console.log(sourceId);
+
+
+        if (isNaN(sourceId) === true) {
+            //Handle taking objeect from a room
+            console.log("attempting to trash an item from the room");
+
+            //checking item is spawned and in the room
+            if (itemReturn2(items["spawned"],"itemname",item,"itemlocation",loc) === itemId) {
+
+
+
+                if (items["spawned"][itemId]["itemtype"] !== "container") {
+                    console.log(items["spawned"][itemId]["itemtype"]);
+                    console.log("Object found");
+                    console.log("Trashing item");
+                    delete items["spawned"][itemId];
+
+                } else {
+
+                    console.log("Not deleting as its a container");
+                    console.log(items["spawned"][itemId]);
+
+
+                    // Obtain a list of the itemsId's that are inside the container
+                    temparray = objParse(items["spawned"],"itemlocation",itemId);
+
+                    // Delete items in container
+                    for (var i = 0; i < temparray.length; i++) {
+                        console.log(temparray[i]);
+                        delete items["spawned"][temparray[i]];
+                    }
+
+                    // Delete container
+                    delete items["spawned"][itemId];
+
+                }
+
+
+
+                }
+
+
+            } else {
+                //if not found in the room
+                console.log("Object not found in the room");
+
+            }
+
+
+        },
+
     spawn: function() {
 
         console.log("The following items are spawned: ");

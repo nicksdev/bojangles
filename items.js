@@ -309,14 +309,12 @@
                 equipped: false,
                 itemtype: "container",
                 spawnFixed: true,
-                spawnVari: false,
+                spawnVari: true,
                 fixedContent: [
-                    ["healing balm",1,1,,],
                     ["gold",5,10,,],
-                    ["steel dagger",1,1,,],
                 ],
                 variContent: {
-                    quantity: 5,
+                    quantity: 1,
                     lootlist: "Z",
                     lootlevel: 1
                 },
