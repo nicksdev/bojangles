@@ -2,7 +2,7 @@
 
 CURRENTLY WORKING ON:
 
-- Add take all function
+- Fix equip item not workinig
 
 
 

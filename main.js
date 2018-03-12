@@ -13,10 +13,42 @@ function game() {
     var combatFlag = "";
     var status = "normal";
 
-    function gamewindow() {
-        $('#userInput').unbind('keyup');
-        $('#userInput').on("keyup", function (event) {
-            if (event.which === 13) {
+
+    // function gamewindowOLD() {
+    //     $('#userInput').unbind('keyup');
+    //     $('#userInput').on("keyup", function (event) {
+    //         if (event.which === 13) {
+    //             event.preventDefault();
+    //             input = $(this).val().toLowerCase();
+    //             //console.log(input);
+    //             consolePush(input,"default");
+    //             inputSplit(input);
+    //             //console.log("Location = " + loc["name"]);
+    //             console.log("Status = " + status);
+    //             if (actions.hasOwnProperty(inputAction) === true) {
+    //                 //console.log("Recognised Action: " + inputAction);
+    //                 countOne();
+    //                 actions[inputAction]();
+    //             } else if (move.hasOwnProperty(inputAction) === true) {
+    //                 console.log("Recognised Movement " + inputAction);
+    //
+    //                 if (status === "normal") {
+    //                     move[inputAction]();
+    //                 } else if (status === "in combat") {
+    //                     consolePush("You cant leave, you are in combat");
+    //                 }
+    //
+    //             }
+    //         }
+    //     });
+    // }
+
+
+    function gamewindow(){
+        const taskInput = document.getElementById('userInput');
+        taskInput.addEventListener('keydown', runEvent);
+        function runEvent(e) {
+            if (e.which === 13){
                 event.preventDefault();
                 input = $(this).val().toLowerCase();
                 //console.log(input);
@@ -36,10 +68,10 @@ function game() {
                     } else if (status === "in combat") {
                         consolePush("You cant leave, you are in combat");
                     }
-
                 }
+                taskInput.value = '';
             }
-        });
+        }
     }
 
     function consolePush(copy,style) {
@@ -890,9 +922,7 @@ function game() {
     }
 
     function deathHandler(target) {
-
-        console.log("launching deathHandler");
-
+        //console.log("launching deathHandler");
         if (target["name"] === player["name"]) {
             console.log("HANDLING CHARACTER DEATH");
             consolePush("YOU ARE DEAD");
@@ -902,21 +932,14 @@ function game() {
         } else {
             //remove mobs from combatarray and spawned list
             combatArray.splice(combatArray.indexOf(target),1);
+
             mobId = getMobId(mobs["spawned"],target["name"]);
 
+            //spawn corpse
+            spawn(mobs["spawned"][mobId]["corpse"],1,1,0,0);
 
-            console.log(mobs["spawned"][mobId]);
-
-
-            spawn("corpse01",1,1,0,0);
-            console.log(spawnCount);
-            console.log(items["spawned"]);
+            //rename corpse to mob name
             corpseId = getId(items["spawned"],"corpse01");
-            console.log(corpseId);
-            console.log(items["spawned"][corpseId]["itemname"]);
-            console.log(mobs["spawned"][mobId]);
-            console.log(mobs["spawned"][mobId]["name"]);
-
             items["spawned"][corpseId]["itemname"] = mobs["spawned"][mobId]["name"] + " corpse";
 
 
@@ -924,10 +947,6 @@ function game() {
             delete mobs["spawned"][mobId];
 
             consolePush(target["name"] + " is a dead body now","error");
-
-
-
-
 
 
             if (combatArray.length == 1) {
@@ -1127,15 +1146,12 @@ actions = {
 
     equip: function () {
         switch (false) {
-
             case (itemCheck("itemname",inputString,"player","itemlocation")):
                 consolePush("You don't have " + inputString,"error");
                 break;
-
             case (equippedList().includes(getId(items["spawned"], inputString)) != true):
                 consolePush("Already Equipped", "error");
                 break;
-
             case (itemCheck("itemname", inputString, "equip", "use")):
                 consolePush("Not equippable", "error");
                 break;
@@ -1147,17 +1163,67 @@ actions = {
                 break;
             default:
 
-                console.log(equippedList());
 
-                equippedList().forEach(function(id) {
-                    console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
-                    if (items["spawned"][getId(items["spawned"],inputString)]["itemtype"] === items["spawned"][id]["itemtype"]) {
-                        consolePush("You need to unequip something first","error")
-                    } else {
-                        items["spawned"][getId(items["spawned"],inputString)]["equipped"] = true;
-                        consolePush("You equip the " + items["spawned"][getId(items["spawned"],inputString)]["itemname"])
-                    }
-                });
+                // console.log(getId(items["spawned"],inputString));
+                //
+                // console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
+                //
+                // eqType = items["spawned"][getId(items["spawned"],inputString)]["itemtype"];
+                // console.log(eqType);
+
+
+                //create array of equipped objects itemtype
+                temparray = [];
+                for (i = 0; i < equippedList().length ; i++) {
+                    console.log(items["spawned"][equippedList()[i]]["itemtype"]);
+                    temparray.push(items["spawned"][equippedList()[i]]["itemtype"]);
+                }
+                console.log(temparray);
+
+
+console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
+
+            function checkIt(currentValue){
+                console.log(currentValue);
+                return currentValue !== items["spawned"][getId(items["spawned"],inputString)]["itemtype"];
+
+
+            }
+
+
+
+            //Equiipped list function returns an array pf id's not objects. Need to chesk an object value - ie itemtype
+
+
+            if (temparray.every(checkIt) === true) {
+
+                consolePush("You equip something");
+                items["spawned"][getId(items["spawned"],inputString)]["equipped"] = true;
+
+                //EQUIPPING NOT WORKING
+
+            } else {
+                 consolePush("You will need to unequip something first","error")
+            }
+
+
+
+
+
+
+
+                //console.log(equippedList());
+                // equippedList().forEach(function(id) {
+                //     console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
+                //     if (items["spawned"][getId(items["spawned"],inputString)]["itemtype"] === items["spawned"][id]["itemtype"]) {
+                //         consolePush("You need to unequip something first","error");
+                //     } else {
+                //         //BUG HERE - is equipping even if a matching type is already equipped. Parses the list and fails when it finds a match but keeps parsing and equips when it finds an item type that DOES NOT match.
+                //         console.log("EQUIPPPING NOW");
+                //         items["spawned"][getId(items["spawned"],inputString)]["equipped"] = true;
+                //         consolePush("You equip the " + items["spawned"][getId(items["spawned"],inputString)]["itemname"])
+                //     }
+                // });
         }
 
     },
@@ -1183,10 +1249,16 @@ actions = {
 
 
 
-        console.log(loot["W"]);
-        console.log(loot["W"]["1"]);
+       console.log(equippedList());
+
+       function checkIt(currentValue){
+           return currentValue !== "item0051"
+       }
+
+       console.log(equippedList().every(checkIt));
 
 
+    console.log(equippedList()[1]);
 
 
 
@@ -1301,98 +1373,158 @@ actions = {
         sourceId = parseInt(getId(items["spawned"], source));
 
 
+        console.log(item + source + itemId, sourceId);
+
+
+
+
         console.log(item);
         console.log(source);
         console.log(itemId);
         console.log(sourceId);
 
 
+
+
+
+
         if (isNaN(sourceId) === true) {
             //Handle taking objeect from a room
             console.log("taking an item from the room");
 
-            //checking item is spawned and in the room
-            if (itemReturn2(items["spawned"],"itemname",item,"itemlocation",loc) === itemId) {
-                console.log("Object found");
-                switch (items["spawned"][itemId]["itemtype"]) {
-                    case "money":
-                        console.log("Picking up money from room");
-                        //money handler
+            if (item === "all") {
+                console.log("Attempting to take everything in the room that is moveable");
 
+                //create array of item id's in the room which are moveable.
+                temparray = objParse2(items["spawned"],"itemlocation",loc,"moveable",true);
 
-                        player["gold"] += items["spawned"][itemId]["quantity"];
-                        consolePush("You pickup " + items["spawned"][itemId]["quantity"] + " gold pieces","items");
-                        delete items["spawned"][itemId];
-
-
-
-
-                        break;
-
-                    default:
-                        console.log("Picking up items from room");
-                        //item handler
-                        moveItem(itemId,["player"]);
-
-
+                // Take all the items in the array
+                for (var i = 0; i < temparray.length; i++) {
+                    moveItem(temparray[i],"player")
                 }
 
-
             } else {
-            //if not found in the room
-                console.log("Object not found in the room");
 
-            }
-
-
-        } else {
-            //Handle taking object from a container
-            console.log("taking an item from a container");
-            console.log(objParse(items["spawned"],"itemname",item));
-
-
-
-            console.log(rooms[loc]["items"]);
-            console.log(items["spawned"]);
-
-            //parse all spawned object of itemane
-            objParse(items["spawned"],"itemname",item).forEach(function (w) {
-
-
-                //if item with matching source is found
-                if (items["spawned"][w]["itemlocation"] === sourceId) {
-                    console.log("Object found in container");
-                    console.log(items["spawned"][w]);
-
-                    // console.log(typeof sourceId);
-                    // console.log(typeof items["spawned"][w]["itemlocation"]);
-                    // console.log("SUCCESS");
-                    // console.log(items["spawned"][w]);
-
+                //checking item is spawned and in the room
+                if (itemReturn2(items["spawned"],"itemname",item,"itemlocation",loc) === itemId) {
+                    console.log("Object found");
                     switch (items["spawned"][itemId]["itemtype"]) {
                         case "money":
-                            console.log("Picking up money from container");
+                            console.log("Picking up money from room");
                             //money handler
+
 
                             player["gold"] += items["spawned"][itemId]["quantity"];
                             consolePush("You pickup " + items["spawned"][itemId]["quantity"] + " gold pieces","items");
                             delete items["spawned"][itemId];
 
+
+
+
                             break;
 
                         default:
-                            console.log("Picking up items from container");
-
+                            console.log("Picking up items from room");
                             //item handler
-                            moveItem(w,["player"]);
+                            moveItem(itemId,["player"]);
+
+
                     }
 
+
                 } else {
-                    console.log("FAILURE");
-                    console.log("Object NOT found in container");
+                    //if not found in the room
+                    console.log("Object not found in the room");
+
                 }
 
-            } );
+
+            }
+
+
+
+
+
+
+
+
+
+
+        } else {
+            //Handle taking object from a container
+
+            if (item === "all") {
+
+                //console.log("Attempting to take everything from a container that is moveable");
+
+                //create array of item id's in the container which are moveable.
+                temparray = objParse2(items["spawned"],"itemlocation",sourceId,"moveable,true");
+
+                // Take all the items in the array
+                for (var i = 0; i < temparray.length; i++) {
+                    moveItem(temparray[i],"player")
+                }
+
+            } else {
+
+                console.log("taking a single item from a container");
+                console.log(objParse(items["spawned"],"itemname",item));
+
+
+
+                console.log(rooms[loc]["items"]);
+                console.log(items["spawned"]);
+
+                //parse all spawned object of itemane
+                objParse(items["spawned"],"itemname",item).forEach(function (w) {
+
+
+                    //if item with matching source is found
+                    if (items["spawned"][w]["itemlocation"] === sourceId) {
+                        console.log("Object found in container");
+                        console.log(items["spawned"][w]);
+
+                        // console.log(typeof sourceId);
+                        // console.log(typeof items["spawned"][w]["itemlocation"]);
+                        // console.log("SUCCESS");
+                        // console.log(items["spawned"][w]);
+
+                        switch (items["spawned"][itemId]["itemtype"]) {
+                            case "money":
+                                console.log("Picking up money from container");
+                                //money handler
+
+                                player["gold"] += items["spawned"][itemId]["quantity"];
+                                consolePush("You pickup " + items["spawned"][itemId]["quantity"] + " gold pieces","items");
+                                delete items["spawned"][itemId];
+
+                                break;
+
+                            default:
+                                console.log("Picking up items from container");
+
+                                //item handler
+                                moveItem(w,["player"]);
+                        }
+
+                    } else {
+                        console.log("FAILURE");
+                        console.log("Object NOT found in container");
+                    }
+
+                } );
+
+
+            }
+
+
+
+
+
+
+
+
+
 
         }
 

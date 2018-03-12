@@ -33,6 +33,20 @@
                 defence: 1,
                 role: ["priest","warrior","wizard"],
                 moveable: true
+            },
+
+            "item0055": {
+                itemname: "leather shirt",
+                    itemlocation: "player",
+                    equipped: false,
+                    itemtype: "chest",
+                    desc: "a flimsy shirt that provides almost no protection",
+                    weight: 2,
+                    itemLevel: 0,
+                    use: "equip",
+                    defence: 2,
+                    role: ["warrior","priest"],
+                    moveable: true
             }
 
 
@@ -478,7 +492,7 @@
                 melee: "claws",
                 spells: [],
                 special: [],
-                lootlist: "Z"
+                corpse: "corpse01"
             },
 
             "mob0002": {
@@ -498,7 +512,7 @@
                 melee: "bite",
                 spells: [],
                 special: [],
-                lootlist: "Z2"
+                corpse: "corpse01"
             },
 
         },
