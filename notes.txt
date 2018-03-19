@@ -2,11 +2,19 @@
 
 CURRENTLY WORKING ON:
 
-- Fix equip item not workinig
-
 
 
 BUGS:
+
+
+
+
+OUSTANDING FEATURES
+
+Combat Order
+Magic
+Lockable items
+Pets
 
 
 

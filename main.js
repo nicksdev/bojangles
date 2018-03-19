@@ -13,6 +13,8 @@ function game() {
     var combatFlag = "";
     var status = "normal";
 
+    const spawnedItems = items["spawned"];
+
 
     // function gamewindowOLD() {
     //     $('#userInput').unbind('keyup');
@@ -86,7 +88,6 @@ function game() {
 
     function init(location) {
 
-
         if (rooms[loc]["visited"] === false) {
             //Spawn room items
             rooms[loc]["items"].forEach(function (z) {
@@ -99,7 +100,6 @@ function game() {
             rooms[loc]["mobs"].forEach(function (z) {
                 // console.log(z);
                 spawnMob(z[0], loc);
-
             });
 
         } else {
@@ -163,8 +163,8 @@ function game() {
     //OBJECT MANAGEMENT
     function changeLoc(id,loc) {
         console.log(id);
-        console.log(items["spawned"][id]);
-        items["spawned"][id]["itemlocation"] = loc;
+        console.log(spawnedItems[id]);
+        spawnedItems[id]["itemlocation"] = loc;
 
     }
 
@@ -257,7 +257,7 @@ function game() {
 
     function itemCheck(field,lookup,value,peram) {
         var result = false;
-        _.forEach(items["spawned"], function(i) {
+        _.forEach(spawnedItems, function(i) {
             if (result) {
                 return;
             }
@@ -284,8 +284,8 @@ function game() {
             // console.log(value);
             // console.log(obj[key][peram2]);
             // console.log(value2);
-            // console.log(items["spawned"][key]["itemtype"]);
-            // console.log(items["spawned"][key]["equipped"]);
+            // console.log(spawnedItems[key]["itemtype"]);
+            // console.log(spawnedItems[key]["equipped"]);
             if (obj[key][peram] == value && obj[key][peram2] == value2) {
 
                 // console.log("MATCH");
@@ -328,18 +328,18 @@ function game() {
     function invList() {
 
 
-        return objParse2(items["spawned"],"itemlocation","player","equipped",false)
+        return objParse2(spawnedItems,"itemlocation","player","equipped",false)
     }
 
     function equippedList() {
-        return objParse2(items["spawned"],"itemlocation","player","equipped",true)
+        return objParse2(spawnedItems,"itemlocation","player","equipped",true)
     }
 
     function displayItems() {
 
         consolePush("This room contains: ");
-        for (var i = 0; i < objParse(items["spawned"], "itemlocation", loc).length; i++) {
-            consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", loc)[i]]["itemname"], "items");
+        for (var i = 0; i < objParse(spawnedItems, "itemlocation", loc).length; i++) {
+            consolePush(spawnedItems[objParse(spawnedItems, "itemlocation", loc)[i]]["itemname"], "items");
         }
 
     }
@@ -348,10 +348,28 @@ function game() {
         consolePush("The " + inputString + " contains: ");
 
 
-        for (var i = 0; i < objParse(items["spawned"], "itemlocation", ident).length; i++) {
-            consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", ident)[i]]["itemname"], "items");
+        for (var i = 0; i < objParse(spawnedItems, "itemlocation", ident).length; i++) {
+            consolePush(spawnedItems[objParse(spawnedItems, "itemlocation", ident)[i]]["itemname"], "items");
         }
 
+
+    }
+
+    function checkIt(currentValue){
+        return currentValue !== spawnedItems[getId(spawnedItems,inputString)]["itemtype"];
+    }
+
+    function moveItem(id,destination) {
+
+        if (spawnedItems[id]["moveable"] === true) {
+
+            console.log("Taking " + spawnedItems[id]["itemname"]);
+
+            spawnedItems[id]["itemlocation"] = destination;
+            consolePush("You take the " + spawnedItems[id]["itemname"], "items");
+        } else {
+            consolePush("You can't move that","error");
+        }
 
     }
 
@@ -369,26 +387,9 @@ function game() {
 
 
     //SPAWN STUFF
-
-    spawn = function(item,qtyLow,qtyHi,percLow,percHi) {
-
-
-        //console.log("Spawning + " + item);
-
-
+    function spawn(item,qtyLow,qtyHi,percLow,percHi){
         sourceId = getId(items["library"],item);
-        // console.log(items["library"]);
-        // console.log(item);
-        // console.log(items["library"][item]);
-        //
-        // console.log(getId(items["library"],item));
-        //
-        // console.log(sourceId);
 
-
-        //[containerID[spawnFixed] = ()
-
-        // console.log(items["library"][sourceId]["itemtype"]);
 
         switch(items["library"][sourceId]["itemtype"]) {
 
@@ -399,11 +400,11 @@ function game() {
 
                 // console.log("TestContainerID = " + containerID);
 
-                if (items["spawned"][containerID]["spawnFixed"] === true) {
+                if (spawnedItems[containerID]["spawnFixed"] === true) {
                     // console.log("Spawning the Containers Fixed Content");
-                    items["spawned"][containerID]["fixedContent"].forEach(function (z) {
+                    spawnedItems[containerID]["fixedContent"].forEach(function (z) {
 
-                    // console.log(items["library"][sourceId]["itemtype"]);
+                        // console.log(items["library"][sourceId]["itemtype"]);
 
 
 
@@ -432,16 +433,16 @@ function game() {
                 }
 
 
-                if (items["spawned"][containerID]["spawnVari"] === true) {
+                if (spawnedItems[containerID]["spawnVari"] === true) {
 
 
                     console.log("Spawning the Containers Variable Content");
 
                     //Spawn contents of the container
 
-                    lootlist = items["spawned"][containerID]["variContent"]["lootlist"];
-                    lootqty = items["spawned"][containerID]["variContent"]["quantity"];
-                    lootlevel = items["spawned"][containerID]["variContent"]["lootlevel"];
+                    lootlist = spawnedItems[containerID]["variContent"]["lootlist"];
+                    lootqty = spawnedItems[containerID]["variContent"]["quantity"];
+                    lootlevel = spawnedItems[containerID]["variContent"]["lootlevel"];
 
                     for (z = 0; z < lootqty; z++) {
                         random = Math.floor(Math.random() * 100);
@@ -470,7 +471,7 @@ function game() {
                                 if (x >= k[0] && x <= k[1]) {
 
                                     // console.log("SPAWNING " + k[2] + "CONTAINER CONTENTSs");
-                                    console.log(items["spawned"][containerID]);
+                                    console.log(spawnedItems[containerID]);
                                     spawnNew(k[2], containerID, k[3], k[4]);
 
                                 }
@@ -482,25 +483,25 @@ function game() {
 
                 }
 
-                    break;
+                break;
 
 
 
 
-                case "money":
+            case "money":
 
-                    console.log(items["library"][sourceId]["itemtype"]);
+                console.log(items["library"][sourceId]["itemtype"]);
 
-                    spawnGold(spawnCount,"item0002",loc,qtyLow,qtyHi);
-
-
+                spawnGold(spawnCount,"item0002",loc,qtyLow,qtyHi);
 
 
-                    // items["spawned"][spawnCount] = jQuery.extend({}, items["library"]["item0002"]);
-                    // items["spawned"][spawnCount]["itemlocation"] = loc;
 
 
-                    break;
+                // spawnedItems[spawnCount] = jQuery.extend({}, items["library"]["item0002"]);
+                // spawnedItems[spawnCount]["itemlocation"] = loc;
+
+
+                break;
 
 
             default:
@@ -508,12 +509,16 @@ function game() {
                 spawnItem(spawnCount,sourceId,loc,qtyLow,qtyHi);
 
 
-                }
+        }
 
 
-        };
 
-    spawnItem = function(id,source,loc,minQ,maxQ) {
+
+
+
+    }
+
+    function spawnItem(id,source,loc,minQ,maxQ) {
 
         // console.log("Spawning + " + items["library"][source]["itemname"]);
 
@@ -532,16 +537,16 @@ function game() {
 
             // console.log(id);
             id = spawnCount;
-            items["spawned"][id] = jQuery.extend({}, items["library"][source]);
-            items["spawned"][id]["itemlocation"] = loc;
+            spawnedItems[id] = jQuery.extend({}, items["library"][source]);
+            spawnedItems[id]["itemlocation"] = loc;
             spawnCount++;
 
         }
 
 
-   };
+   }
 
-    spawnGold = function(id,source,loc,minQ,maxQ) {
+    function spawnGold(id,source,loc,minQ,maxQ) {
 
         //create pile of gold
         // pile of gold quantity = quantity
@@ -555,18 +560,18 @@ function game() {
         quantity = minQ + Math.floor(Math.random() * diff);
 
 
-        items["spawned"][id] = jQuery.extend({}, items["library"]["item0002"]);
-        items["spawned"][id]["itemlocation"] = loc;
-        items["spawned"][id]["quantity"] = quantity;
+        spawnedItems[id] = jQuery.extend({}, items["library"]["item0002"]);
+        spawnedItems[id]["itemlocation"] = loc;
+        spawnedItems[id]["quantity"] = quantity;
 
         spawnCount++;
 
 
 
 
-    };
+    }
 
-    spawnNew = function (item,loc,quantity,min) {
+    function spawnNew(item,loc,quantity,min) {
 
         sourceId = getId(items["library"],item);
 
@@ -574,13 +579,13 @@ function game() {
             case "containerFixed":
                 console.log("Spawning Container Fixed");
 
-                items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
-                items["spawned"][spawnCount]["itemlocation"] = loc;
+                spawnedItems[spawnCount] = jQuery.extend({}, items["library"][sourceId]);
+                spawnedItems[spawnCount]["itemlocation"] = loc;
                 containerID = spawnCount;
                 spawnCount++;
 
                 //Spawn contents of the container
-                items["spawned"][containerID]["spawncontents"].forEach(function (z) {
+                spawnedItems[containerID]["spawncontents"].forEach(function (z) {
                         spawnNew(z[0], containerID, z[1], z[2]);
 
 
@@ -592,16 +597,16 @@ function game() {
 
                 // console.log("Spawning Container Variable");
 
-                items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
-                items["spawned"][spawnCount]["itemlocation"] = loc;
+                spawnedItems[spawnCount] = jQuery.extend({}, items["library"][sourceId]);
+                spawnedItems[spawnCount]["itemlocation"] = loc;
                 containerID = spawnCount;
                 spawnCount++;
 
                 //Spawn contents of the container
 
-                lootlist = items["spawned"][containerID]["lootlist"];
-                lootqty = items["spawned"][containerID]["contents"];
-                lootlevel = items["spawned"][containerID]["itemLevel"];
+                lootlist = spawnedItems[containerID]["lootlist"];
+                lootqty = spawnedItems[containerID]["contents"];
+                lootlevel = spawnedItems[containerID]["itemLevel"];
 
 
                 //Iterate over container quantity
@@ -618,7 +623,7 @@ function game() {
                         if (x >= k[0] && x <= k[1]) {
 
                             // console.log("SPAWNING " + k[2] + "CONTAINER CONTENTSs");
-                            console.log(items["spawned"][containerID]);
+                            console.log(spawnedItems[containerID]);
                             spawnNew(k[2],containerID,k[3],k[4]);
 
                         }
@@ -633,11 +638,11 @@ function game() {
                 break;
 
             case "money":
-                items["spawned"][spawnCount] = jQuery.extend({}, items["library"]["item0002"]);
-                items["spawned"][spawnCount]["itemlocation"] = loc;
+                spawnedItems[spawnCount] = jQuery.extend({}, items["library"]["item0002"]);
+                spawnedItems[spawnCount]["itemlocation"] = loc;
                 diff = quantity - min;
                 value = min + Math.floor(Math.random() * diff);
-                items["spawned"][spawnCount]["quantity"] = value;
+                spawnedItems[spawnCount]["quantity"] = value;
                 spawnCount++;
 
                 break;
@@ -650,8 +655,8 @@ function game() {
                 for (i = 0; i < quantity; i++) {                //Loop handles multiple quantities
 
                    // console.log("Spawning normal item " + items["library"][sourceId]["itemname"]);
-                    items["spawned"][spawnCount] = jQuery.extend({}, items["library"][sourceId]);
-                    items["spawned"][spawnCount]["itemlocation"] = loc;
+                    spawnedItems[spawnCount] = jQuery.extend({}, items["library"][sourceId]);
+                    spawnedItems[spawnCount]["itemlocation"] = loc;
                     spawnCount++;
 
                 }
@@ -660,16 +665,16 @@ function game() {
 
     }
 
-    spawnCorpse = function(name,level) {
-
-        console.log("spawning corpse");
-        items["spawned"][spawnCount] = items["library"]["mobcorpse"];
-        items["spawned"][spawnCount]["itemlocation"] = loc;
-        items["spawned"][spawnCount]["itemname"] = name + " corpse";
-
-        console.log(items["spawned"]);
-        spawnCount++;
-    };
+    // function spawnCorpse(name,level) {
+    //
+    //     console.log("spawning corpse");
+    //     spawnedItems[spawnCount] = items["library"]["mobcorpse"];
+    //     spawnedItems[spawnCount]["itemlocation"] = loc;
+    //     spawnedItems[spawnCount]["itemname"] = name + " corpse";
+    //
+    //     console.log(spawnedItems);
+    //     spawnCount++;
+    // }
 
     function spawnMob(mob,loc) {
         // console.log(mob);
@@ -939,8 +944,8 @@ function game() {
             spawn(mobs["spawned"][mobId]["corpse"],1,1,0,0);
 
             //rename corpse to mob name
-            corpseId = getId(items["spawned"],"corpse01");
-            items["spawned"][corpseId]["itemname"] = mobs["spawned"][mobId]["name"] + " corpse";
+            corpseId = getId(spawnedItems,"corpse01");
+            spawnedItems[corpseId]["itemname"] = mobs["spawned"][mobId]["name"] + " corpse";
 
 
             //REMOVING MOB FROM SPAWNED LIST
@@ -1055,7 +1060,7 @@ function game() {
     }
 
     function ownedList() {
-        return objParse(items["spawned"],"itemlocation","player")
+        return objParse(spawnedItems,"itemlocation","player")
     }
 
 
@@ -1064,9 +1069,9 @@ actions = {
     attack: function () {
 
       target = targetObj(inputString);
-      weapon = items["spawned"][itemReturn2(items["spawned"],"itemtype","weapon","equipped",true)];
+      weapon = spawnedItems[itemReturn2(spawnedItems,"itemtype","weapon","equipped",true)];
 
-        //console.log(itemReturn2(items["spawned"],"itemtype","weapon","equipped",true));
+        //console.log(itemReturn2(spawnedItems,"itemtype","weapon","equipped",true));
 
       consolePush("YOU ATTACK THE " + target["name"] + " with your " + weapon["itemname"],"combatPlayer");
 
@@ -1082,8 +1087,8 @@ actions = {
     look: function () {
         consolePush("You look");
         consolePush(rooms[loc]["copy"]["default"]);
-        // for (var i = 0; i < objParse(items["spawned"], "itemlocation", loc).length; i++) {
-        //     consolePush(items["spawned"][objParse(items["spawned"], "itemlocation", loc)[i]]["itemname"], "items");
+        // for (var i = 0; i < objParse(spawnedItems, "itemlocation", loc).length; i++) {
+        //     consolePush(spawnedItems[objParse(spawnedItems, "itemlocation", loc)[i]]["itemname"], "items");
         // }
 
         for (var i = 0; i < mobParse(mobs["spawned"], "location", loc).length; i++) {
@@ -1113,12 +1118,12 @@ actions = {
 
         consolePush("You have the following equipped:");
         for (var i = 0; i < equippedList().length; i++) {
-            consolePush(items["spawned"][equippedList()[i]]["itemname"], "items");
+            consolePush(spawnedItems[equippedList()[i]]["itemname"], "items");
         }
 
         consolePush("You are carrying the following:");
         for (var i = 0; i < invList().length; i++) {
-            consolePush(items["spawned"][invList()[i]]["itemname"], "items");
+            consolePush(spawnedItems[invList()[i]]["itemname"], "items");
         }
     },
 
@@ -1127,15 +1132,15 @@ actions = {
         // check to if item in unequipped
         //change location to room
 
-    itemID = itemReturn2(items["spawned"],"itemname",inputString,"itemlocation","player");
+    itemID = itemReturn2(spawnedItems,"itemname",inputString,"itemlocation","player");
 
     if (itemID !== null) {
 
-        if (items["spawned"][itemID]["equipped"] === true) {
+        if (spawnedItems[itemID]["equipped"] === true) {
             consolePush("Remove the item first","error")
         } else {
             changeLoc(itemID,loc);
-            consolePush("You drop the " + items["spawned"][itemID]["itemname"])
+            consolePush("You drop the " + spawnedItems[itemID]["itemname"])
         }
 
     } else {
@@ -1149,88 +1154,44 @@ actions = {
             case (itemCheck("itemname",inputString,"player","itemlocation")):
                 consolePush("You don't have " + inputString,"error");
                 break;
-            case (equippedList().includes(getId(items["spawned"], inputString)) != true):
+            case (equippedList().includes(getId(spawnedItems, inputString)) != true):
                 consolePush("Already Equipped", "error");
                 break;
             case (itemCheck("itemname", inputString, "equip", "use")):
                 consolePush("Not equippable", "error");
                 break;
-            case (fetchValue(items["spawned"], "itemname", inputString, "role").includes(player["role"])):
+            case (fetchValue(spawnedItems, "itemname", inputString, "role").includes(player["role"])):
                 consolePush("Wrong Class", "error");
                 break;
-            case (fetchValue(items["spawned"], "itemname", inputString, "itemLevel") <= player["level"]):
+            case (fetchValue(spawnedItems, "itemname", inputString, "itemLevel") <= player["level"]):
                 consolePush("Wrong Level", "error");
                 break;
             default:
 
 
-                // console.log(getId(items["spawned"],inputString));
-                //
-                // console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
-                //
-                // eqType = items["spawned"][getId(items["spawned"],inputString)]["itemtype"];
-                // console.log(eqType);
-
-
                 //create array of equipped objects itemtype
                 temparray = [];
                 for (i = 0; i < equippedList().length ; i++) {
-                    console.log(items["spawned"][equippedList()[i]]["itemtype"]);
-                    temparray.push(items["spawned"][equippedList()[i]]["itemtype"]);
+                    console.log(spawnedItems[equippedList()[i]]["itemtype"]);
+                    temparray.push(spawnedItems[equippedList()[i]]["itemtype"]);
                 }
-                console.log(temparray);
 
-
-console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
-
-            function checkIt(currentValue){
-                console.log(currentValue);
-                return currentValue !== items["spawned"][getId(items["spawned"],inputString)]["itemtype"];
-
-
-            }
-
-
-
-            //Equiipped list function returns an array pf id's not objects. Need to chesk an object value - ie itemtype
-
+                //Check the array to see if ANY matches, all pass = true
 
             if (temparray.every(checkIt) === true) {
-
-                consolePush("You equip something");
-                items["spawned"][getId(items["spawned"],inputString)]["equipped"] = true;
-
-                //EQUIPPING NOT WORKING
-
+                const equipId = itemReturn2(spawnedItems,"itemname",inputString,"itemlocation","player");
+                spawnedItems[equipId].equipped = true;
+                consolePush("You equip the " + spawnedItems[equipId].itemname);
             } else {
                  consolePush("You will need to unequip something first","error")
             }
-
-
-
-
-
-
-
-                //console.log(equippedList());
-                // equippedList().forEach(function(id) {
-                //     console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
-                //     if (items["spawned"][getId(items["spawned"],inputString)]["itemtype"] === items["spawned"][id]["itemtype"]) {
-                //         consolePush("You need to unequip something first","error");
-                //     } else {
-                //         //BUG HERE - is equipping even if a matching type is already equipped. Parses the list and fails when it finds a match but keeps parsing and equips when it finds an item type that DOES NOT match.
-                //         console.log("EQUIPPPING NOW");
-                //         items["spawned"][getId(items["spawned"],inputString)]["equipped"] = true;
-                //         consolePush("You equip the " + items["spawned"][getId(items["spawned"],inputString)]["itemname"])
-                //     }
-                // });
         }
 
     },
 
     unequip: function () {
-        if (equippedList().includes(getId(items["spawned"], inputString)) === true) {
-            items["spawned"][getId(items["spawned"],inputString)]["equipped"] = false;
+        if (equippedList().includes(getId(spawnedItems, inputString)) === true) {
+            spawnedItems[getId(spawnedItems,inputString)]["equipped"] = false;
             consolePush("You remove " + inputString);
         } else {
             consolePush("You don't have that item equipped","error")
@@ -1239,7 +1200,7 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
 
     test2: function () {
 
-        console.log(items["spawned"]);
+        console.log(spawnedItems);
         console.log(mobs["spawned"]);
         console.log(rooms[loc]);
 
@@ -1247,20 +1208,7 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
 
     test: function () {
 
-
-
-       console.log(equippedList());
-
-       function checkIt(currentValue){
-           return currentValue !== "item0051"
-       }
-
-       console.log(equippedList().every(checkIt));
-
-
-    console.log(equippedList()[1]);
-
-
+        console.table(spawnedItems);
 
     },
 
@@ -1294,7 +1242,7 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
 
 
 
-        id = getId(items["spawned"], a[0]);
+        id = getId(spawnedItems, a[0]);
 
 
         target = a[2];
@@ -1318,7 +1266,7 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
 
                 //applyEffect(effect,target,source)
 
-                applyEffect(items["spawned"][id]["effect"],target,items["spawned"][id]);
+                applyEffect(spawnedItems[id]["effect"],target,spawnedItems[id]);
 
 
                 if (status === "in combat") {
@@ -1346,7 +1294,7 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
     search: function() {
         if (itemCheck("itemname", inputString, loc, "itemlocation") === true) {
             consolePush("I search the " + inputString);
-            displayContents(getId(items["spawned"],inputString));
+            displayContents(getId(spawnedItems,inputString));
         } else {
             consolePush("I don't see the " + inputString + " here","error");
         }
@@ -1369,8 +1317,8 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
         item = a[0];
         source = a[2];
 
-        itemId = getId(items["spawned"], item);
-        sourceId = parseInt(getId(items["spawned"], source));
+        itemId = getId(spawnedItems, item);
+        sourceId = parseInt(getId(spawnedItems, source));
 
 
         console.log(item + source + itemId, sourceId);
@@ -1396,7 +1344,7 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
                 console.log("Attempting to take everything in the room that is moveable");
 
                 //create array of item id's in the room which are moveable.
-                temparray = objParse2(items["spawned"],"itemlocation",loc,"moveable",true);
+                temparray = objParse2(spawnedItems,"itemlocation",loc,"moveable",true);
 
                 // Take all the items in the array
                 for (var i = 0; i < temparray.length; i++) {
@@ -1406,17 +1354,17 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
             } else {
 
                 //checking item is spawned and in the room
-                if (itemReturn2(items["spawned"],"itemname",item,"itemlocation",loc) === itemId) {
+                if (itemReturn2(spawnedItems,"itemname",item,"itemlocation",loc) === itemId) {
                     console.log("Object found");
-                    switch (items["spawned"][itemId]["itemtype"]) {
+                    switch (spawnedItems[itemId]["itemtype"]) {
                         case "money":
                             console.log("Picking up money from room");
                             //money handler
 
 
-                            player["gold"] += items["spawned"][itemId]["quantity"];
-                            consolePush("You pickup " + items["spawned"][itemId]["quantity"] + " gold pieces","items");
-                            delete items["spawned"][itemId];
+                            player["gold"] += spawnedItems[itemId]["quantity"];
+                            consolePush("You pickup " + spawnedItems[itemId]["quantity"] + " gold pieces","items");
+                            delete spawnedItems[itemId];
 
 
 
@@ -1458,7 +1406,7 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
                 //console.log("Attempting to take everything from a container that is moveable");
 
                 //create array of item id's in the container which are moveable.
-                temparray = objParse2(items["spawned"],"itemlocation",sourceId,"moveable,true");
+                temparray = objParse2(spawnedItems,"itemlocation",sourceId,"moveable,true");
 
                 // Take all the items in the array
                 for (var i = 0; i < temparray.length; i++) {
@@ -1468,35 +1416,35 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
             } else {
 
                 console.log("taking a single item from a container");
-                console.log(objParse(items["spawned"],"itemname",item));
+                console.log(objParse(spawnedItems,"itemname",item));
 
 
 
                 console.log(rooms[loc]["items"]);
-                console.log(items["spawned"]);
+                console.log(spawnedItems);
 
                 //parse all spawned object of itemane
-                objParse(items["spawned"],"itemname",item).forEach(function (w) {
+                objParse(spawnedItems,"itemname",item).forEach(function (w) {
 
 
                     //if item with matching source is found
-                    if (items["spawned"][w]["itemlocation"] === sourceId) {
+                    if (spawnedItems[w]["itemlocation"] === sourceId) {
                         console.log("Object found in container");
-                        console.log(items["spawned"][w]);
+                        console.log(spawnedItems[w]);
 
                         // console.log(typeof sourceId);
-                        // console.log(typeof items["spawned"][w]["itemlocation"]);
+                        // console.log(typeof spawnedItems[w]["itemlocation"]);
                         // console.log("SUCCESS");
-                        // console.log(items["spawned"][w]);
+                        // console.log(spawnedItems[w]);
 
-                        switch (items["spawned"][itemId]["itemtype"]) {
+                        switch (spawnedItems[itemId]["itemtype"]) {
                             case "money":
                                 console.log("Picking up money from container");
                                 //money handler
 
-                                player["gold"] += items["spawned"][itemId]["quantity"];
-                                consolePush("You pickup " + items["spawned"][itemId]["quantity"] + " gold pieces","items");
-                                delete items["spawned"][itemId];
+                                player["gold"] += spawnedItems[itemId]["quantity"];
+                                consolePush("You pickup " + spawnedItems[itemId]["quantity"] + " gold pieces","items");
+                                delete spawnedItems[itemId];
 
                                 break;
 
@@ -1547,8 +1495,8 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
         item = a[0];
         source = a[2];
 
-        itemId = getId(items["spawned"], item);
-        sourceId = parseInt(getId(items["spawned"], source));
+        itemId = getId(spawnedItems, item);
+        sourceId = parseInt(getId(spawnedItems, source));
 
 
         console.log(item);
@@ -1562,33 +1510,33 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
             console.log("attempting to trash an item from the room");
 
             //checking item is spawned and in the room
-            if (itemReturn2(items["spawned"],"itemname",item,"itemlocation",loc) === itemId) {
+            if (itemReturn2(spawnedItems,"itemname",item,"itemlocation",loc) === itemId) {
 
 
 
-                if (items["spawned"][itemId]["itemtype"] !== "container") {
-                    console.log(items["spawned"][itemId]["itemtype"]);
+                if (spawnedItems[itemId]["itemtype"] !== "container") {
+                    console.log(spawnedItems[itemId]["itemtype"]);
                     console.log("Object found");
                     console.log("Trashing item");
-                    delete items["spawned"][itemId];
+                    delete spawnedItems[itemId];
 
                 } else {
 
                     console.log("Not deleting as its a container");
-                    console.log(items["spawned"][itemId]);
+                    console.log(spawnedItems[itemId]);
 
 
                     // Obtain a list of the itemsId's that are inside the container
-                    temparray = objParse(items["spawned"],"itemlocation",itemId);
+                    temparray = objParse(spawnedItems,"itemlocation",itemId);
 
                     // Delete items in container
                     for (var i = 0; i < temparray.length; i++) {
                         console.log(temparray[i]);
-                        delete items["spawned"][temparray[i]];
+                        delete spawnedItems[temparray[i]];
                     }
 
                     // Delete container
-                    delete items["spawned"][itemId];
+                    delete spawnedItems[itemId];
 
                 }
 
@@ -1609,7 +1557,7 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
     spawn: function() {
 
         console.log("The following items are spawned: ");
-        console.log(items["spawned"]);
+        console.log(spawnedItems);
         console.log(mobs["spawned"]);
 
 
@@ -1619,19 +1567,6 @@ console.log(items["spawned"][getId(items["spawned"],inputString)]["itemtype"]);
 };
 
 
-function moveItem(id,destination) {
-
-    if (items["spawned"][id]["moveable"] === true) {
-
-        console.log("Taking " + items["spawned"][id]["itemname"]);
-
-        items["spawned"][id]["itemlocation"] = destination;
-        consolePush("You take the " + items["spawned"][id]["itemname"], "items");
-    } else {
-        consolePush("You can't move that","error");
-    }
-
-}
 
 move = {
     north: function(){
