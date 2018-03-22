@@ -2,8 +2,6 @@ rooms = {
 
 
 
-
-
     "room0": {
         name: "room name - room 0",
         copy:  {
@@ -23,9 +21,9 @@ rooms = {
             // ["blue purse",1]
             //["red chest",1],
             //["gold",5,10]
-            // ["old wooden chest",1]
+            //["old wooden chest",1]
             ["black chest",1,1,0,0],
-            //["gold",50,50,0,0]
+            ["gold",50,50,0,0]
 
 
         ],
